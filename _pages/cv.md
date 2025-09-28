@@ -1,4 +1,3 @@
-<!-- cv.md -->
 ---
 layout: archive
 title: "CV"

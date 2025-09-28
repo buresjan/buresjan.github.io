@@ -1,4 +1,3 @@
-<!-- about.md -->
 ---
 permalink: /
 title: "About"
