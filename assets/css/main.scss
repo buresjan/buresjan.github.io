@@ -57,15 +57,14 @@
 .greedy-nav .visible-links li {
   display: flex;
   align-items: center;
+  margin: 0 0.75rem;
   flex: 0 0 auto;
 }
 
 .greedy-nav .visible-links .masthead__menu-item--lg.persist {
-  flex: 1 1 auto;
-  justify-content: flex-start;
+  margin-right: auto;
 }
 
 .greedy-nav .visible-links #theme-toggle {
-  flex: 1 1 auto;
-  justify-content: flex-end;
+  margin-left: auto;
 }
