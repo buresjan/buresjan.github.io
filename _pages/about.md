@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-<div class="page-justify">
+<div class="page-justify" markdown="1">
 
 I am a first-year Ph.D. student in Mathematical Engineering at the Department of Mathematics, FNSPE CTU in Prague. I study computational hemodynamics and optimization with emphasis on the total cavopulmonary connection (TCPC). <!-- :contentReference[oaicite:0]{index=0} -->
 
