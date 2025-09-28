@@ -7,6 +7,8 @@ redirect_from:
   - /about.html
 ---
 
+<div class="page-justify">
+
 I am a first-year Ph.D. student in Mathematical Engineering at the Department of Mathematics, FNSPE CTU in Prague. I study computational hemodynamics and optimization with emphasis on the total cavopulmonary connection (TCPC). <!-- :contentReference[oaicite:0]{index=0} -->
 
 ## Contact & Office Hours
@@ -24,3 +26,5 @@ I am a first-year Ph.D. student in Mathematical Engineering at the Department of
 ## Projects
 - **Inter-Excellence LUAUS25049** — Geometry optimization of TCPC with LBM, clinical data integration, experimental validation. Includes a research stay at UT Southwestern & Children’s Medical Center Dallas (11 Apr – 7 Jun 2025) and a FIMH 2025 poster accepted for LNCS proceedings. <!-- :contentReference[oaicite:3]{index=3} -->
 - **GA24-11247S** — Off-diagonal thermodynamics: workflows for predicting bimolecular reaction barriers and analyzing selectivity. Role: computation, automation, and statistical analysis at Heyrovský Institute.
+
+</div>
