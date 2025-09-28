@@ -1,4 +1,4 @@
----
+.---
 permalink: /
 title: "About"
 author_profile: true
@@ -24,7 +24,7 @@ I am a first-year Ph.D. student in Mathematical Engineering at the Department of
 - Off-diagonal thermodynamics and reaction selectivity (C–H bond cleavage) <!-- :contentReference[oaicite:2]{index=2} -->
 
 ## Projects
-- **Inter-Excellence LUAUS25049** — Geometry optimization of TCPC with LBM, clinical data integration, experimental validation. Includes a research stay at UT Southwestern & Children’s Medical Center Dallas (11 Apr – 7 Jun 2025) and a FIMH 2025 poster accepted for LNCS proceedings. <!-- :contentReference[oaicite:3]{index=3} -->
+- **Inter-Excellence LUAUS25049** — Translation of mathematical modeling and optimization techniques to cardiovascular medicine. My main focus in this project is geometry optimization of total cavopulmonary connection using the lattice Boltzmann method. I aim to integrate the available clinical data into this procees and also to experimentally validate the process.
 - **GA24-11247S** — Off-diagonal thermodynamics: workflows for predicting bimolecular reaction barriers and analyzing selectivity. Role: computation, automation, and statistical analysis at Heyrovský Institute.
 
 </div>

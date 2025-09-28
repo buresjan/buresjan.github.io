@@ -46,3 +46,26 @@
 .page-justify li {
   text-align: justify;
 }
+
+.greedy-nav .visible-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.greedy-nav .visible-links li {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.greedy-nav .visible-links .masthead__menu-item--lg.persist {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+}
+
+.greedy-nav .visible-links #theme-toggle {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
