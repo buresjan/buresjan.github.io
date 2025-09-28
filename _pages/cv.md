@@ -8,13 +8,6 @@ redirect_from:
   - /resume
 ---
 
-{% include base_path %}
-
-Contact
-======
-- **Email:** buresj11@fjfi.cvut.cz  
-- **Phone:** +420 739 766 067 <!-- :contentReference[oaicite:12]{index=12} -->
-
 Education
 ======
 - **Ph.D., Mathematical Engineering**, FNSPE CTU in Prague, 2025–present. Research: mathematical modeling and shape optimization in cardiology. Supervisor: doc. Ing. Radek Fučík, Ph.D. <!-- :contentReference[oaicite:13]{index=13} -->
@@ -56,33 +49,3 @@ Teaching
 - Calculus I, Calculus II — exercise sessions, exam support (2023–2025). <!-- :contentReference[oaicite:31]{index=31} -->
 - Nonlinear Optimization — materials co-creation; guest lecture on derivative-free methods (2025). <!-- :contentReference[oaicite:32]{index=32} -->
 - **Upcoming:** 01LIP (Linear Programming), lecturer from AY 2025/26. <!-- :contentReference[oaicite:33]{index=33} -->
-
-Skills
-======
-- **Programming:** C++ (GPU), Python, Julia
-- **Tools:** LaTeX, Git, JetBrains; VisIt, ParaView; MS Office; Plotly Dash
-- **OS:** Linux, Windows
-- **Languages:** Czech (native), English (C1), German (B1) <!-- :contentReference[oaicite:34]{index=34} -->
-
-Service
-======
-- Contributor, *Corpus Omne* faculty magazine, since 2022. <!-- :contentReference[oaicite:35]{index=35} -->
-- Member, Czech Mathematical Society, since 2023. <!-- :contentReference[oaicite:36]{index=36} -->
-
-Publications (site collection)
-======
-<ul>{% for post in site.publications reversed %}
-  {% include archive-single-cv.html %}
-{% endfor %}</ul>
-
-Talks (site collection)
-======
-<ul>{% for post in site.talks reversed %}
-  {% include archive-single-talk-cv.html  %}
-{% endfor %}</ul>
-
-Teaching (site collection)
-======
-<ul>{% for post in site.teaching reversed %}
-  {% include archive-single-cv.html %}
-{% endfor %}</ul>
