@@ -27,7 +27,10 @@ Požadavky
 Osnova přednášek
 ======
 
-<p style="color: red; text-align: justify;">V průběhu semestru budou postupně doplňovány studijní texty a otázky k jednotlivým přednáškám. Texty nicméně vznikají průběžně a mohou se v nich tak přirozeně objevovat překlepy, chyby, atd. Budu moc rád, když mi jakékoliv takové nedostatky ohlásíte! 🙂</p>
+<p style="color: red; text-align: justify;">V průběhu semestru budou postupně doplňovány studijní texty a otázky k jednotlivým přednáškám. Texty nicméně vznikají průběžně a mohou se v nich tak přirozeně objevovat překlepy, chyby, atd. Budu moc rád, když mi jakékoliv takové nedostatky ohlásíte! 🙂
+<br>
+<br>
+Dále platí, že  již některé nahrané texty a otázky bude možná někdy potřeba modifikovat — v případě zásadních změn vás o tom samozřejmě včas informuji.</p>
 
 <style>
 .lp-date { margin: 0.25rem 0 0.85rem 0; }
