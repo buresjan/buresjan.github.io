@@ -2,6 +2,8 @@
 permalink: /
 title: "About"
 author_profile: true
+author: "Jan Bures (About/CV)"
+double_sidebar: true
 redirect_from:
   - /about/
   - /about.html
@@ -26,5 +28,8 @@ I am a first-year Ph.D. student in Mathematical Engineering at the Department of
 ## Projects
 - **Inter-Excellence LUAUS25049** — Translation of mathematical modeling and optimization techniques to cardiovascular medicine. My main focus in this project is geometry optimization of total cavopulmonary connection using the lattice Boltzmann method. I aim to integrate the available clinical data into this procees and also to experimentally validate the process.
 - **GA24-11247S** — Off-diagonal thermodynamics and its connection with other factors as a route to predictable selectivity in C-H bond cleavage. My role is mainly automating the workflows for predicting bimolecular reaction barriers and performing subsequent statistical analysis.
+
+## For Students
+If your interests overlap with my work in mathematical modeling, optimization, or scientific computing, please reach out. I am happy to discuss supervision options, project ideas, or other ways we can collaborate on topics that excite you.
 
 </div>

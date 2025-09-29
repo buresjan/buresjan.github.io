@@ -16,6 +16,13 @@
   }
 }
 
+/* Align top of content with sidebars on double-sidebar pages */
+@include breakpoint($large) {
+  #main.double-sidebar {
+    margin-top: 0;
+  }
+}
+
 .page {
   @include breakpoint($large) {
     @include span(10 of 12 last);
@@ -31,6 +38,25 @@
     .page__share {
       @include full();
     }
+  }
+}
+
+/* Double-sidebar pages: keep default width but center between rails */
+@include breakpoint($large) {
+  .double-sidebar .page {
+    /* Shift right by left-rail width, and reserve space for right rail */
+    @include span(9 of 12);
+    @include push(2 of 12);
+    @include post(2 of 12);
+    margin-top: 0;
+  }
+}
+
+@include breakpoint($large) {
+  #main.double-sidebar article.page {
+    /* Hardcoded offset to align with sidebars on desktop */
+    margin-top: -330px;
+    // padding-top: 90px;
   }
 }
 

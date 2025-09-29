@@ -27,6 +27,31 @@
   }
 }
 
+/* Double-sidebar pages: keep default archive width but center between rails */
+@include breakpoint($large) {
+  .double-sidebar .archive {
+    @include span(8 of 12);
+    @include push(2 of 12);
+    @include post(2 of 12);
+    margin-top: 0;
+  }
+}
+
+@include breakpoint($large) {
+  #main.double-sidebar .archive {
+    /* Hardcoded offset to align with sidebars on desktop */
+    margin-top: -330px;
+    // padding-top: 90px;
+  }
+}
+
+/* CV content tweaks */
+@include breakpoint($large) {
+  .double-sidebar .archive {
+    text-align: justify;
+  }
+}
+
 .archive__subtitle {
   margin: 1.414em 0 0;
   padding-bottom: 0.5em;

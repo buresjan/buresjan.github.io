@@ -88,13 +88,7 @@
 }
 
 /* Ensure right sidebar stays sticky on large screens */
-@include breakpoint($large) {
-  .sidebar__right.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: $masthead-height;
-  }
-}
+/* Right rail is fixed like the left; sticky override no longer needed */
 
 /* Reorder for small screens: left sidebar on top, content in middle, right sidebar below */
 @media screen and (max-width: $sidebar-screen-min-width) {
@@ -106,4 +100,25 @@
   #main > article.page { order: 2; }
   #main > .archive { order: 2; }
   #main > .sidebar__right { order: 3; }
+}
+
+/* Small tweaks for the right sidebar content */
+.right-sidebar-group { margin-bottom: 1rem; }
+.right-sidebar-title { margin: 0 0 0.5rem 0; font-weight: 600; }
+.right-list { margin: 0 0 0 1.25rem; padding: 0; }
+.right-list li { margin: 0.25rem 0; }
+
+/* Teaching header metadata tweaks */
+.page__meta-teaching { margin: 1.25rem 0 2rem; }
+.page__meta-teaching-intro { font-size: 1rem; margin-bottom: 0.65rem; }
+.page__meta-teaching-list { margin: 0; padding-left: 1.35rem; list-style-type: disc; }
+.page__meta-teaching-list li { margin: 0.3rem 0; }
+
+/* On desktops, right rail is sticky like the left's sticky utility, but aligned to the masthead */
+@include breakpoint($large) {
+  .double-sidebar .sidebar__right.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: $masthead-height;
+  }
 }

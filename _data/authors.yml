@@ -16,3 +16,13 @@ Name2 Name2:
   avatar      : "bio-photo.jpg"
   twitter     : "name2"
   google_plus : "Name"
+
+Jan Bures (About/CV):
+  name        : "Jan Bureš"
+  avatar      : "profile.png"
+  bio         : "First-year Ph.D. student in Mathematical Engineering at the Department of Mathematics at FNSPE CTU in Prague"
+  location    : "Prague, Czechia"
+  employer    : "FNSPE CTU in Prague"
+  employer_url: "https://fjfi.cvut.cz/en/"
+  email       : "buresj11@cvut.cz"
+  orcid       : "https://orcid.org/0009-0007-4357-0141"

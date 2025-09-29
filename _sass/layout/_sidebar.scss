@@ -63,14 +63,33 @@
 .sidebar__right {
   margin-bottom: 1em;
 
+  /* match left sidebar text sizes */
+  h2, h3, h4, h5, h6 { margin-bottom: 0; font-family: $sans-serif-narrow; }
+  h3, h4 { font-size: $type-size-5; }
+  p, li { font-family: $sans-serif; font-size: $type-size-6; line-height: 1.5; }
+
+  /* no fixed positioning here; sticky is applied via .sticky rule */
+
   @include breakpoint($large) {
     @include span(2 of 12 last);
     z-index: 10;
   }
 
   @include breakpoint($x-large) {
-    @include span(2 of 12 last);
+    max-width: $sidebar-link-max-width;
+    padding-left: 0;
   }
+}
+
+/* No special double-sidebar overrides here; left sidebar stays fixed */
+
+/* No special sizing overrides for double-sidebar; center reserves space via suffix */
+
+/* Keep employer link aligned with icon when present */
+.author__urls li.author__desktop a {
+  display: inline;
+  padding: 0;
+  border: 0;
 }
 
 /*
