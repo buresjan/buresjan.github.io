@@ -86,3 +86,12 @@
     margin: 0;
   }
 }
+
+/* Ensure right sidebar stays sticky on large screens */
+@include breakpoint($large) {
+  .sidebar__right.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: $masthead-height;
+  }
+}

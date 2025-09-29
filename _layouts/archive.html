@@ -21,4 +21,10 @@ layout: default
     {% endunless %}
     {{ content }}
   </div>
+
+  {%- comment -%}
+    Right sidebar duplicate of left; placed after archive content so
+    on small screens it appears below the main content.
+  {%- endcomment -%}
+  {% include sidebar-right.html %}
 </div>
