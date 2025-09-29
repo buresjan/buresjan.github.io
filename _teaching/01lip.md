@@ -54,9 +54,9 @@ html[data-theme="dark"] .lp-date .btn-questions {
 </style>
 
 1. Formulace úlohy lineárního programování, převody omezení, příklady úloh.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">23/09/2025</span> <a class="btn" href="{{ '/files/slides1.pdf' | relative_url }}" download>Studijní text k přednášce 1 (PDF)</a> <a class="btn btn-questions" href="{{ '/files/slides2.pdf' | relative_url }}" download>Otázky k přednášce 1 (PDF)</a></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">23/09/2025</span> <a class="btn" href="{{ '/files/pr01.pdf' | relative_url }}" download>Studijní text k přednášce 1 (PDF)</a> <a class="btn btn-questions" href="{{ '/files/pr01cv.pdf' | relative_url }}" download>Otázky k přednášce 1 (PDF)</a></div>
 2. Vlastnosti úloh lineárního programování, množina přípustných a optimálních řešení a jejich vlastnosti, geometrie úloh LP.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">30/09/2025</span> <a class="btn" href="{{ '/files/slides1.pdf' | relative_url }}" download>Studijní text k přednášce 2 (PDF)</a> <a class="btn btn-questions" href="{{ '/files/slides2.pdf' | relative_url }}" download>Otázky k přednášce 2 (PDF)</a></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">30/09/2025</span> <a class="btn" href="{{ '/files/pr02.pdf' | relative_url }}" download>Studijní text k přednášce 2 (PDF)</a> <a class="btn btn-questions" href="{{ '/files/pr02cv.pdf' | relative_url }}" download>Otázky k přednášce 2 (PDF)</a></div>
 3. Základní věta LP, grafické řešení úloh LP.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">07/10/2025</span></div>
 4. Simplexový algoritmus — jednofázová metoda, neomezenost úlohy, více optimálních řešení.
