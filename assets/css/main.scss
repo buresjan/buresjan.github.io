@@ -90,16 +90,52 @@
 /* Ensure right sidebar stays sticky on large screens */
 /* Right rail is fixed like the left; sticky override no longer needed */
 
-/* Reorder for small screens: left sidebar on top, content in middle, right sidebar below */
-@media screen and (max-width: $sidebar-screen-min-width) {
+/* Reorder for medium and small screens: stack content between the two sidebars */
+@media screen and (max-width: 1200px) {
   #main {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
   }
-  #main > .sidebar { order: 1; }
-  #main > article.page { order: 2; }
-  #main > .archive { order: 2; }
-  #main > .sidebar__right { order: 3; }
+
+  #main > .sidebar {
+    order: 1;
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-top: 0;
+  }
+
+  #main > article.page,
+  #main > .archive {
+    order: 2;
+  }
+
+  #main > .sidebar__right {
+    order: 3;
+    position: static;
+    margin-top: 2rem;
+  }
+
+  #main > .sidebar,
+  #main > .sidebar__right,
+  #main > article.page,
+  #main > .archive {
+    width: 100%;
+    max-width: 100%;
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  #main.double-sidebar article.page {
+    margin-top: 0;
+  }
+
+  #main.double-sidebar .sidebar__right.sticky {
+    position: static;
+    top: auto;
+  }
 }
 
 /* Small tweaks for the right sidebar content */
