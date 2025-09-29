@@ -8,9 +8,9 @@
 
   <div class="author__avatar">
     {% if author.avatar contains "://" %}
-    	<img src="{{ author.avatar }}" alt="{{ author.name }}"  fetchpriority="high" />
+    	<img src="{{ author.avatar }}" alt="{{ author.name }}" fetchpriority="high" draggable="false" oncontextmenu="return false;" ondragstart="return false;" onmousedown="if (event.button === 1) { event.preventDefault(); return false; }" onauxclick="event.preventDefault(); return false;" />
     {% else %}
-    	<img src="{{ author.avatar | prepend: "/images/" | prepend: base_path }}" class="author__avatar" alt="{{ author.name }}"  fetchpriority="high" />
+	<img src="{{ author.avatar | prepend: "/images/" | prepend: base_path }}" class="author__avatar" alt="{{ author.name }}" fetchpriority="high" draggable="false" oncontextmenu="return false;" ondragstart="return false;" onmousedown="if (event.button === 1) { event.preventDefault(); return false; }" onauxclick="event.preventDefault(); return false;" />
     {% endif %}
   </div>
 

@@ -19,11 +19,10 @@ I am a first-year Ph.D. student in Mathematical Engineering at the Department of
 - Email: buresj11@fjfi.cvut.cz
 
 ## Research Focus
-- CFD for cardiovascular flows (LBM), shape and topology optimization of TCPC
-- MRI-validated flow phantoms and data assimilation
+- CFD for cardiovascular flows in large vessels
+- Shape and topology optimization of large vessel inspired geometries
 - Gradient-based and derivative-free optimization, uncertainty and robustness
-- GPU-accelerated scientific computing
-- Off-diagonal thermodynamics and reaction selectivity (C–H bond cleavage) <!-- :contentReference[oaicite:2]{index=2} -->
+- MRI-validated flow phantoms
 
 ## Projects
 - **Inter-Excellence LUAUS25049** — Translation of mathematical modeling and optimization techniques to cardiovascular medicine. My main focus in this project is geometry optimization of total cavopulmonary connection using the lattice Boltzmann method. I aim to integrate the available clinical data into this procees and also to experimentally validate the process.
