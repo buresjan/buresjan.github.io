@@ -9,7 +9,7 @@ header_lines:
   - "Přednášky: Úterý T-209, 8:00"
   - "Cvičení: Vybrané pátky T-115, 8:00"
 summary: "Introduction to linear programming: formulation, simplex, duality, sensitivity analysis, and applications."
-permalink: /teaching/2025-26-01-linear-programming
+permalink: /teaching/01lip
 date: 2025-09-01
 lang: cs
 ---
@@ -27,7 +27,7 @@ Požadavky
 Osnova přednášek
 ======
 
-<p style="color: red; text-align: justify;">V průběhu semestru budou postupně doplňovány studijní texty a otázky k jednotlivým přednáškám. Texty nicméně vznikají průběžně a mohou se v nich tak přirozeně objevovat chyby, které budu moc rád, když mi ohlásíte! 🙂</p>
+<p style="color: red; text-align: justify;">V průběhu semestru budou postupně doplňovány studijní texty a otázky k jednotlivým přednáškám. Texty nicméně vznikají průběžně a mohou se v nich tak přirozeně objevovat překlepy, chyby, atd. Budu moc rád, když mi jakékoliv takové nedostatky ohlásíte! 🙂</p>
 
 <style>
 .lp-date { margin: 0.25rem 0 0.85rem 0; }
