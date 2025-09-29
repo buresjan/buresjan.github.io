@@ -95,3 +95,15 @@
     top: $masthead-height;
   }
 }
+
+/* Reorder for small screens: left sidebar on top, content in middle, right sidebar below */
+@media screen and (max-width: $sidebar-screen-min-width) {
+  #main {
+    display: flex;
+    flex-direction: column;
+  }
+  #main > .sidebar { order: 1; }
+  #main > article.page { order: 2; }
+  #main > .archive { order: 2; }
+  #main > .sidebar__right { order: 3; }
+}
