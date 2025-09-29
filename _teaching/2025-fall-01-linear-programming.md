@@ -27,6 +27,8 @@ Požadavky
 Osnova přednášek
 ======
 
+<p style="color: red; text-align: justify;">V průběhu semestru budou postupně doplňovány studijní texty a otázky k jednotlivým přednáškám. Texty nicméně vznikají průběžně a mohou se v nich tak přirozeně objevovat chyby, které budu moc rád, když mi ohlásíte! 🙂</p>
+
 <style>
 .lp-date { margin: 0.25rem 0 0.85rem 0; }
 .lp-date .label { color: #555; font-style: italic; font-weight: normal; margin-right: 0.35rem; }
