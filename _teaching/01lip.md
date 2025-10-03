@@ -82,7 +82,7 @@ Osnova cvičení
 ======
 
 1. Řešení úloh LP na počítači — softwarové nástroje a jejich použití.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">03/10/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">03/10/2025</span> <a class="btn" href="{{ '/files/cv1.zip' | relative_url }}" download>Úlohy ke cvičení 1</a></div>
 2. Úloha lineárního programování, podmínka optimality a neomezenost.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">17/10/2025</span></div>
 3. Simplexová metoda — základní kroky algoritmu, různé situace při řešení; dvoufázová simplexová metoda (technika pomocné báze, M‑úloha); duální simplexová metoda.
