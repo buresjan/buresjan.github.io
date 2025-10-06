@@ -58,7 +58,7 @@ html[data-theme="dark"] .lp-date .btn-questions {
 2. Vlastnosti úloh lineárního programování, množina přípustných a optimálních řešení a jejich vlastnosti, geometrie úloh LP.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">30/09/2025</span> <a class="btn" href="{{ '/files/pr02.pdf' | relative_url }}" download>Studijní text k přednášce 2 (PDF)</a> <a class="btn btn-questions" href="{{ '/files/pr02cv.pdf' | relative_url }}" download>Otázky k přednášce 2 (PDF)</a></div>
 3. Základní věta LP, grafické řešení úloh LP.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">07/10/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">07/10/2025</span> <a class="btn" href="{{ '/files/pr03.pdf' | relative_url }}" download>Studijní text k přednášce 3 (PDF)</a></div>
 4. Simplexový algoritmus — jednofázová metoda, neomezenost úlohy, více optimálních řešení.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">14/10/2025</span></div>
 5. Simplexový algoritmus — dvoufázová metoda (technika pomocné báze), M‑úloha.
