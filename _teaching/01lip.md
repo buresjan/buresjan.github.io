@@ -60,7 +60,7 @@ html[data-theme="dark"] .lp-date .btn-questions {
 3. Základní věta LP, grafické řešení úloh LP.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">07/10/2025</span> <a class="btn" href="{{ '/files/pr03.pdf' | relative_url }}" download>Studijní text k přednášce 3 (PDF)</a></div>
 4. Simplexový algoritmus — jednofázová metoda, neomezenost úlohy, více optimálních řešení.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">14/10/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">14/10/2025</span> <a class="btn" href="{{ '/files/pr04.pdf' | relative_url }}" download>Studijní text k přednášce 4 (PDF)</a></div>
 5. Simplexový algoritmus — dvoufázová metoda (technika pomocné báze), M‑úloha.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">21/10/2025</span></div>
 6. Vlastnosti simplexové metody — degenerace, cyklení, časová náročnost algoritmu.
