@@ -21,6 +21,7 @@ Požadavky
 
 - Zápočet: Udělen za splněnou docházku a úspěšné vyřešení zápočtového testu.
   - TBA. Detaily doplněny na cvičení.
+  - <a class="btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
   - TBA. Detaily ke konkrétním otázkám budou doplněny.
 
@@ -84,7 +85,7 @@ Osnova cvičení
 1. Řešení úloh LP na počítači — softwarové nástroje a jejich použití.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">03/10/2025</span> <a class="btn" href="{{ '/files/cv1.zip' | relative_url }}" download>Úlohy ke cvičení 1</a> <a class="btn" href="{{ '/files/cv1-text.pdf' | relative_url }}" download>Text k úlohám</a></div>
 2. Úloha lineárního programování, podmínka optimality a neomezenost.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">17/10/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">17/10/2025</span> <a class="btn" href="{{ '/files/cv2.zip' | relative_url }}" download>Úlohy ke cvičení 2</a></div>
 3. Simplexová metoda — základní kroky algoritmu, různé situace při řešení; dvoufázová simplexová metoda (technika pomocné báze, M‑úloha); duální simplexová metoda.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">31/10/2025</span></div>
 4. Příklad z teorie her — hledání smíšených strategií.
