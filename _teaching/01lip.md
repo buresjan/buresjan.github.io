@@ -21,7 +21,7 @@ Požadavky
 
 - Zápočet: Udělen za splněnou docházku a úspěšné vyřešení zápočtového testu.
   - TBA. Detaily doplněny na cvičení.
-  - <a class="btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
+  - <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
   - TBA. Detaily ke konkrétním otázkám budou doplněny.
 
@@ -43,13 +43,17 @@ html[data-theme="dark"] .lp-date .label { color: #ffffff; }
 .lp-date .date + .btn { margin-left: 0.25rem; }
 .lp-date .btn + .btn { margin-left: 0.25rem; }
 .lp-date .btn,
-.lp-date .btn-questions { background-color: #9b9b9b; border-color: #9b9b9b; color: #111; }
+.lp-date .btn-questions,
+.btn.lp-btn { background-color: #9b9b9b; border-color: #9b9b9b; color: #111; }
 .lp-date .btn:hover,
 .lp-date .btn:focus,
 .lp-date .btn-questions:hover,
-.lp-date .btn-questions:focus { background-color: #8c8c8c; border-color: #8c8c8c; color: #111; }
+.lp-date .btn-questions:focus,
+.btn.lp-btn:hover,
+.btn.lp-btn:focus { background-color: #8c8c8c; border-color: #8c8c8c; color: #111; }
 html[data-theme="dark"] .lp-date .btn,
-html[data-theme="dark"] .lp-date .btn-questions {
+html[data-theme="dark"] .lp-date .btn-questions,
+html[data-theme="dark"] .btn.lp-btn {
   color: #181818;
 }
 </style>
@@ -63,7 +67,7 @@ html[data-theme="dark"] .lp-date .btn-questions {
 4. Simplexový algoritmus — jednofázová metoda, neomezenost úlohy, více optimálních řešení.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">14/10/2025</span> <a class="btn" href="{{ '/files/pr04.pdf' | relative_url }}" download>Studijní text k přednášce 4 (PDF)</a></div>
 5. Simplexový algoritmus — dvoufázová metoda (technika pomocné báze), M‑úloha.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">21/10/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">21/10/2025</span> <a class="btn" href="{{ '/files/pr05.pdf' | relative_url }}" download>Studijní text k přednášce 5 (PDF)</a></div>
 6. Vlastnosti simplexové metody — degenerace, cyklení, časová náročnost algoritmu.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">04/11/2025</span></div>
 7. Dualita úloh lineárního programování — formulace duální úlohy, věty o dualitě.
