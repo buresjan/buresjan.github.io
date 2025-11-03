@@ -69,7 +69,7 @@ html[data-theme="dark"] .btn.lp-btn {
 5. Simplexový algoritmus — dvoufázová metoda (technika pomocné báze), M‑úloha.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">21/10/2025</span> <a class="btn" href="{{ '/files/pr05.pdf' | relative_url }}" download>Studijní text k přednášce 5 (PDF)</a></div>
 6. Vlastnosti simplexové metody — degenerace, cyklení, časová náročnost algoritmu.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">04/11/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">04/11/2025</span> <a class="btn" href="{{ '/files/pr06.pdf' | relative_url }}" download>Studijní text k přednášce 6</a></div>
 7. Dualita úloh lineárního programování — formulace duální úlohy, věty o dualitě.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">11/11/2025</span></div>
 8. Algoritmus duálně‑simplexové metody.
