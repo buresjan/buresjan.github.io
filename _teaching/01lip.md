@@ -71,7 +71,7 @@ html[data-theme="dark"] .btn.lp-btn {
 6. Vlastnosti simplexové metody — degenerace, cyklení, časová náročnost algoritmu.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">04/11/2025</span> <a class="btn" href="{{ '/files/pr06.pdf' | relative_url }}" download>Studijní text k přednášce 6 (PDF)</a></div>
 7. Dualita úloh lineárního programování — formulace duální úlohy, věty o dualitě.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">11/11/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">11/11/2025</span> <a class="btn" href="{{ '/files/pr07.pdf' | relative_url }}" download>Studijní text k přednášce 7 (PDF)</a></div>
 8. Algoritmus duálně‑simplexové metody.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">18/11/2025</span></div>
 9. Dopravní problém — metoda MODI.
@@ -91,7 +91,7 @@ Osnova cvičení
 2. Úloha lineárního programování, podmínka optimality a neomezenost.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">17/10/2025</span> <a class="btn" href="{{ '/files/cv2.zip' | relative_url }}" download>Úlohy ke cvičení 2</a></div>
 3. Simplexová metoda — základní kroky algoritmu, různé situace při řešení; dvoufázová simplexová metoda (technika pomocné báze, M‑úloha); duální simplexová metoda.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">31/10/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">31/10/2025</span></div>
 4. Příklad z teorie her — hledání smíšených strategií.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">14/11/2025</span></div>
 5. Gomoryho algoritmus a další algoritmy LIP (metoda větví a mezí).
