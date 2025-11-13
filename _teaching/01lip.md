@@ -93,7 +93,7 @@ Osnova cvičení
 3. Simplexová metoda — základní kroky algoritmu, různé situace při řešení; dvoufázová simplexová metoda (technika pomocné báze, M‑úloha); duální simplexová metoda.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">31/10/2025</span></div>
 4. Příklad z teorie her — hledání smíšených strategií.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">14/11/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">14/11/2025</span> <a class="btn" href="{{ '/files/cv04.zip' | relative_url }}" download>Text a úloha ke cvičení</a></div>
 5. Gomoryho algoritmus a další algoritmy LIP (metoda větví a mezí).
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">28/11/2025</span></div>
 6. Kvadratické programování.
