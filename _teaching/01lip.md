@@ -73,7 +73,7 @@ html[data-theme="dark"] .btn.lp-btn {
 7. Dualita úloh lineárního programování — formulace duální úlohy, věty o dualitě.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">11/11/2025</span> <a class="btn" href="{{ '/files/pr07.pdf' | relative_url }}" download>Studijní text k přednášce 7 (PDF)</a></div>
 8. Algoritmus duálně‑simplexové metody.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">18/11/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">18/11/2025</span> <a class="btn" href="{{ '/files/pr08.pdf' | relative_url }}" download>Studijní text k přednášce 8 (PDF)</a></div>
 9. Dopravní problém — metoda MODI.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">25/11/2025</span></div>
 10. Aplikace v teorii her — maticové hry s nulovým součtem, smíšené strategie, min‑max teorém.
