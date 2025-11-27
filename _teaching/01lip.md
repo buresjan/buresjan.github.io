@@ -95,6 +95,6 @@ Osnova cvičení
 4. Příklad z teorie her — hledání smíšených strategií.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">14/11/2025</span> <a class="btn" href="{{ '/files/cv04.zip' | relative_url }}" download>Text a úloha ke cvičení</a></div>
 5. Gomoryho algoritmus a další algoritmy LIP (metoda větví a mezí).
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">28/11/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">28/11/2025</span> <a class="btn" href="{{ '/files/cv05.zip' | relative_url }}" download>Úlohy ke cvičení 5</a></div>
 6. Kvadratické programování.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">12/12/2025</span></div>
