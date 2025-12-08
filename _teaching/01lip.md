@@ -77,7 +77,7 @@ html[data-theme="dark"] .btn.lp-btn {
 9. Dopravní problém — metoda MODI.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">25/11/2025</span> <a class="btn" href="{{ '/files/pr09.pdf' | relative_url }}" download>Studijní text k přednášce 9 (PDF)</a></div>
 10. Aplikace v teorii her — maticové hry s nulovým součtem, smíšené strategie, min‑max teorém.
-    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">02/12/2025</span></div>
+    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">02/12/2025</span></div> <a class="btn" href="{{ '/files/pr10.pdf' | relative_url }}" download>Studijní text k přednášce 10 (PDF)</a></div>
 11. Algoritmy celočíselného programování — typické úlohy LIP, metoda větví a mezí.
     <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">09/12/2025</span></div>
 12. Algoritmy celočíselného programování — Gomoryho řezy.
