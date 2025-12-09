@@ -23,7 +23,7 @@ Požadavky
   - Detaily doplněny na cvičení.
   - <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
-  - Zkouška je realizována písemnou formou -- skládá se **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
+  - Zkouška je realizována písemnou formou -- skládá se ze **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
   - Zkoušku lze skládat pouze se získaným zápočtem.
   - Na termíny zkoušek se přihlašujte v systému KOS.
   - <a class="btn lp-btn" href="{{ '/files/otazky.pdf' | relative_url }}" download>Seznam otázek ke zkoušce</a>
