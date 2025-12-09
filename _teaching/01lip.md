@@ -23,7 +23,10 @@ Požadavky
   - TBA. Detaily doplněny na cvičení.
   - <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
-  - TBA. Detaily ke konkrétním otázkám budou doplněny.
+  - Zkouška je realizována písemmou formou -- skládá se **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
+  - Zkoušku lze skládat pouze se získaným zápočtem.
+  - Na termíny zkoušek se přihlašujte v systému KOS.
+  - <a class="btn" href="{{ '/files/pr01.pdf' | relative_url }}" download>Seznam otázek ke zkoušce</a> </div>
 
 Osnova přednášek
 ======
@@ -59,9 +62,9 @@ html[data-theme="dark"] .btn.lp-btn {
 </style>
 
 1. Formulace úlohy lineárního programování, převody omezení, příklady úloh.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">23/09/2025</span> <a class="btn" href="{{ '/files/pr01.pdf' | relative_url }}" download>Studijní text k přednášce 1 (PDF)</a> <a class="btn btn-questions" href="{{ '/files/pr01cv.pdf' | relative_url }}" download>Otázky k přednášce 1 (PDF)</a></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">23/09/2025</span> <a class="btn" href="{{ '/files/pr01.pdf' | relative_url }}" download>Studijní text k přednášce 1 (PDF)</a> </div>
 2. Vlastnosti úloh lineárního programování, množina přípustných a optimálních řešení a jejich vlastnosti, geometrie úloh LP.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">30/09/2025</span> <a class="btn" href="{{ '/files/pr02.pdf' | relative_url }}" download>Studijní text k přednášce 2 (PDF)</a> <a class="btn btn-questions" href="{{ '/files/pr02cv.pdf' | relative_url }}" download>Otázky k přednášce 2 (PDF)</a></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">30/09/2025</span> <a class="btn" href="{{ '/files/pr02.pdf' | relative_url }}" download>Studijní text k přednášce 2 (PDF)</a> </div>
 3. Základní věta LP, grafické řešení úloh LP.
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">07/10/2025</span> <a class="btn" href="{{ '/files/pr03.pdf' | relative_url }}" download>Studijní text k přednášce 3 (PDF)</a></div>
 4. Simplexový algoritmus — jednofázová metoda, neomezenost úlohy, více optimálních řešení.
