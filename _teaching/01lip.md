@@ -26,7 +26,7 @@ Požadavky
   - Zkouška je realizována písemmou formou -- skládá se **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
   - Zkoušku lze skládat pouze se získaným zápočtem.
   - Na termíny zkoušek se přihlašujte v systému KOS.
-  - <a class="btn" href="{{ '/files/pr01.pdf' | relative_url }}" download>Seznam otázek ke zkoušce</a> </div>
+  - <a class="btn" href="{{ '/files/otazky.pdf' | relative_url }}" download>Seznam otázek ke zkoušce</a> </div>
 
 Osnova přednášek
 ======
