@@ -20,7 +20,7 @@ Požadavky
 ======
 
 - Zápočet: Udělen za splněnou docházku a úspěšné vyřešení zápočtového testu.
-  - TBA. Detaily doplněny na cvičení.
+  - Detaily doplněny na cvičení.
   - <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
   - Zkouška je realizována písemnou formou -- skládá se **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
