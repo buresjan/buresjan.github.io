@@ -82,9 +82,9 @@ html[data-theme="dark"] .btn.lp-btn {
 10. Aplikace v teorii her — maticové hry s nulovým součtem, smíšené strategie, min‑max teorém.
     <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">02/12/2025</span> <a class="btn" href="{{ '/files/pr10.pdf' | relative_url }}" download>Studijní text k přednášce 10 (PDF)</a></div>
 11. Algoritmy celočíselného programování — typické úlohy LIP, metoda větví a mezí.
-    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">09/12/2025</span></div>
+    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">09/12/2025</span> <a class="btn" href="{{ '/files/pr11.pdf' | relative_url }}" download>Studijní text k přednášce 11 a 12 (PDF)</a></div>
 12. Algoritmy celočíselného programování — Gomoryho řezy.
-    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">16/12/2025</span></div>
+    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">16/12/2025</span></div>
 
 Osnova cvičení
 ======
@@ -100,4 +100,4 @@ Osnova cvičení
 5. Gomoryho algoritmus a další algoritmy LIP (metoda větví a mezí).
    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">28/11/2025</span> <a class="btn" href="{{ '/files/cv05.zip' | relative_url }}" download>Úlohy ke cvičení 5</a></div>
 6. Kvadratické programování.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date">12/12/2025</span></div>
+   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">12/12/2025</span></div>
