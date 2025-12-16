@@ -35,6 +35,7 @@ Osnova přednášek
 <br>
 <br>
 Dále platí, že  již některé nahrané texty a otázky bude možná někdy potřeba modifikovat — v případě zásadních změn vás o tom samozřejmě včas informuji.
+<br>
 - 16.12.2025: úprava důkazu první implikace ve větě 3.2
 </p>
 
