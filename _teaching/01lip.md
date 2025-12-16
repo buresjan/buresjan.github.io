@@ -34,7 +34,9 @@ Osnova přednášek
 <p style="color: red; text-align: justify;">V průběhu semestru budou postupně doplňovány studijní texty a otázky k jednotlivým přednáškám. Texty nicméně vznikají průběžně a mohou se v nich tak přirozeně objevovat překlepy, chyby, atd. Budu moc rád, když mi jakékoliv takové nedostatky ohlásíte! 🙂
 <br>
 <br>
-Dále platí, že  již některé nahrané texty a otázky bude možná někdy potřeba modifikovat — v případě zásadních změn vás o tom samozřejmě včas informuji.</p>
+Dále platí, že  již některé nahrané texty a otázky bude možná někdy potřeba modifikovat — v případě zásadních změn vás o tom samozřejmě včas informuji.
+- 16.12.2025: úprava důkazu první implikace ve větě 3.2
+</p>
 
 <style>
 .lp-date { margin: 0.25rem 0 0.85rem 0; }
@@ -84,7 +86,7 @@ html[data-theme="dark"] .btn.lp-btn {
 11. Algoritmy celočíselného programování — typické úlohy LIP, metoda větví a mezí.
     <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">09/12/2025</span> <a class="btn" href="{{ '/files/pr11.pdf' | relative_url }}" download>Studijní text k přednášce 11 a 12 (PDF)</a></div>
 12. Algoritmy celočíselného programování — Gomoryho řezy.
-    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">16/12/2025</span></div>
+    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">16/12/2025</span><a class="btn" href="{{ '/files/pr11.pdf' | relative_url }}" download>Studijní text k přednášce 11 a 12 (PDF)</a></div>
 
 Osnova cvičení
 ======
