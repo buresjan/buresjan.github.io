@@ -27,7 +27,7 @@ Požadavky
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
   - Zkouška je realizována písemnou formou -- skládá se ze **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
   - Zkoušku lze skládat pouze se získaným zápočtem. 
-  - Přihlásit se na zkoušku můžete i bez zápočtu v systému KOS, před skládáním zkoušky je však formálně odevzdat zápočtový program, tj. zaslat přednášejícímu svou práci alespoň 1 den před termínem zkoušky + absolvovat krátkou konzultaci k programu (lze individuálně domluvit i na den zkouškového termínu).
+  - Přihlásit se na zkoušku můžete i bez zápočtu v systému KOS, před skládáním zkoušky je však nutné formálně odevzdat zápočtový program, tj. zaslat přednášejícímu svou práci alespoň 1 den před termínem zkoušky + absolvovat krátkou konzultaci k programu (lze individuálně domluvit i na den zkouškového termínu).
   - Na termíny zkoušek se přihlašujte v systému KOS.
   - Zkoušku bude možné v omezené kapacitě skládat i během LS / v letním zkouškovém období (pro tuto variantu kontaktujte přednášejícího).
   - <a class="btn lp-btn" href="{{ '/files/otazky.pdf' | relative_url }}" download>Seznam otázek ke zkoušce</a>
