@@ -57,7 +57,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
      <span class="label">Planned date:</span>
      <span class="date">16/02/2026</span>
      <!-- Add links once you upload them -->
-     <!-- <a class="btn" href="{{ '/files/yzalg/tut01.pdf' | relative_url }}" download>Tutorial sheet (PDF)</a> -->
+     <a class="btn" href="{{ '/files/yzalg/ex01.pdf' | relative_url }}" download>Presentaion (PDF)</a>
      <!-- <a class="btn" href="{{ '/files/yzalg/tut01.zip' | relative_url }}" download>Starter code (ZIP)</a> -->
    </div>
 
