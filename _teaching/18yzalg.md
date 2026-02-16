@@ -6,9 +6,8 @@ type: "Tutorials"
 local_type: "Academic year 2025/26, 2+2, credit + exam"
 header_lines:
   - "Academic year 2025/26, 2+2, credit + exam; 4 credits"
-  - "Lectures: TBA"
-  - "Tutorials: Mondays (room/time TBA) — no tutorial on Easter Monday"
-summary: "Python-first introduction to algorithmic thinking: problem specification, algorithm description, correctness, testing, and basic time/memory complexity, supported by hands-on tutorials and short group mini-projects."
+  - "Tutorials: Mondays (room T-124)"
+summary: "Introduction to algorithmic thinking and basics of algorithmization (Exercises)."
 permalink: /teaching/18yzalg
 date: 2026-02-01
 lang: en
@@ -21,10 +20,9 @@ Requirements
 ======
 
 - **Credit:** Awarded for active participation in tutorials and successful completion of assigned mini-projects during the semester.
-  - Students work in groups and submit short, self-contained implementations with a brief write-up (PDF or notebook).
 - **Exam:** The final grade is composed of two equally weighted parts.
   - **50%** — continuous assessment from mini-projects completed during the semester.
-  - **50%** — an individual final presentation on a topic related to the course content (followed by a short discussion).
+  - **50%** — defined during the Lectures.
 
 Tutorials
 ======
