@@ -1,46 +1,38 @@
 ---
-title: "01LIP -- Linear Programming (in Czech)"
-local_title: "01LIP -- Lineární programování"
+title: "18YZALG — Basics of Algorithmization"
+local_title: "18YZALG — Základy algoritmizace"
 collection: teaching
-type: "Lecture + Exercises"
-local_type: "Akademický rok 2025/26, 2+1 z, zk"
+type: "Tutorials"
+local_type: "Academic year 2025/26, 2+2, credit + exam"
 header_lines:
-  - "Akademický rok 2025/26, 2+1 z, zk; 3 kredity"
-  - "Přednášky: Úterý T-209, 8:00"
-  - "Cvičení: Vybrané pátky T-115, 8:00"
-summary: "Introduction to linear programming: formulation, simplex, duality, sensitivity analysis, and applications."
-permalink: /teaching/01lip
-date: 2025-09-01
-lang: cs
+  - "Academic year 2025/26, 2+2, credit + exam; 4 credits"
+  - "Lectures: TBA"
+  - "Tutorials: Mondays (room/time TBA) — no tutorial on Easter Monday"
+summary: "Python-first introduction to algorithmic thinking: problem specification, algorithm description, correctness, testing, and basic time/memory complexity, supported by hands-on tutorials and short group mini-projects."
+permalink: /teaching/18yzalg
+date: 2026-02-01
+lang: en
 ---
 
-[Oficiální sylabus předmětu: Lineární programování (Bílá kniha)](https://bilakniha.cvut.cz/cs/predmet11339905.html#gsc.tab=0){:target="_blank" rel="noopener"}
+<!-- Optional: add official syllabus link once you have it -->
+<!-- [Official course syllabus (Bílá kniha)](https://bilakniha.cvut.cz/){:target=\"_blank\" rel=\"noopener\"} -->
 
-Požadavky
+Requirements
 ======
 
-- Zápočet: Udělen za splněnou docházku a úspěšné vyřešení zápočtového testu.
-  - Detaily doplněny na cvičení.
-  - Cílem je samostatně vypracovat řešení zvolené úlohy lineárního programování dle zadaných pokynů. Lze odevzdat zdrojový kód se stručným popisem v PDF dokumentu **nebo** Jupyter notebook kombinující popis úlohy i samotný kód.
-  - <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
-  - Deadline odevzdání je **15.5.2026**.
-- Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
-  - Zkouška je realizována písemnou formou -- skládá se ze **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
-  - Zkoušku lze skládat pouze se získaným zápočtem. 
-  - Přihlásit se na zkoušku můžete i bez zápočtu v systému KOS, před skládáním zkoušky je však nutné formálně odevzdat zápočtový program, tj. zaslat přednášejícímu svou práci alespoň 1 den před termínem zkoušky + absolvovat krátkou konzultaci k programu (konzultace lze individuálně domluvit i na den zkouškového termínu).
-  - Na termíny zkoušek se přihlašujte v systému KOS.
-  - Zkoušku bude možné v omezené kapacitě skládat i během LS / v letním zkouškovém období (pro tuto variantu kontaktujte přednášejícího).
-  - <a class="btn lp-btn" href="{{ '/files/otazky.pdf' | relative_url }}" download>Seznam otázek ke zkoušce</a>
+- **Credit:** Awarded for active participation in tutorials and successful completion of assigned mini-projects during the semester.
+  - Students work in groups and submit short, self-contained implementations with a brief write-up (PDF or notebook).
+- **Exam:** The final grade is composed of two equally weighted parts.
+  - **50%** — continuous assessment from mini-projects completed during the semester.
+  - **50%** — an individual final presentation on a topic related to the course content (followed by a short discussion).
 
-Osnova přednášek
+Tutorials
 ======
 
-<p style="color: red; text-align: justify;">V průběhu semestru budou postupně doplňovány studijní texty a otázky k jednotlivým přednáškám. Texty nicméně vznikají průběžně a mohou se v nich tak přirozeně objevovat překlepy, chyby, atd. Budu moc rád, když mi jakékoliv takové nedostatky ohlásíte! 🙂
-<br>
-<br>
-Dále platí, že  již některé nahrané texty a otázky bude možná někdy potřeba modifikovat — v případě zásadních změn vás o tom samozřejmě včas informuji.
-<br>
-- 16.12.2025: úprava důkazu první implikace ve větě 3.2
+<p style="color: red; text-align: justify;">
+Materials and task sheets will be added gradually during the semester. Draft materials may contain typos or small issues — if you notice anything, please report it. 🙂
+<br><br>
+The schedule below may be adjusted if needed; any major changes will be announced in advance.
 </p>
 
 <style>
@@ -53,58 +45,23 @@ html[data-theme="dark"] .lp-date .label { color: #ffffff; }
 .lp-date .date + .btn { margin-left: 0.25rem; }
 .lp-date .btn + .btn { margin-left: 0.25rem; }
 .lp-date .btn,
-.lp-date .btn-questions,
 .btn.lp-btn { background-color: #9b9b9b; border-color: #9b9b9b; color: #111; }
 .lp-date .btn:hover,
 .lp-date .btn:focus,
-.lp-date .btn-questions:hover,
-.lp-date .btn-questions:focus,
 .btn.lp-btn:hover,
 .btn.lp-btn:focus { background-color: #8c8c8c; border-color: #8c8c8c; color: #111; }
 html[data-theme="dark"] .lp-date .btn,
-html[data-theme="dark"] .lp-date .btn-questions,
-html[data-theme="dark"] .btn.lp-btn {
-  color: #181818;
-}
+html[data-theme="dark"] .btn.lp-btn { color: #181818; }
 </style>
 
-1. Formulace úlohy lineárního programování, převody omezení, příklady úloh.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">23/09/2025</span> <a class="btn" href="{{ '/files/pr01.pdf' | relative_url }}" download>Studijní text k přednášce 1 (PDF)</a> </div>
-2. Vlastnosti úloh lineárního programování, množina přípustných a optimálních řešení a jejich vlastnosti, geometrie úloh LP.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">30/09/2025</span> <a class="btn" href="{{ '/files/pr02.pdf' | relative_url }}" download>Studijní text k přednášce 2 (PDF)</a> </div>
-3. Základní věta LP, grafické řešení úloh LP.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">07/10/2025</span> <a class="btn" href="{{ '/files/pr03.pdf' | relative_url }}" download>Studijní text k přednášce 3 (PDF)</a></div>
-4. Simplexový algoritmus — jednofázová metoda, neomezenost úlohy, více optimálních řešení.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">14/10/2025</span> <a class="btn" href="{{ '/files/pr04.pdf' | relative_url }}" download>Studijní text k přednášce 4 (PDF)</a></div>
-5. Simplexový algoritmus — dvoufázová metoda (technika pomocné báze), M‑úloha.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">21/10/2025</span> <a class="btn" href="{{ '/files/pr05.pdf' | relative_url }}" download>Studijní text k přednášce 5 (PDF)</a></div>
-6. Vlastnosti simplexové metody — degenerace, cyklení, časová náročnost algoritmu.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">04/11/2025</span> <a class="btn" href="{{ '/files/pr06.pdf' | relative_url }}" download>Studijní text k přednášce 6 (PDF)</a></div>
-7. Dualita úloh lineárního programování — formulace duální úlohy, věty o dualitě.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">11/11/2025</span> <a class="btn" href="{{ '/files/pr07.pdf' | relative_url }}" download>Studijní text k přednášce 7 (PDF)</a></div>
-8. Algoritmus duálně‑simplexové metody.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">18/11/2025</span> <a class="btn" href="{{ '/files/pr08.pdf' | relative_url }}" download>Studijní text k přednášce 8 (PDF)</a></div>
-9. Dopravní problém — metoda MODI.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">25/11/2025</span> <a class="btn" href="{{ '/files/pr09.pdf' | relative_url }}" download>Studijní text k přednášce 9 (PDF)</a></div>
-10. Aplikace v teorii her — maticové hry s nulovým součtem, smíšené strategie, min‑max teorém.
-    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">02/12/2025</span> <a class="btn" href="{{ '/files/pr10.pdf' | relative_url }}" download>Studijní text k přednášce 10 (PDF)</a></div>
-11. Algoritmy celočíselného programování — typické úlohy LIP, metoda větví a mezí.
-    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">09/12/2025</span> <a class="btn" href="{{ '/files/pr11.pdf' | relative_url }}" download>Studijní text k přednášce 11 a 12 (PDF)</a></div>
-12. Algoritmy celočíselného programování — Gomoryho řezy.
-    <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">16/12/2025</span><a class="btn" href="{{ '/files/pr11.pdf' | relative_url }}" download>Studijní text k přednášce 11 a 12 (PDF)</a></div>
+1. **Tutorial 1 — Algorithms in practice: specification, correctness, and complexity.**
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">16/02/2026</span>
+     <!-- Add links once you upload them -->
+     <!-- <a class="btn" href="{{ '/files/yzalg/tut01.pdf' | relative_url }}" download>Tutorial sheet (PDF)</a> -->
+     <!-- <a class="btn" href="{{ '/files/yzalg/tut01.zip' | relative_url }}" download>Starter code (ZIP)</a> -->
+   </div>
 
-Osnova cvičení
-======
-
-1. Řešení úloh LP na počítači — softwarové nástroje a jejich použití.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">03/10/2025</span> <a class="btn" href="{{ '/files/cv1.zip' | relative_url }}" download>Úlohy ke cvičení 1</a> <a class="btn" href="{{ '/files/cv1-text.pdf' | relative_url }}" download>Text k úlohám</a></div>
-2. Úloha lineárního programování, podmínka optimality a neomezenost.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">17/10/2025</span> <a class="btn" href="{{ '/files/cv2.zip' | relative_url }}" download>Úlohy ke cvičení 2</a></div>
-3. Simplexová metoda — základní kroky algoritmu, různé situace při řešení; dvoufázová simplexová metoda (technika pomocné báze, M‑úloha); duální simplexová metoda.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">31/10/2025</span></div>
-4. Příklad z teorie her — hledání smíšených strategií.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">14/11/2025</span> <a class="btn" href="{{ '/files/cv04.zip' | relative_url }}" download>Text a úloha ke cvičení</a></div>
-5. Gomoryho algoritmus a další algoritmy LIP (metoda větví a mezí).
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">28/11/2025</span> <a class="btn" href="{{ '/files/cv05.zip' | relative_url }}" download>Úlohy ke cvičení 5</a></div>
-6. Kvadratické programování.
-   <div class="lp-date"><span class="label">Předpokládané datum:</span> <span class="date past">12/12/2025</span></div>
+<!-- Future tutorials will be added later -->
+<!-- Note: no tutorial on 06/04/2026 (Easter Monday). -->
