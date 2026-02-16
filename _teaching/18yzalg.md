@@ -1,13 +1,13 @@
 ---
-title: "18YZALG — Basics of Algorithmization"
-local_title: "18YZALG — Základy algoritmizace"
+title: "18YZALG — Basics of Algorithmization (Exercises)"
+local_title: "18YZALG —  Basics of Algorithmization (Exercises)"
 collection: teaching
 type: "Tutorials"
 local_type: "Academic year 2025/26, 2+2, credit + exam"
 header_lines:
   - "Academic year 2025/26, 2+2, credit + exam; 4 credits"
   - "Tutorials: Mondays (room T-124)"
-summary: "Introduction to algorithmic thinking and basics of algorithmization (Exercises)."
+summary: "Introduction to algorithmic thinking and basics of algorithmization."
 permalink: /teaching/18yzalg
 date: 2026-02-01
 lang: en
