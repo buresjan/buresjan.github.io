@@ -91,7 +91,6 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
    </div>
 
 6. **Tutorial 6 — Part III: sorting algorithms.**
-   *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">23/03/2026</span>
@@ -99,6 +98,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
    </div>
 
 7. **Tutorial 7 — Part III: sorting algorithms (continued).**
+   *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">30/03/2026</span>
