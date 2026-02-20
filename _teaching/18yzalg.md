@@ -55,11 +55,95 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
 1. **Tutorial 1 — Algorithms in practice: specification, correctness, and complexity.**
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">16/02/2026</span>
+     <span class="date past">16/02/2026</span>
      <!-- Add links once you upload them -->
      <a class="btn" href="{{ '/files/yzalg/ex01.pdf' | relative_url }}" download>Presentation (PDF)</a>
+     <a class="btn" href="{{ '/files/yzalg/ex01-miniprojects.pdf' | relative_url }}" download>Mini-project descriptions (PDF)</a>
      <!-- <a class="btn" href="{{ '/files/yzalg/tut01.zip' | relative_url }}" download>Starter code (ZIP)</a> -->
    </div>
 
-<!-- Future tutorials will be added later -->
-<!-- Note: no tutorial on 06/04/2026 (Easter Monday). -->
+2. **Tutorial 2 — Part I: specification, correctness, and complexity (continued).**
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">23/02/2026</span>
+     <!-- <a class="btn" href="{{ '/files/yzalg/ex02.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+   </div>
+
+3. **Tutorial 3 — Part II: core data structures.**
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">02/03/2026</span>
+     <!-- <a class="btn" href="{{ '/files/yzalg/ex03.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+   </div>
+
+4. **Tutorial 4 — Part II: core data structures (continued).**
+   *Student presentations week: part of the tutorial is devoted to assignment presentations.*
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">09/03/2026</span>
+     <!-- <a class="btn" href="{{ '/files/yzalg/ex04.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+   </div>
+
+5. **Tutorial 5 — No tutorial (no lecture week).**
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">16/03/2026</span>
+   </div>
+
+6. **Tutorial 6 — Part III: sorting algorithms.**
+   *Student presentations week: part of the tutorial is devoted to assignment presentations.*
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">23/03/2026</span>
+     <!-- <a class="btn" href="{{ '/files/yzalg/ex06.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+   </div>
+
+7. **Tutorial 7 — Part III: sorting algorithms (continued).**
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">30/03/2026</span>
+     <!-- <a class="btn" href="{{ '/files/yzalg/ex07.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+   </div>
+
+8. **Tutorial 8 — Easter Monday (no tutorial).**
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">06/04/2026</span>
+   </div>
+
+9. **Tutorial 9 — Part IV: introduction to graphs and shortest paths.**
+   <div class="lp-date">
+     <span class="label">Planned date:</span>
+     <span class="date">13/04/2026</span>
+     <!-- <a class="btn" href="{{ '/files/yzalg/ex09.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+   </div>
+
+10. **Tutorial 10 — Part IV: introduction to graphs and shortest paths (continued).**
+    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
+    <div class="lp-date">
+      <span class="label">Planned date:</span>
+      <span class="date">20/04/2026</span>
+      <!-- <a class="btn" href="{{ '/files/yzalg/ex10.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+    </div>
+
+11. **Tutorial 11 — Part V: recursion.**
+    <div class="lp-date">
+      <span class="label">Planned date:</span>
+      <span class="date">27/04/2026</span>
+      <!-- <a class="btn" href="{{ '/files/yzalg/ex11.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+    </div>
+
+12. **Tutorial 12 — Part VI: scientific algorithmization.**
+    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
+    <div class="lp-date">
+      <span class="label">Planned date:</span>
+      <span class="date">04/05/2026</span>
+      <!-- <a class="btn" href="{{ '/files/yzalg/ex12.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+    </div>
+
+13. **Tutorial 13 — Part VI: scientific algorithmization (continued).**
+    <div class="lp-date">
+      <span class="label">Planned date:</span>
+      <span class="date">11/05/2026</span>
+      <!-- <a class="btn" href="{{ '/files/yzalg/ex13.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+    </div>
