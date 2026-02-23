@@ -65,8 +65,8 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
 2. **Tutorial 2 — Part I: specification, correctness, and complexity (continued).**
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">23/02/2026</span>
-     <a class="btn" href="{{ '/files/yzalg/ex02.pdf' | relative_url }}" download>Presentation (PDF)</a> -->
+     <span class="date past">23/02/2026</span>
+     <a class="btn" href="{{ '/files/yzalg/ex02.pdf' | relative_url }}" download>Presentation (PDF)</a>
    </div>
 
 3. **Tutorial 3 — Part II: core data structures.**
