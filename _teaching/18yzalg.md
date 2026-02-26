@@ -84,20 +84,20 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
      <!-- <a class="btn" href="{{ '/files/yzalg/ex04.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
    </div>
 
-5. **Tutorial 5 — No tutorial (no lecture week).**
+5. **No tutorial (no lecture week).**
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">16/03/2026</span>
    </div>
 
-6. **Tutorial 6 — Part III: sorting algorithms.**
+6. **Tutorial 5 — Part III: sorting algorithms.**
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">23/03/2026</span>
      <!-- <a class="btn" href="{{ '/files/yzalg/ex06.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
    </div>
 
-7. **Tutorial 7 — Part III: sorting algorithms (continued).**
+7. **Tutorial 6 — Part III: sorting algorithms (continued).**
    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
      <span class="label">Planned date:</span>
@@ -105,20 +105,20 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
      <!-- <a class="btn" href="{{ '/files/yzalg/ex07.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
    </div>
 
-8. **Tutorial 8 — Easter Monday (no tutorial).**
+8. **No tutorial (Easter Monday).**
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">06/04/2026</span>
    </div>
 
-9. **Tutorial 9 — Part IV: introduction to graphs and shortest paths.**
+9. **Tutorial 7 — Part IV: introduction to graphs and shortest paths.**
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">13/04/2026</span>
      <!-- <a class="btn" href="{{ '/files/yzalg/ex09.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
    </div>
 
-10. **Tutorial 10 — Part IV: introduction to graphs and shortest paths (continued).**
+10. **Tutorial 8 — Part IV: introduction to graphs and shortest paths (continued).**
     *Student presentations week: part of the tutorial is devoted to assignment presentations.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
@@ -126,14 +126,14 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
       <!-- <a class="btn" href="{{ '/files/yzalg/ex10.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
     </div>
 
-11. **Tutorial 11 — Part V: recursion.**
+11. **Tutorial 9 — Part V: recursion.**
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date">27/04/2026</span>
       <!-- <a class="btn" href="{{ '/files/yzalg/ex11.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
     </div>
 
-12. **Tutorial 12 — Part VI: scientific algorithmization.**
+12. **Tutorial 10 — Part VI: scientific algorithmization.**
     *Student presentations week: part of the tutorial is devoted to assignment presentations.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
@@ -141,7 +141,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
       <!-- <a class="btn" href="{{ '/files/yzalg/ex12.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
     </div>
 
-13. **Tutorial 13 — Part VI: scientific algorithmization (continued).**
+13. **Tutorial 11 — Part VI: scientific algorithmization (continued).**
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date">11/05/2026</span>
