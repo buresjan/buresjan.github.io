@@ -74,6 +74,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
      <span class="label">Planned date:</span>
      <span class="date">02/03/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex03.pdf' | relative_url }}" download>Presentation (PDF)</a>
+    <a class="btn" href="{{ '/files/yzalg/ex03_04-miniprojects.pdf' | relative_url }}" download>Mini-project descriptions (PDF)</a>
    </div>
 
 4. **Tutorial 4 — Part II: core data structures (continued).**
