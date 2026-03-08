@@ -29,34 +29,21 @@ Plánovaný harmonogram cvičení
 POZOR, harmonogram se může v průběhu semestru změnit.
 </p>
 
-| Datum | Program |
-| --- | --- |
-| 16.02. | 1. cvičení |
-| 19.02. | 2. cvičení |
-| 23.02. | CVIČENÍ NENÍ |
-| 26.02. | 3. cvičení |
-| 02.03. | 4. cvičení |
-| 05.03. | 5. cvičení |
-| 09.03. | 6. cvičení |
-| 12.03. | 7. cvičení |
-| 16.03. | 8. cvičení |
-| 19.03. | 9. cvičení |
-| 23.03. | 10. cvičení |
-| 26.03. | 11. cvičení |
-| 30.03. | 12. cvičení |
-| 02.04. | 13. cvičení |
-| 06.04. | CVIČENÍ NENÍ |
-| 09.04. | 14. cvičení |
-| 13.04. | 15. cvičení |
-| 16.04. | 16. cvičení |
-| 20.04. | 17. cvičení |
-| 23.04. | 18. cvičení |
-| 27.04. | 19. cvičení |
-| 30.04. | 20. cvičení |
-| 04.05. | CVIČENÍ NENÍ |
-| 07.05. | CVIČENÍ NENÍ |
-| 11.05. | CVIČENÍ NENÍ |
-| 14.05. | CVIČENÍ NENÍ |
+| Datum | Pořadí | Datum | Pořadí |
+| --- | --- | --- | --- |
+| 16.02. | 1. | 19.02. | 2. |
+| 23.02. | není | 26.02. | 3. |
+| 02.03. | 4. | 05.03. | 5. |
+| 09.03. | 6. | 12.03. | 7. |
+| 16.03. | 8. | 19.03. | 9. |
+| 23.03. | 10. | 26.03. | 11. |
+| 30.03. | 12. | 02.04. | 13. |
+| 06.04. | není | 09.04. | 14. |
+| 13.04. | 15. | 16.04. | 16. |
+| 20.04. | 17. | 23.04. | 18. |
+| 27.04. | 19. | 30.04. | 20. |
+| 04.05. | není | 07.05. | není |
+| 11.05. | není | 14.05. | není |
 
 Přehled cvičení
 ======
@@ -64,159 +51,159 @@ Přehled cvičení
 ### 1. cvičení (16.02.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 2. cvičení (19.02.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 3. cvičení (26.02.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 4. cvičení (02.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 5. cvičení (05.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 6. cvičení (09.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 7. cvičení (12.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 8. cvičení (16.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 9. cvičení (19.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 10. cvičení (23.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 11. cvičení (26.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 12. cvičení (30.03.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 13. cvičení (02.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 14. cvičení (09.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 15. cvičení (13.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 16. cvičení (16.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 17. cvičení (20.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 18. cvičení (23.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 19. cvičení (27.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
 
 ### 20. cvičení (30.04.)
 
 **Obsah cvičení:**  
-_Doplním._
+Bude doplněno.._
 
 **Doporučené příklady ze sbírky:**  
-_Doplním._
+Bude doplněno.._
