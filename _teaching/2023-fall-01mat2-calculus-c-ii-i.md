@@ -5,6 +5,7 @@ collection: teaching
 type: "Exercises"
 local_type: "Akademický rok 2025/26, cvičení"
 header_lines:
+- Cvičení k předmětu 01MAT2.
 summary: "Stránka ke cvičením z předmětu Matematika 2 v akademickém roce 2025/26."
 permalink: /teaching/2023-01mat2-calculus-c-ii-i
 date: 2026-03-08
