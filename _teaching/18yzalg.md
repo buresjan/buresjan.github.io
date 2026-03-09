@@ -77,6 +77,23 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
     <a class="btn" href="{{ '/files/yzalg/ex03_04-miniprojects.pdf' | relative_url }}" download>Mini-project descriptions (PDF)</a>
    </div>
 
+   <table>
+     <tr>
+       <th>Project 1</th>
+       <th>Project 2</th>
+       <th>Project 3</th>
+       <th>Project 4</th>
+       <th>Project 5</th>
+     </tr>
+     <tr>
+       <td><span style="color: #dc2626; font-weight: 700;">Taken</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #dc2626; font-weight: 700;">Taken</span></td>
+       <td><span style="color: #dc2626; font-weight: 700;">Taken</span></td>
+     </tr>
+   </table>
+
 4. **Tutorial 4 — Part II: core data structures (continued).**
    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
