@@ -72,7 +72,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
 3. **Tutorial 3 — Part II: core data structures.**
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">02/03/2026</span>
+     <span class="date past">02/03/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex03.pdf' | relative_url }}" download>Presentation (PDF)</a>
     <a class="btn" href="{{ '/files/yzalg/ex03_04-miniprojects.pdf' | relative_url }}" download>Mini-project descriptions (PDF)</a>
    </div>
@@ -98,7 +98,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">09/03/2026</span>
+     <span class="date past">09/03/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex04.pdf' | relative_url }}" download>Presentation (PDF)</a>
    </div>
 
