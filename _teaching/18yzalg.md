@@ -121,7 +121,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
      <span class="label">Planned date:</span>
      <span class="date">30/03/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex06.pdf' | relative_url }}" download>Presentation (PDF)</a>
-     <a class="btn" href="{{ '/files/yzalg/ex05_06-miniprojects.pdf' | relative_url }}" download>Mini-project #2 descriptions (PDF)</a>
+     <a class="btn" href="{{ '/files/yzalg/ex05_06-miniprojects.pdf' | relative_url }}" download>Mini-projects #2 descriptions (PDF)</a>
    </div>
    
    Mini-Projects #2
