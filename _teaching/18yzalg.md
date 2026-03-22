@@ -74,9 +74,10 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
      <span class="label">Planned date:</span>
      <span class="date past">02/03/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex03.pdf' | relative_url }}" download>Presentation (PDF)</a>
-    <a class="btn" href="{{ '/files/yzalg/ex03_04-miniprojects.pdf' | relative_url }}" download>Mini-project descriptions (PDF)</a>
+    <a class="btn" href="{{ '/files/yzalg/ex03_04-miniprojects.pdf' | relative_url }}" download>Mini-projects #1 descriptions (PDF)</a>
    </div>
 
+   Mini-Projects #1
    <table>
      <tr>
        <th>Project 1</th>
@@ -105,23 +106,41 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
 5. **No tutorial (no lecture week).**
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">16/03/2026</span>
+     <span class="date past">16/03/2026</span>
    </div>
 
 6. **Tutorial 5 — Part III: sorting algorithms.**
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">23/03/2026</span>
-     <!-- <a class="btn" href="{{ '/files/yzalg/ex06.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+     <span class="date past">23/03/2026</span>
+     <a class="btn" href="{{ '/files/yzalg/ex05.pdf' | relative_url }}" download>Presentation (PDF)</a>
    </div>
 
 7. **Tutorial 6 — Part III: sorting algorithms (continued).**
-   *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">30/03/2026</span>
-     <!-- <a class="btn" href="{{ '/files/yzalg/ex07.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+     <a class="btn" href="{{ '/files/yzalg/ex06.pdf' | relative_url }}" download>Task sheet (PDF)</a>
+     <a class="btn" href="{{ '/files/yzalg/ex05_06-miniprojects.pdf' | relative_url }}" download>Mini-project #2 descriptions (PDF)</a>
    </div>
+   
+   Mini-Projects #2
+   <table>
+     <tr>
+       <th>Project 1</th>
+       <th>Project 2</th>
+       <th>Project 3</th>
+       <th>Project 4</th>
+       <th>Project 5</th>
+     </tr>
+     <tr>
+       <td><span style="color: #dc2626; font-weight: 700;">Available</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #dc2626; font-weight: 700;">Available</span></td>
+       <td><span style="color: #dc2626; font-weight: 700;">Available</span></td>
+     </tr>
+   </table>
 
 8. **No tutorial (Easter Monday).**
    <div class="lp-date">
@@ -130,6 +149,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
    </div>
 
 9. **Tutorial 7 — Part IV: introduction to graphs and shortest paths.**
+   *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
      <span class="label">Planned date:</span>
      <span class="date">13/04/2026</span>
@@ -137,7 +157,6 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
    </div>
 
 10. **Tutorial 8 — Part IV: introduction to graphs and shortest paths (continued).**
-    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date">20/04/2026</span>
@@ -145,6 +164,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
     </div>
 
 11. **Tutorial 9 — Part V: recursion.**
+    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date">27/04/2026</span>
@@ -152,7 +172,6 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
     </div>
 
 12. **Tutorial 10 — Part VI: scientific algorithmization.**
-    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date">04/05/2026</span>
@@ -160,6 +179,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
     </div>
 
 13. **Tutorial 11 — Part VI: scientific algorithmization (continued).**
+    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date">11/05/2026</span>
