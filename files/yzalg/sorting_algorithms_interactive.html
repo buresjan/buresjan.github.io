@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sorting animations on the same small data</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --ink: #162232;
+  --muted: #5a6778;
+  --line: #cdd8e5;
+  --default: #045073;
+  --compare: #e39b22;
+  --swap: #d64f4f;
+  --special: #377069;
+  --sorted: #399175;
+  --range: #e7f0f8;
+  --aux: #eff4f8;
+  --gap: #ffffff;
+  --gapline: #b4becc;
+  --floating: #fff6d6;
+  --shadow: 0 8px 24px rgba(13, 38, 89, 0.06);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 16px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 20px 32px;
+}
+header {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+}
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.6rem, 2vw + 1rem, 2.4rem);
+}
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.dataset {
+  font-weight: 700;
+  background: #eef4fa;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: inline-block;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+.global-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+  margin-top: 10px;
+}
+button {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover { background: #f3f7fb; }
+button.primary {
+  background: #0d2659;
+  color: white;
+  border-color: #0d2659;
+}
+button.primary:hover { filter: brightness(1.03); }
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: center;
+  color: var(--muted);
+  margin-top: 12px;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.swatch {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 18px 18px 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.card-head h2 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+.step-label {
+  color: var(--muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  background: #fbfdff;
+  border: 1px solid #e3edf6;
+}
+.message {
+  min-height: 3.1em;
+  color: var(--ink);
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.controls button {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+.speed-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+}
+input[type="range"] {
+  width: 180px;
+}
+.note {
+  color: var(--muted);
+  margin-top: 16px;
+}
+code {
+  background: #eef4fa;
+  padding: 0.1em 0.35em;
+  border-radius: 6px;
+}
+@media (max-width: 760px) {
+  .controls { gap: 8px; }
+  button { padding: 9px 12px; }
+  .card-head { align-items: flex-start; flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Sorting animations on the same small data</h1>
+    <div class="subtitle">Six standalone, playable animations using the exact same input so you can compare how each algorithm moves values around.</div>
+    <div class="dataset">Input data: [7, 3, 5, 1, 8, 2, 6, 4]</div>
+    <div class="global-controls">
+      <button class="primary" id="playAll">Play all</button>
+      <button id="pauseAll">Pause all</button>
+      <button id="resetAll">Reset all</button>
+      <label class="speed-wrap">Speed
+        <input id="speed" type="range" min="1" max="6" value="3">
+        <span id="speedLabel">3×</span>
+      </label>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="swatch" style="background: var(--default)"></span>unsolved</span>
+      <span class="legend-item"><span class="swatch" style="background: var(--compare)"></span>compare</span>
+      <span class="legend-item"><span class="swatch" style="background: var(--swap)"></span>write / swap</span>
+      <span class="legend-item"><span class="swatch" style="background: var(--special)"></span>pivot / min / key</span>
+      <span class="legend-item"><span class="swatch" style="background: var(--sorted)"></span>sorted</span>
+    </div>
+  </header>
+
+  <section class="grid" id="grid"></section>
+</div>
+
+<script>
+const DATA = {"Quick Sort":{"frames":[{"array":[7,3,5,1,8,2,6,4],"message":"Start Quick Sort on [7, 3, 5, 1, 8, 2, 6, 4].","compare":[],"swap":[],"special":[],"sorted":[],"range":[],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Partition range [0..7] using pivot 4 at index 7.","compare":[],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare A[0]=7 with pivot 4.","compare":[0],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare A[1]=3 with pivot 4.","compare":[1],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Swap A[0] and A[1] so smaller values stay left of the pivot.","compare":[],"swap":[0,1],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Compare A[2]=5 with pivot 4.","compare":[2],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Compare A[3]=1 with pivot 4.","compare":[3],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,1,5,7,8,2,6,4],"message":"Swap A[1] and A[3] so smaller values stay left of the pivot.","compare":[],"swap":[1,3],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,1,5,7,8,2,6,4],"message":"Compare A[4]=8 with pivot 4.","compare":[4],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,1,5,7,8,2,6,4],"message":"Compare A[5]=2 with pivot 4.","compare":[5],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,1,2,7,8,5,6,4],"message":"Swap A[2] and A[5] so smaller values stay left of the pivot.","compare":[],"swap":[2,5],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,1,2,7,8,5,6,4],"message":"Compare A[6]=6 with pivot 4.","compare":[6],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,1,2,4,8,5,6,7],"message":"Place pivot 4 into its final position 3.","compare":[],"swap":[3,7],"special":[],"sorted":[3],"range":[0,7],"floating":null,"aux":[]},{"array":[3,1,2,4,8,5,6,7],"message":"Partition range [0..2] using pivot 2 at index 2.","compare":[],"swap":[],"special":[2],"sorted":[3],"range":[0,2],"floating":null,"aux":[]},{"array":[3,1,2,4,8,5,6,7],"message":"Compare A[0]=3 with pivot 2.","compare":[0],"swap":[],"special":[2],"sorted":[3],"range":[0,2],"floating":null,"aux":[]},{"array":[3,1,2,4,8,5,6,7],"message":"Compare A[1]=1 with pivot 2.","compare":[1],"swap":[],"special":[2],"sorted":[3],"range":[0,2],"floating":null,"aux":[]},{"array":[1,3,2,4,8,5,6,7],"message":"Swap A[0] and A[1] so smaller values stay left of the pivot.","compare":[],"swap":[0,1],"special":[2],"sorted":[3],"range":[0,2],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Place pivot 2 into its final position 1.","compare":[],"swap":[1,2],"special":[],"sorted":[1,3],"range":[0,2],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Single element at index 0 is already in final position.","compare":[],"swap":[],"special":[0],"sorted":[0,1,3],"range":[0,0],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Single element at index 2 is already in final position.","compare":[],"swap":[],"special":[2],"sorted":[0,1,2,3],"range":[2,2],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Partition range [4..7] using pivot 7 at index 7.","compare":[],"swap":[],"special":[7],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Compare A[4]=8 with pivot 7.","compare":[4],"swap":[],"special":[7],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Compare A[5]=5 with pivot 7.","compare":[5],"swap":[],"special":[7],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"Swap A[4] and A[5] so smaller values stay left of the pivot.","compare":[],"swap":[4,5],"special":[7],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"Compare A[6]=6 with pivot 7.","compare":[6],"swap":[],"special":[7],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,8,7],"message":"Swap A[5] and A[6] so smaller values stay left of the pivot.","compare":[],"swap":[5,6],"special":[7],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Place pivot 7 into its final position 6.","compare":[],"swap":[6,7],"special":[],"sorted":[0,1,2,3,6],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Partition range [4..5] using pivot 6 at index 5.","compare":[],"swap":[],"special":[5],"sorted":[0,1,2,3,6],"range":[4,5],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Compare A[4]=5 with pivot 6.","compare":[4],"swap":[],"special":[5],"sorted":[0,1,2,3,6],"range":[4,5],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"A[4] already belongs on the left side of the pivot.","compare":[],"swap":[4],"special":[5],"sorted":[0,1,2,3,6],"range":[4,5],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Place pivot 6 into its final position 5.","compare":[],"swap":[5,5],"special":[],"sorted":[0,1,2,3,5,6],"range":[4,5],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Single element at index 4 is already in final position.","compare":[],"swap":[],"special":[4],"sorted":[0,1,2,3,4,5,6],"range":[4,4],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Single element at index 7 is already in final position.","compare":[],"swap":[],"special":[7],"sorted":[0,1,2,3,4,5,6,7],"range":[7,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Array is fully sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]}],"stats":{"comparisons":13,"writes":10},"complexity":"Avg O(n log n), worst O(n\u00b2)"},"Merge Sort":{"frames":[{"array":[7,3,5,1,8,2,6,4],"message":"Start Merge Sort on [7, 3, 5, 1, 8, 2, 6, 4].","compare":[],"swap":[],"special":[],"sorted":[],"range":[],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Split range [0..7] into [0..3] and [4..7].","compare":[],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Split range [0..3] into [0..1] and [2..3].","compare":[],"swap":[],"special":[1],"sorted":[],"range":[0,3],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Split range [0..1] into [0..0] and [1..1].","compare":[],"swap":[],"special":[0],"sorted":[],"range":[0,1],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Single element at index 0 is already sorted.","compare":[],"swap":[],"special":[0],"sorted":[],"range":[0,0],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Single element at index 1 is already sorted.","compare":[],"swap":[],"special":[1],"sorted":[],"range":[1,1],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Merge sorted halves [0..0] and [1..1].","compare":[],"swap":[0],"special":[],"sorted":[],"range":[0,1],"floating":null,"aux":[{"label":"L","values":[7],"pointer":0},{"label":"R","values":[3],"pointer":0}]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare left value 7 and right value 3.","compare":[0],"swap":[],"special":[],"sorted":[],"range":[0,1],"floating":null,"aux":[{"label":"L","values":[7],"pointer":0},{"label":"R","values":[3],"pointer":0}]},{"array":[3,3,5,1,8,2,6,4],"message":"Write 3 into position 0.","compare":[],"swap":[0],"special":[],"sorted":[],"range":[0,1],"floating":null,"aux":[{"label":"L","values":[7],"pointer":0},{"label":"R","values":[3],"pointer":0}]},{"array":[3,7,5,1,8,2,6,4],"message":"Copy remaining left value 7 into position 1.","compare":[],"swap":[1],"special":[],"sorted":[],"range":[0,1],"floating":null,"aux":[{"label":"L","values":[7],"pointer":0},{"label":"R","values":[3],"pointer":1}]},{"array":[3,7,5,1,8,2,6,4],"message":"Finished merge of range [0..1].","compare":[],"swap":[],"special":[],"sorted":[],"range":[0,1],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Split range [2..3] into [2..2] and [3..3].","compare":[],"swap":[],"special":[2],"sorted":[],"range":[2,3],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Single element at index 2 is already sorted.","compare":[],"swap":[],"special":[2],"sorted":[],"range":[2,2],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Single element at index 3 is already sorted.","compare":[],"swap":[],"special":[3],"sorted":[],"range":[3,3],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Merge sorted halves [2..2] and [3..3].","compare":[],"swap":[2],"special":[],"sorted":[],"range":[2,3],"floating":null,"aux":[{"label":"L","values":[5],"pointer":0},{"label":"R","values":[1],"pointer":0}]},{"array":[3,7,5,1,8,2,6,4],"message":"Compare left value 5 and right value 1.","compare":[2],"swap":[],"special":[],"sorted":[],"range":[2,3],"floating":null,"aux":[{"label":"L","values":[5],"pointer":0},{"label":"R","values":[1],"pointer":0}]},{"array":[3,7,1,1,8,2,6,4],"message":"Write 1 into position 2.","compare":[],"swap":[2],"special":[],"sorted":[],"range":[2,3],"floating":null,"aux":[{"label":"L","values":[5],"pointer":0},{"label":"R","values":[1],"pointer":0}]},{"array":[3,7,1,5,8,2,6,4],"message":"Copy remaining left value 5 into position 3.","compare":[],"swap":[3],"special":[],"sorted":[],"range":[2,3],"floating":null,"aux":[{"label":"L","values":[5],"pointer":0},{"label":"R","values":[1],"pointer":1}]},{"array":[3,7,1,5,8,2,6,4],"message":"Finished merge of range [2..3].","compare":[],"swap":[],"special":[],"sorted":[],"range":[2,3],"floating":null,"aux":[]},{"array":[3,7,1,5,8,2,6,4],"message":"Merge sorted halves [0..1] and [2..3].","compare":[],"swap":[0],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":0},{"label":"R","values":[1,5],"pointer":0}]},{"array":[3,7,1,5,8,2,6,4],"message":"Compare left value 3 and right value 1.","compare":[0],"swap":[],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":0},{"label":"R","values":[1,5],"pointer":0}]},{"array":[1,7,1,5,8,2,6,4],"message":"Write 1 into position 0.","compare":[],"swap":[0],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":0},{"label":"R","values":[1,5],"pointer":0}]},{"array":[1,7,1,5,8,2,6,4],"message":"Compare left value 3 and right value 5.","compare":[1],"swap":[],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":0},{"label":"R","values":[1,5],"pointer":1}]},{"array":[1,3,1,5,8,2,6,4],"message":"Write 3 into position 1.","compare":[],"swap":[1],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":0},{"label":"R","values":[1,5],"pointer":1}]},{"array":[1,3,1,5,8,2,6,4],"message":"Compare left value 7 and right value 5.","compare":[2],"swap":[],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":1},{"label":"R","values":[1,5],"pointer":1}]},{"array":[1,3,5,5,8,2,6,4],"message":"Write 5 into position 2.","compare":[],"swap":[2],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":1},{"label":"R","values":[1,5],"pointer":1}]},{"array":[1,3,5,7,8,2,6,4],"message":"Copy remaining left value 7 into position 3.","compare":[],"swap":[3],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[{"label":"L","values":[3,7],"pointer":1},{"label":"R","values":[1,5],"pointer":2}]},{"array":[1,3,5,7,8,2,6,4],"message":"Finished merge of range [0..3].","compare":[],"swap":[],"special":[],"sorted":[],"range":[0,3],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Split range [4..7] into [4..5] and [6..7].","compare":[],"swap":[],"special":[5],"sorted":[],"range":[4,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Split range [4..5] into [4..4] and [5..5].","compare":[],"swap":[],"special":[4],"sorted":[],"range":[4,5],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Single element at index 4 is already sorted.","compare":[],"swap":[],"special":[4],"sorted":[],"range":[4,4],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Single element at index 5 is already sorted.","compare":[],"swap":[],"special":[5],"sorted":[],"range":[5,5],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Merge sorted halves [4..4] and [5..5].","compare":[],"swap":[4],"special":[],"sorted":[],"range":[4,5],"floating":null,"aux":[{"label":"L","values":[8],"pointer":0},{"label":"R","values":[2],"pointer":0}]},{"array":[1,3,5,7,8,2,6,4],"message":"Compare left value 8 and right value 2.","compare":[4],"swap":[],"special":[],"sorted":[],"range":[4,5],"floating":null,"aux":[{"label":"L","values":[8],"pointer":0},{"label":"R","values":[2],"pointer":0}]},{"array":[1,3,5,7,2,2,6,4],"message":"Write 2 into position 4.","compare":[],"swap":[4],"special":[],"sorted":[],"range":[4,5],"floating":null,"aux":[{"label":"L","values":[8],"pointer":0},{"label":"R","values":[2],"pointer":0}]},{"array":[1,3,5,7,2,8,6,4],"message":"Copy remaining left value 8 into position 5.","compare":[],"swap":[5],"special":[],"sorted":[],"range":[4,5],"floating":null,"aux":[{"label":"L","values":[8],"pointer":0},{"label":"R","values":[2],"pointer":1}]},{"array":[1,3,5,7,2,8,6,4],"message":"Finished merge of range [4..5].","compare":[],"swap":[],"special":[],"sorted":[],"range":[4,5],"floating":null,"aux":[]},{"array":[1,3,5,7,2,8,6,4],"message":"Split range [6..7] into [6..6] and [7..7].","compare":[],"swap":[],"special":[6],"sorted":[],"range":[6,7],"floating":null,"aux":[]},{"array":[1,3,5,7,2,8,6,4],"message":"Single element at index 6 is already sorted.","compare":[],"swap":[],"special":[6],"sorted":[],"range":[6,6],"floating":null,"aux":[]},{"array":[1,3,5,7,2,8,6,4],"message":"Single element at index 7 is already sorted.","compare":[],"swap":[],"special":[7],"sorted":[],"range":[7,7],"floating":null,"aux":[]},{"array":[1,3,5,7,2,8,6,4],"message":"Merge sorted halves [6..6] and [7..7].","compare":[],"swap":[6],"special":[],"sorted":[],"range":[6,7],"floating":null,"aux":[{"label":"L","values":[6],"pointer":0},{"label":"R","values":[4],"pointer":0}]},{"array":[1,3,5,7,2,8,6,4],"message":"Compare left value 6 and right value 4.","compare":[6],"swap":[],"special":[],"sorted":[],"range":[6,7],"floating":null,"aux":[{"label":"L","values":[6],"pointer":0},{"label":"R","values":[4],"pointer":0}]},{"array":[1,3,5,7,2,8,4,4],"message":"Write 4 into position 6.","compare":[],"swap":[6],"special":[],"sorted":[],"range":[6,7],"floating":null,"aux":[{"label":"L","values":[6],"pointer":0},{"label":"R","values":[4],"pointer":0}]},{"array":[1,3,5,7,2,8,4,6],"message":"Copy remaining left value 6 into position 7.","compare":[],"swap":[7],"special":[],"sorted":[],"range":[6,7],"floating":null,"aux":[{"label":"L","values":[6],"pointer":0},{"label":"R","values":[4],"pointer":1}]},{"array":[1,3,5,7,2,8,4,6],"message":"Finished merge of range [6..7].","compare":[],"swap":[],"special":[],"sorted":[],"range":[6,7],"floating":null,"aux":[]},{"array":[1,3,5,7,2,8,4,6],"message":"Merge sorted halves [4..5] and [6..7].","compare":[],"swap":[4],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":0},{"label":"R","values":[4,6],"pointer":0}]},{"array":[1,3,5,7,2,8,4,6],"message":"Compare left value 2 and right value 4.","compare":[4],"swap":[],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":0},{"label":"R","values":[4,6],"pointer":0}]},{"array":[1,3,5,7,2,8,4,6],"message":"Write 2 into position 4.","compare":[],"swap":[4],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":0},{"label":"R","values":[4,6],"pointer":0}]},{"array":[1,3,5,7,2,8,4,6],"message":"Compare left value 8 and right value 4.","compare":[5],"swap":[],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":1},{"label":"R","values":[4,6],"pointer":0}]},{"array":[1,3,5,7,2,4,4,6],"message":"Write 4 into position 5.","compare":[],"swap":[5],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":1},{"label":"R","values":[4,6],"pointer":0}]},{"array":[1,3,5,7,2,4,4,6],"message":"Compare left value 8 and right value 6.","compare":[6],"swap":[],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":1},{"label":"R","values":[4,6],"pointer":1}]},{"array":[1,3,5,7,2,4,6,6],"message":"Write 6 into position 6.","compare":[],"swap":[6],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":1},{"label":"R","values":[4,6],"pointer":1}]},{"array":[1,3,5,7,2,4,6,8],"message":"Copy remaining left value 8 into position 7.","compare":[],"swap":[7],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[{"label":"L","values":[2,8],"pointer":1},{"label":"R","values":[4,6],"pointer":2}]},{"array":[1,3,5,7,2,4,6,8],"message":"Finished merge of range [4..7].","compare":[],"swap":[],"special":[],"sorted":[],"range":[4,7],"floating":null,"aux":[]},{"array":[1,3,5,7,2,4,6,8],"message":"Merge sorted halves [0..3] and [4..7].","compare":[],"swap":[0],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":0},{"label":"R","values":[2,4,6,8],"pointer":0}]},{"array":[1,3,5,7,2,4,6,8],"message":"Compare left value 1 and right value 2.","compare":[0],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":0},{"label":"R","values":[2,4,6,8],"pointer":0}]},{"array":[1,3,5,7,2,4,6,8],"message":"Write 1 into position 0.","compare":[],"swap":[0],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":0},{"label":"R","values":[2,4,6,8],"pointer":0}]},{"array":[1,3,5,7,2,4,6,8],"message":"Compare left value 3 and right value 2.","compare":[1],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":1},{"label":"R","values":[2,4,6,8],"pointer":0}]},{"array":[1,2,5,7,2,4,6,8],"message":"Write 2 into position 1.","compare":[],"swap":[1],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":1},{"label":"R","values":[2,4,6,8],"pointer":0}]},{"array":[1,2,5,7,2,4,6,8],"message":"Compare left value 3 and right value 4.","compare":[2],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":1},{"label":"R","values":[2,4,6,8],"pointer":1}]},{"array":[1,2,3,7,2,4,6,8],"message":"Write 3 into position 2.","compare":[],"swap":[2],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":1},{"label":"R","values":[2,4,6,8],"pointer":1}]},{"array":[1,2,3,7,2,4,6,8],"message":"Compare left value 5 and right value 4.","compare":[3],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":2},{"label":"R","values":[2,4,6,8],"pointer":1}]},{"array":[1,2,3,4,2,4,6,8],"message":"Write 4 into position 3.","compare":[],"swap":[3],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":2},{"label":"R","values":[2,4,6,8],"pointer":1}]},{"array":[1,2,3,4,2,4,6,8],"message":"Compare left value 5 and right value 6.","compare":[4],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":2},{"label":"R","values":[2,4,6,8],"pointer":2}]},{"array":[1,2,3,4,5,4,6,8],"message":"Write 5 into position 4.","compare":[],"swap":[4],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":2},{"label":"R","values":[2,4,6,8],"pointer":2}]},{"array":[1,2,3,4,5,4,6,8],"message":"Compare left value 7 and right value 6.","compare":[5],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":3},{"label":"R","values":[2,4,6,8],"pointer":2}]},{"array":[1,2,3,4,5,6,6,8],"message":"Write 6 into position 5.","compare":[],"swap":[5],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":3},{"label":"R","values":[2,4,6,8],"pointer":2}]},{"array":[1,2,3,4,5,6,6,8],"message":"Compare left value 7 and right value 8.","compare":[6],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":3},{"label":"R","values":[2,4,6,8],"pointer":3}]},{"array":[1,2,3,4,5,6,7,8],"message":"Write 7 into position 6.","compare":[],"swap":[6],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":3},{"label":"R","values":[2,4,6,8],"pointer":3}]},{"array":[1,2,3,4,5,6,7,8],"message":"Copy remaining right value 8 into position 7.","compare":[],"swap":[7],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[{"label":"L","values":[1,3,5,7],"pointer":4},{"label":"R","values":[2,4,6,8],"pointer":3}]},{"array":[1,2,3,4,5,6,7,8],"message":"Finished merge of range [0..7].","compare":[],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Array is fully sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]}],"stats":{"comparisons":17,"writes":24},"complexity":"O(n log n)"},"Insertion Sort":{"frames":[{"array":[7,3,5,1,8,2,6,4],"message":"Start Insertion Sort on [7, 3, 5, 1, 8, 2, 6, 4].","compare":[],"swap":[],"special":[],"sorted":[],"range":[],"floating":null,"aux":[]},{"array":[7,null,5,1,8,2,6,4],"message":"Take key 3 from index 1 and insert it into the sorted prefix 0..0.","compare":[],"swap":[],"special":[],"sorted":[0],"range":[0,1],"floating":{"label":"key","value":3,"slot":1},"aux":[]},{"array":[7,null,5,1,8,2,6,4],"message":"Compare key 3 with A[0]=7.","compare":[0],"swap":[],"special":[],"sorted":[],"range":[0,1],"floating":{"label":"key","value":3,"slot":1},"aux":[]},{"array":[null,7,5,1,8,2,6,4],"message":"Shift 7 one position to the right.","compare":[],"swap":[0,1],"special":[],"sorted":[],"range":[0,1],"floating":{"label":"key","value":3,"slot":0},"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Insert key 3 into position 0.","compare":[],"swap":[0],"special":[],"sorted":[0,1],"range":[0,1],"floating":null,"aux":[]},{"array":[3,7,null,1,8,2,6,4],"message":"Take key 5 from index 2 and insert it into the sorted prefix 0..1.","compare":[],"swap":[],"special":[],"sorted":[0,1],"range":[0,2],"floating":{"label":"key","value":5,"slot":2},"aux":[]},{"array":[3,7,null,1,8,2,6,4],"message":"Compare key 5 with A[1]=7.","compare":[1],"swap":[],"special":[],"sorted":[],"range":[0,2],"floating":{"label":"key","value":5,"slot":2},"aux":[]},{"array":[3,null,7,1,8,2,6,4],"message":"Shift 7 one position to the right.","compare":[],"swap":[1,2],"special":[],"sorted":[],"range":[0,2],"floating":{"label":"key","value":5,"slot":1},"aux":[]},{"array":[3,null,7,1,8,2,6,4],"message":"Compare key 5 with A[0]=3.","compare":[0],"swap":[],"special":[],"sorted":[],"range":[0,2],"floating":{"label":"key","value":5,"slot":1},"aux":[]},{"array":[3,5,7,1,8,2,6,4],"message":"Insert key 5 into position 1.","compare":[],"swap":[1],"special":[],"sorted":[0,1,2],"range":[0,2],"floating":null,"aux":[]},{"array":[3,5,7,null,8,2,6,4],"message":"Take key 1 from index 3 and insert it into the sorted prefix 0..2.","compare":[],"swap":[],"special":[],"sorted":[0,1,2],"range":[0,3],"floating":{"label":"key","value":1,"slot":3},"aux":[]},{"array":[3,5,7,null,8,2,6,4],"message":"Compare key 1 with A[2]=7.","compare":[2],"swap":[],"special":[],"sorted":[],"range":[0,3],"floating":{"label":"key","value":1,"slot":3},"aux":[]},{"array":[3,5,null,7,8,2,6,4],"message":"Shift 7 one position to the right.","compare":[],"swap":[2,3],"special":[],"sorted":[],"range":[0,3],"floating":{"label":"key","value":1,"slot":2},"aux":[]},{"array":[3,5,null,7,8,2,6,4],"message":"Compare key 1 with A[1]=5.","compare":[1],"swap":[],"special":[],"sorted":[],"range":[0,3],"floating":{"label":"key","value":1,"slot":2},"aux":[]},{"array":[3,null,5,7,8,2,6,4],"message":"Shift 5 one position to the right.","compare":[],"swap":[1,2],"special":[],"sorted":[],"range":[0,3],"floating":{"label":"key","value":1,"slot":1},"aux":[]},{"array":[3,null,5,7,8,2,6,4],"message":"Compare key 1 with A[0]=3.","compare":[0],"swap":[],"special":[],"sorted":[],"range":[0,3],"floating":{"label":"key","value":1,"slot":1},"aux":[]},{"array":[null,3,5,7,8,2,6,4],"message":"Shift 3 one position to the right.","compare":[],"swap":[0,1],"special":[],"sorted":[],"range":[0,3],"floating":{"label":"key","value":1,"slot":0},"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Insert key 1 into position 0.","compare":[],"swap":[0],"special":[],"sorted":[0,1,2,3],"range":[0,3],"floating":null,"aux":[]},{"array":[1,3,5,7,null,2,6,4],"message":"Take key 8 from index 4 and insert it into the sorted prefix 0..3.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3],"range":[0,4],"floating":{"label":"key","value":8,"slot":4},"aux":[]},{"array":[1,3,5,7,null,2,6,4],"message":"Compare key 8 with A[3]=7.","compare":[3],"swap":[],"special":[],"sorted":[],"range":[0,4],"floating":{"label":"key","value":8,"slot":4},"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Insert key 8 into position 4.","compare":[],"swap":[4],"special":[],"sorted":[0,1,2,3,4],"range":[0,4],"floating":null,"aux":[]},{"array":[1,3,5,7,8,null,6,4],"message":"Take key 2 from index 5 and insert it into the sorted prefix 0..4.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4],"range":[0,5],"floating":{"label":"key","value":2,"slot":5},"aux":[]},{"array":[1,3,5,7,8,null,6,4],"message":"Compare key 2 with A[4]=8.","compare":[4],"swap":[],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":5},"aux":[]},{"array":[1,3,5,7,null,8,6,4],"message":"Shift 8 one position to the right.","compare":[],"swap":[4,5],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":4},"aux":[]},{"array":[1,3,5,7,null,8,6,4],"message":"Compare key 2 with A[3]=7.","compare":[3],"swap":[],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":4},"aux":[]},{"array":[1,3,5,null,7,8,6,4],"message":"Shift 7 one position to the right.","compare":[],"swap":[3,4],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":3},"aux":[]},{"array":[1,3,5,null,7,8,6,4],"message":"Compare key 2 with A[2]=5.","compare":[2],"swap":[],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":3},"aux":[]},{"array":[1,3,null,5,7,8,6,4],"message":"Shift 5 one position to the right.","compare":[],"swap":[2,3],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":2},"aux":[]},{"array":[1,3,null,5,7,8,6,4],"message":"Compare key 2 with A[1]=3.","compare":[1],"swap":[],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":2},"aux":[]},{"array":[1,null,3,5,7,8,6,4],"message":"Shift 3 one position to the right.","compare":[],"swap":[1,2],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":1},"aux":[]},{"array":[1,null,3,5,7,8,6,4],"message":"Compare key 2 with A[0]=1.","compare":[0],"swap":[],"special":[],"sorted":[],"range":[0,5],"floating":{"label":"key","value":2,"slot":1},"aux":[]},{"array":[1,2,3,5,7,8,6,4],"message":"Insert key 2 into position 1.","compare":[],"swap":[1],"special":[],"sorted":[0,1,2,3,4,5],"range":[0,5],"floating":null,"aux":[]},{"array":[1,2,3,5,7,8,null,4],"message":"Take key 6 from index 6 and insert it into the sorted prefix 0..5.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5],"range":[0,6],"floating":{"label":"key","value":6,"slot":6},"aux":[]},{"array":[1,2,3,5,7,8,null,4],"message":"Compare key 6 with A[5]=8.","compare":[5],"swap":[],"special":[],"sorted":[],"range":[0,6],"floating":{"label":"key","value":6,"slot":6},"aux":[]},{"array":[1,2,3,5,7,null,8,4],"message":"Shift 8 one position to the right.","compare":[],"swap":[5,6],"special":[],"sorted":[],"range":[0,6],"floating":{"label":"key","value":6,"slot":5},"aux":[]},{"array":[1,2,3,5,7,null,8,4],"message":"Compare key 6 with A[4]=7.","compare":[4],"swap":[],"special":[],"sorted":[],"range":[0,6],"floating":{"label":"key","value":6,"slot":5},"aux":[]},{"array":[1,2,3,5,null,7,8,4],"message":"Shift 7 one position to the right.","compare":[],"swap":[4,5],"special":[],"sorted":[],"range":[0,6],"floating":{"label":"key","value":6,"slot":4},"aux":[]},{"array":[1,2,3,5,null,7,8,4],"message":"Compare key 6 with A[3]=5.","compare":[3],"swap":[],"special":[],"sorted":[],"range":[0,6],"floating":{"label":"key","value":6,"slot":4},"aux":[]},{"array":[1,2,3,5,6,7,8,4],"message":"Insert key 6 into position 4.","compare":[],"swap":[4],"special":[],"sorted":[0,1,2,3,4,5,6],"range":[0,6],"floating":null,"aux":[]},{"array":[1,2,3,5,6,7,8,null],"message":"Take key 4 from index 7 and insert it into the sorted prefix 0..6.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6],"range":[0,7],"floating":{"label":"key","value":4,"slot":7},"aux":[]},{"array":[1,2,3,5,6,7,8,null],"message":"Compare key 4 with A[6]=8.","compare":[6],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":7},"aux":[]},{"array":[1,2,3,5,6,7,null,8],"message":"Shift 8 one position to the right.","compare":[],"swap":[6,7],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":6},"aux":[]},{"array":[1,2,3,5,6,7,null,8],"message":"Compare key 4 with A[5]=7.","compare":[5],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":6},"aux":[]},{"array":[1,2,3,5,6,null,7,8],"message":"Shift 7 one position to the right.","compare":[],"swap":[5,6],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":5},"aux":[]},{"array":[1,2,3,5,6,null,7,8],"message":"Compare key 4 with A[4]=6.","compare":[4],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":5},"aux":[]},{"array":[1,2,3,5,null,6,7,8],"message":"Shift 6 one position to the right.","compare":[],"swap":[4,5],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":4},"aux":[]},{"array":[1,2,3,5,null,6,7,8],"message":"Compare key 4 with A[3]=5.","compare":[3],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":4},"aux":[]},{"array":[1,2,3,null,5,6,7,8],"message":"Shift 5 one position to the right.","compare":[],"swap":[3,4],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":3},"aux":[]},{"array":[1,2,3,null,5,6,7,8],"message":"Compare key 4 with A[2]=3.","compare":[2],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":{"label":"key","value":4,"slot":3},"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Insert key 4 into position 3.","compare":[],"swap":[3],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[0,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Array is fully sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]}],"stats":{"comparisons":20,"writes":22},"complexity":"Worst-case O(n\u00b2)"},"Selection Sort":{"frames":[{"array":[7,3,5,1,8,2,6,4],"message":"Start Selection Sort on [7, 3, 5, 1, 8, 2, 6, 4].","compare":[],"swap":[],"special":[],"sorted":[],"range":[],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Scan indices 0..7 to find the minimum for position 0.","compare":[],"swap":[],"special":[0],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare current minimum 7 at index 0 with A[1]=3.","compare":[1],"swap":[],"special":[0],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"New minimum found: 3 at index 1.","compare":[],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare current minimum 3 at index 1 with A[2]=5.","compare":[2],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare current minimum 3 at index 1 with A[3]=1.","compare":[3],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"New minimum found: 1 at index 3.","compare":[],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare current minimum 1 at index 3 with A[4]=8.","compare":[4],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare current minimum 1 at index 3 with A[5]=2.","compare":[5],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare current minimum 1 at index 3 with A[6]=6.","compare":[6],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare current minimum 1 at index 3 with A[7]=4.","compare":[7],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Swap minimum 1 into position 0.","compare":[],"swap":[0,3],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Prefix 0..0 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0],"range":[],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Scan indices 1..7 to find the minimum for position 1.","compare":[],"swap":[],"special":[1],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Compare current minimum 3 at index 1 with A[2]=5.","compare":[2],"swap":[],"special":[1],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Compare current minimum 3 at index 1 with A[3]=7.","compare":[3],"swap":[],"special":[1],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Compare current minimum 3 at index 1 with A[4]=8.","compare":[4],"swap":[],"special":[1],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Compare current minimum 3 at index 1 with A[5]=2.","compare":[5],"swap":[],"special":[1],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"New minimum found: 2 at index 5.","compare":[],"swap":[],"special":[5],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Compare current minimum 2 at index 5 with A[6]=6.","compare":[6],"swap":[],"special":[5],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,3,5,7,8,2,6,4],"message":"Compare current minimum 2 at index 5 with A[7]=4.","compare":[7],"swap":[],"special":[5],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Swap minimum 2 into position 1.","compare":[],"swap":[1,5],"special":[],"sorted":[0],"range":[1,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Prefix 0..1 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1],"range":[],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Scan indices 2..7 to find the minimum for position 2.","compare":[],"swap":[],"special":[2],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Compare current minimum 5 at index 2 with A[3]=7.","compare":[3],"swap":[],"special":[2],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Compare current minimum 5 at index 2 with A[4]=8.","compare":[4],"swap":[],"special":[2],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Compare current minimum 5 at index 2 with A[5]=3.","compare":[5],"swap":[],"special":[2],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"New minimum found: 3 at index 5.","compare":[],"swap":[],"special":[5],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Compare current minimum 3 at index 5 with A[6]=6.","compare":[6],"swap":[],"special":[5],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,5,7,8,3,6,4],"message":"Compare current minimum 3 at index 5 with A[7]=4.","compare":[7],"swap":[],"special":[5],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"Swap minimum 3 into position 2.","compare":[],"swap":[2,5],"special":[],"sorted":[0,1],"range":[2,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"Prefix 0..2 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"Scan indices 3..7 to find the minimum for position 3.","compare":[],"swap":[],"special":[3],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"Compare current minimum 7 at index 3 with A[4]=8.","compare":[4],"swap":[],"special":[3],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"Compare current minimum 7 at index 3 with A[5]=5.","compare":[5],"swap":[],"special":[3],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"New minimum found: 5 at index 5.","compare":[],"swap":[],"special":[5],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"Compare current minimum 5 at index 5 with A[6]=6.","compare":[6],"swap":[],"special":[5],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"Compare current minimum 5 at index 5 with A[7]=4.","compare":[7],"swap":[],"special":[5],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,7,8,5,6,4],"message":"New minimum found: 4 at index 7.","compare":[],"swap":[],"special":[7],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Swap minimum 4 into position 3.","compare":[],"swap":[3,7],"special":[],"sorted":[0,1,2],"range":[3,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Prefix 0..3 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Scan indices 4..7 to find the minimum for position 4.","compare":[],"swap":[],"special":[4],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Compare current minimum 8 at index 4 with A[5]=5.","compare":[5],"swap":[],"special":[4],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"New minimum found: 5 at index 5.","compare":[],"swap":[],"special":[5],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Compare current minimum 5 at index 5 with A[6]=6.","compare":[6],"swap":[],"special":[5],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,8,5,6,7],"message":"Compare current minimum 5 at index 5 with A[7]=7.","compare":[7],"swap":[],"special":[5],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"Swap minimum 5 into position 4.","compare":[],"swap":[4,5],"special":[],"sorted":[0,1,2,3],"range":[4,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"Prefix 0..4 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"Scan indices 5..7 to find the minimum for position 5.","compare":[],"swap":[],"special":[5],"sorted":[0,1,2,3,4],"range":[5,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"Compare current minimum 8 at index 5 with A[6]=6.","compare":[6],"swap":[],"special":[5],"sorted":[0,1,2,3,4],"range":[5,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"New minimum found: 6 at index 6.","compare":[],"swap":[],"special":[6],"sorted":[0,1,2,3,4],"range":[5,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,8,6,7],"message":"Compare current minimum 6 at index 6 with A[7]=7.","compare":[7],"swap":[],"special":[6],"sorted":[0,1,2,3,4],"range":[5,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,8,7],"message":"Swap minimum 6 into position 5.","compare":[],"swap":[5,6],"special":[],"sorted":[0,1,2,3,4],"range":[5,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,8,7],"message":"Prefix 0..5 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,8,7],"message":"Scan indices 6..7 to find the minimum for position 6.","compare":[],"swap":[],"special":[6],"sorted":[0,1,2,3,4,5],"range":[6,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,8,7],"message":"Compare current minimum 8 at index 6 with A[7]=7.","compare":[7],"swap":[],"special":[6],"sorted":[0,1,2,3,4,5],"range":[6,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,8,7],"message":"New minimum found: 7 at index 7.","compare":[],"swap":[],"special":[7],"sorted":[0,1,2,3,4,5],"range":[6,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Swap minimum 7 into position 6.","compare":[],"swap":[6,7],"special":[],"sorted":[0,1,2,3,4,5],"range":[6,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Prefix 0..6 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Scan indices 7..7 to find the minimum for position 7.","compare":[],"swap":[],"special":[7],"sorted":[0,1,2,3,4,5,6],"range":[7,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Position 7 already holds the minimum 8.","compare":[],"swap":[7],"special":[],"sorted":[0,1,2,3,4,5,6],"range":[7,7],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Prefix 0..7 is now sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Array is fully sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]}],"stats":{"comparisons":28,"writes":7},"complexity":"Worst-case O(n\u00b2)"},"Bubble Sort":{"frames":[{"array":[7,3,5,1,8,2,6,4],"message":"Start Bubble Sort on [7, 3, 5, 1, 8, 2, 6, 4].","compare":[],"swap":[],"special":[],"sorted":[],"range":[],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Pass through indices 0..7. Largest value will bubble to position 7.","compare":[],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare A[0]=7 and A[1]=3.","compare":[0,1],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Swap 3 and 7 because they are out of order.","compare":[],"swap":[0,1],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,7,5,1,8,2,6,4],"message":"Compare A[1]=7 and A[2]=5.","compare":[1,2],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,7,1,8,2,6,4],"message":"Swap 5 and 7 because they are out of order.","compare":[],"swap":[1,2],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,7,1,8,2,6,4],"message":"Compare A[2]=7 and A[3]=1.","compare":[2,3],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,8,2,6,4],"message":"Swap 1 and 7 because they are out of order.","compare":[],"swap":[2,3],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,8,2,6,4],"message":"Compare A[3]=7 and A[4]=8.","compare":[3,4],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,8,2,6,4],"message":"Compare A[4]=8 and A[5]=2.","compare":[4,5],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,2,8,6,4],"message":"Swap 2 and 8 because they are out of order.","compare":[],"swap":[4,5],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,2,8,6,4],"message":"Compare A[5]=8 and A[6]=6.","compare":[5,6],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,2,6,8,4],"message":"Swap 6 and 8 because they are out of order.","compare":[],"swap":[5,6],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,2,6,8,4],"message":"Compare A[6]=8 and A[7]=4.","compare":[6,7],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,2,6,4,8],"message":"Swap 4 and 8 because they are out of order.","compare":[],"swap":[6,7],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[3,5,1,7,2,6,4,8],"message":"Index 7 is now in its final sorted position.","compare":[],"swap":[],"special":[],"sorted":[7],"range":[],"floating":null,"aux":[]},{"array":[3,5,1,7,2,6,4,8],"message":"Pass through indices 0..6. Largest value will bubble to position 6.","compare":[],"swap":[],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,5,1,7,2,6,4,8],"message":"Compare A[0]=3 and A[1]=5.","compare":[0,1],"swap":[],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,5,1,7,2,6,4,8],"message":"Compare A[1]=5 and A[2]=1.","compare":[1,2],"swap":[],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,7,2,6,4,8],"message":"Swap 1 and 5 because they are out of order.","compare":[],"swap":[1,2],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,7,2,6,4,8],"message":"Compare A[2]=5 and A[3]=7.","compare":[2,3],"swap":[],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,7,2,6,4,8],"message":"Compare A[3]=7 and A[4]=2.","compare":[3,4],"swap":[],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,2,7,6,4,8],"message":"Swap 2 and 7 because they are out of order.","compare":[],"swap":[3,4],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,2,7,6,4,8],"message":"Compare A[4]=7 and A[5]=6.","compare":[4,5],"swap":[],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,2,6,7,4,8],"message":"Swap 6 and 7 because they are out of order.","compare":[],"swap":[4,5],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,2,6,7,4,8],"message":"Compare A[5]=7 and A[6]=4.","compare":[5,6],"swap":[],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,2,6,4,7,8],"message":"Swap 4 and 7 because they are out of order.","compare":[],"swap":[5,6],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[3,1,5,2,6,4,7,8],"message":"Index 6 is now in its final sorted position.","compare":[],"swap":[],"special":[],"sorted":[6,7],"range":[],"floating":null,"aux":[]},{"array":[3,1,5,2,6,4,7,8],"message":"Pass through indices 0..5. Largest value will bubble to position 5.","compare":[],"swap":[],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[3,1,5,2,6,4,7,8],"message":"Compare A[0]=3 and A[1]=1.","compare":[0,1],"swap":[],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,5,2,6,4,7,8],"message":"Swap 1 and 3 because they are out of order.","compare":[],"swap":[0,1],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,5,2,6,4,7,8],"message":"Compare A[1]=3 and A[2]=5.","compare":[1,2],"swap":[],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,5,2,6,4,7,8],"message":"Compare A[2]=5 and A[3]=2.","compare":[2,3],"swap":[],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,2,5,6,4,7,8],"message":"Swap 2 and 5 because they are out of order.","compare":[],"swap":[2,3],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,2,5,6,4,7,8],"message":"Compare A[3]=5 and A[4]=6.","compare":[3,4],"swap":[],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,2,5,6,4,7,8],"message":"Compare A[4]=6 and A[5]=4.","compare":[4,5],"swap":[],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,2,5,4,6,7,8],"message":"Swap 4 and 6 because they are out of order.","compare":[],"swap":[4,5],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[1,3,2,5,4,6,7,8],"message":"Index 5 is now in its final sorted position.","compare":[],"swap":[],"special":[],"sorted":[5,6,7],"range":[],"floating":null,"aux":[]},{"array":[1,3,2,5,4,6,7,8],"message":"Pass through indices 0..4. Largest value will bubble to position 4.","compare":[],"swap":[],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[1,3,2,5,4,6,7,8],"message":"Compare A[0]=1 and A[1]=3.","compare":[0,1],"swap":[],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[1,3,2,5,4,6,7,8],"message":"Compare A[1]=3 and A[2]=2.","compare":[1,2],"swap":[],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[1,2,3,5,4,6,7,8],"message":"Swap 2 and 3 because they are out of order.","compare":[],"swap":[1,2],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[1,2,3,5,4,6,7,8],"message":"Compare A[2]=3 and A[3]=5.","compare":[2,3],"swap":[],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[1,2,3,5,4,6,7,8],"message":"Compare A[3]=5 and A[4]=4.","compare":[3,4],"swap":[],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Swap 4 and 5 because they are out of order.","compare":[],"swap":[3,4],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Index 4 is now in its final sorted position.","compare":[],"swap":[],"special":[],"sorted":[4,5,6,7],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Pass through indices 0..3. Largest value will bubble to position 3.","compare":[],"swap":[],"special":[],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Compare A[0]=1 and A[1]=2.","compare":[0,1],"swap":[],"special":[],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Compare A[1]=2 and A[2]=3.","compare":[1,2],"swap":[],"special":[],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Compare A[2]=3 and A[3]=4.","compare":[2,3],"swap":[],"special":[],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Index 3 is now in its final sorted position.","compare":[],"swap":[],"special":[],"sorted":[3,4,5,6,7],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Pass through indices 0..2. Largest value will bubble to position 2.","compare":[],"swap":[],"special":[],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Compare A[0]=1 and A[1]=2.","compare":[0,1],"swap":[],"special":[],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Compare A[1]=2 and A[2]=3.","compare":[1,2],"swap":[],"special":[],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Index 2 is now in its final sorted position.","compare":[],"swap":[],"special":[],"sorted":[2,3,4,5,6,7],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Pass through indices 0..1. Largest value will bubble to position 1.","compare":[],"swap":[],"special":[],"sorted":[2,3,4,5,6,7],"range":[0,1],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Compare A[0]=1 and A[1]=2.","compare":[0,1],"swap":[],"special":[],"sorted":[2,3,4,5,6,7],"range":[0,1],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Index 1 is now in its final sorted position.","compare":[],"swap":[],"special":[],"sorted":[1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Array is fully sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]}],"stats":{"comparisons":28,"writes":15},"complexity":"Worst-case O(n\u00b2)"},"Heap Sort":{"frames":[{"array":[7,3,5,1,8,2,6,4],"message":"Start Heap Sort on [7, 3, 5, 1, 8, 2, 6, 4].","compare":[],"swap":[],"special":[],"sorted":[],"range":[],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Build a max-heap in range [0..7].","compare":[],"swap":[],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Sift down node at index 3 inside heap [0..7].","compare":[],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,1,8,2,6,4],"message":"Compare root A[3]=1 with left child A[7]=4.","compare":[3,7],"swap":[],"special":[3],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,4,8,2,6,1],"message":"Swap A[3] and A[7] so the larger value rises toward the root.","compare":[],"swap":[3,7],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,4,8,2,6,1],"message":"Index 7 has no children inside the current heap.","compare":[],"swap":[],"special":[7],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,4,8,2,6,1],"message":"Sift down node at index 2 inside heap [0..7].","compare":[],"swap":[],"special":[2],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,4,8,2,6,1],"message":"Compare root A[2]=5 with left child A[5]=2.","compare":[2,5],"swap":[],"special":[2],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,5,4,8,2,6,1],"message":"Compare the current larger value 5 with right child A[6]=6.","compare":[2,6],"swap":[],"special":[2],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,6,4,8,2,5,1],"message":"Swap A[2] and A[6] so the larger value rises toward the root.","compare":[],"swap":[2,6],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,6,4,8,2,5,1],"message":"Index 6 has no children inside the current heap.","compare":[],"swap":[],"special":[6],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,6,4,8,2,5,1],"message":"Sift down node at index 1 inside heap [0..7].","compare":[],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,6,4,8,2,5,1],"message":"Compare root A[1]=3 with left child A[3]=4.","compare":[1,3],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,3,6,4,8,2,5,1],"message":"Compare the current larger value 4 with right child A[4]=8.","compare":[3,4],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,8,6,4,3,2,5,1],"message":"Swap A[1] and A[4] so the larger value rises toward the root.","compare":[],"swap":[1,4],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,8,6,4,3,2,5,1],"message":"Index 4 has no children inside the current heap.","compare":[],"swap":[],"special":[4],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,8,6,4,3,2,5,1],"message":"Sift down node at index 0 inside heap [0..7].","compare":[],"swap":[],"special":[0],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,8,6,4,3,2,5,1],"message":"Compare root A[0]=7 with left child A[1]=8.","compare":[0,1],"swap":[],"special":[0],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[7,8,6,4,3,2,5,1],"message":"Compare the current larger value 8 with right child A[2]=6.","compare":[1,2],"swap":[],"special":[0],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[8,7,6,4,3,2,5,1],"message":"Swap A[0] and A[1] so the larger value rises toward the root.","compare":[],"swap":[0,1],"special":[],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[8,7,6,4,3,2,5,1],"message":"Compare root A[1]=7 with left child A[3]=4.","compare":[1,3],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[8,7,6,4,3,2,5,1],"message":"Compare the current larger value 7 with right child A[4]=3.","compare":[1,4],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[8,7,6,4,3,2,5,1],"message":"Node A[1]=7 already satisfies the max-heap property.","compare":[],"swap":[],"special":[1],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[8,7,6,4,3,2,5,1],"message":"Max-heap built. The largest value is now at the root.","compare":[],"swap":[],"special":[0],"sorted":[],"range":[0,7],"floating":null,"aux":[]},{"array":[1,7,6,4,3,2,5,8],"message":"Swap the root value 8 into final position 7.","compare":[],"swap":[0,7],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[1,7,6,4,3,2,5,8],"message":"Sift down node at index 0 inside heap [0..6].","compare":[],"swap":[],"special":[0],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[1,7,6,4,3,2,5,8],"message":"Compare root A[0]=1 with left child A[1]=7.","compare":[0,1],"swap":[],"special":[0],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[1,7,6,4,3,2,5,8],"message":"Compare the current larger value 7 with right child A[2]=6.","compare":[1,2],"swap":[],"special":[0],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[7,1,6,4,3,2,5,8],"message":"Swap A[0] and A[1] so the larger value rises toward the root.","compare":[],"swap":[0,1],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[7,1,6,4,3,2,5,8],"message":"Compare root A[1]=1 with left child A[3]=4.","compare":[1,3],"swap":[],"special":[1],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[7,1,6,4,3,2,5,8],"message":"Compare the current larger value 4 with right child A[4]=3.","compare":[3,4],"swap":[],"special":[1],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[7,4,6,1,3,2,5,8],"message":"Swap A[1] and A[3] so the larger value rises toward the root.","compare":[],"swap":[1,3],"special":[],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[7,4,6,1,3,2,5,8],"message":"Index 3 has no children inside the current heap.","compare":[],"swap":[],"special":[3],"sorted":[7],"range":[0,6],"floating":null,"aux":[]},{"array":[5,4,6,1,3,2,7,8],"message":"Swap the root value 7 into final position 6.","compare":[],"swap":[0,6],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[5,4,6,1,3,2,7,8],"message":"Sift down node at index 0 inside heap [0..5].","compare":[],"swap":[],"special":[0],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[5,4,6,1,3,2,7,8],"message":"Compare root A[0]=5 with left child A[1]=4.","compare":[0,1],"swap":[],"special":[0],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[5,4,6,1,3,2,7,8],"message":"Compare the current larger value 5 with right child A[2]=6.","compare":[0,2],"swap":[],"special":[0],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[6,4,5,1,3,2,7,8],"message":"Swap A[0] and A[2] so the larger value rises toward the root.","compare":[],"swap":[0,2],"special":[],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[6,4,5,1,3,2,7,8],"message":"Compare root A[2]=5 with left child A[5]=2.","compare":[2,5],"swap":[],"special":[2],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[6,4,5,1,3,2,7,8],"message":"Node A[2]=5 already satisfies the max-heap property.","compare":[],"swap":[],"special":[2],"sorted":[6,7],"range":[0,5],"floating":null,"aux":[]},{"array":[2,4,5,1,3,6,7,8],"message":"Swap the root value 6 into final position 5.","compare":[],"swap":[0,5],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[2,4,5,1,3,6,7,8],"message":"Sift down node at index 0 inside heap [0..4].","compare":[],"swap":[],"special":[0],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[2,4,5,1,3,6,7,8],"message":"Compare root A[0]=2 with left child A[1]=4.","compare":[0,1],"swap":[],"special":[0],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[2,4,5,1,3,6,7,8],"message":"Compare the current larger value 4 with right child A[2]=5.","compare":[1,2],"swap":[],"special":[0],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[5,4,2,1,3,6,7,8],"message":"Swap A[0] and A[2] so the larger value rises toward the root.","compare":[],"swap":[0,2],"special":[],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[5,4,2,1,3,6,7,8],"message":"Index 2 has no children inside the current heap.","compare":[],"swap":[],"special":[2],"sorted":[5,6,7],"range":[0,4],"floating":null,"aux":[]},{"array":[3,4,2,1,5,6,7,8],"message":"Swap the root value 5 into final position 4.","compare":[],"swap":[0,4],"special":[],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[3,4,2,1,5,6,7,8],"message":"Sift down node at index 0 inside heap [0..3].","compare":[],"swap":[],"special":[0],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[3,4,2,1,5,6,7,8],"message":"Compare root A[0]=3 with left child A[1]=4.","compare":[0,1],"swap":[],"special":[0],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[3,4,2,1,5,6,7,8],"message":"Compare the current larger value 4 with right child A[2]=2.","compare":[1,2],"swap":[],"special":[0],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[4,3,2,1,5,6,7,8],"message":"Swap A[0] and A[1] so the larger value rises toward the root.","compare":[],"swap":[0,1],"special":[],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[4,3,2,1,5,6,7,8],"message":"Compare root A[1]=3 with left child A[3]=1.","compare":[1,3],"swap":[],"special":[1],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[4,3,2,1,5,6,7,8],"message":"Node A[1]=3 already satisfies the max-heap property.","compare":[],"swap":[],"special":[1],"sorted":[4,5,6,7],"range":[0,3],"floating":null,"aux":[]},{"array":[1,3,2,4,5,6,7,8],"message":"Swap the root value 4 into final position 3.","compare":[],"swap":[0,3],"special":[],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[1,3,2,4,5,6,7,8],"message":"Sift down node at index 0 inside heap [0..2].","compare":[],"swap":[],"special":[0],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[1,3,2,4,5,6,7,8],"message":"Compare root A[0]=1 with left child A[1]=3.","compare":[0,1],"swap":[],"special":[0],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[1,3,2,4,5,6,7,8],"message":"Compare the current larger value 3 with right child A[2]=2.","compare":[1,2],"swap":[],"special":[0],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[3,1,2,4,5,6,7,8],"message":"Swap A[0] and A[1] so the larger value rises toward the root.","compare":[],"swap":[0,1],"special":[],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[3,1,2,4,5,6,7,8],"message":"Index 1 has no children inside the current heap.","compare":[],"swap":[],"special":[1],"sorted":[3,4,5,6,7],"range":[0,2],"floating":null,"aux":[]},{"array":[2,1,3,4,5,6,7,8],"message":"Swap the root value 3 into final position 2.","compare":[],"swap":[0,2],"special":[],"sorted":[2,3,4,5,6,7],"range":[0,1],"floating":null,"aux":[]},{"array":[2,1,3,4,5,6,7,8],"message":"Sift down node at index 0 inside heap [0..1].","compare":[],"swap":[],"special":[0],"sorted":[2,3,4,5,6,7],"range":[0,1],"floating":null,"aux":[]},{"array":[2,1,3,4,5,6,7,8],"message":"Compare root A[0]=2 with left child A[1]=1.","compare":[0,1],"swap":[],"special":[0],"sorted":[2,3,4,5,6,7],"range":[0,1],"floating":null,"aux":[]},{"array":[2,1,3,4,5,6,7,8],"message":"Node A[0]=2 already satisfies the max-heap property.","compare":[],"swap":[],"special":[0],"sorted":[2,3,4,5,6,7],"range":[0,1],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Swap the root value 2 into final position 1.","compare":[],"swap":[0,1],"special":[],"sorted":[1,2,3,4,5,6,7],"range":[0,0],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Only one element remains in the heap, so it is already in final position.","compare":[],"swap":[],"special":[0],"sorted":[1,2,3,4,5,6,7],"range":[0,0],"floating":null,"aux":[]},{"array":[1,2,3,4,5,6,7,8],"message":"Array is fully sorted.","compare":[],"swap":[],"special":[],"sorted":[0,1,2,3,4,5,6,7],"range":[],"floating":null,"aux":[]}],"stats":{"comparisons":24,"writes":17},"complexity":"Worst-case O(n log n)"}};
+const ORDER = ["Quick Sort", "Merge Sort", "Insertion Sort", "Selection Sort", "Bubble Sort", "Heap Sort"];
+
+const COLORS = {
+  default: getComputedStyle(document.documentElement).getPropertyValue('--default').trim(),
+  compare: getComputedStyle(document.documentElement).getPropertyValue('--compare').trim(),
+  swap: getComputedStyle(document.documentElement).getPropertyValue('--swap').trim(),
+  special: getComputedStyle(document.documentElement).getPropertyValue('--special').trim(),
+  sorted: getComputedStyle(document.documentElement).getPropertyValue('--sorted').trim(),
+  range: getComputedStyle(document.documentElement).getPropertyValue('--range').trim(),
+  aux: getComputedStyle(document.documentElement).getPropertyValue('--aux').trim(),
+  gap: getComputedStyle(document.documentElement).getPropertyValue('--gap').trim(),
+  gapline: getComputedStyle(document.documentElement).getPropertyValue('--gapline').trim(),
+  floating: getComputedStyle(document.documentElement).getPropertyValue('--floating').trim(),
+  line: getComputedStyle(document.documentElement).getPropertyValue('--line').trim(),
+  ink: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim(),
+  muted: getComputedStyle(document.documentElement).getPropertyValue('--muted').trim()
+};
+
+function drawRoundedRect(ctx, x, y, w, h, r, fill, stroke) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+  if (fill) {
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+}
+
+function textWidth(ctx, text, font) {
+  ctx.save();
+  ctx.font = font;
+  const w = ctx.measureText(text).width;
+  ctx.restore();
+  return w;
+}
+
+function fitCanvas(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const w = Math.round(rect.width * dpr);
+  const h = Math.round(rect.height * dpr);
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return ctx;
+}
+
+function barColor(frame, idx) {
+  if ((frame.sorted || []).includes(idx)) return COLORS.sorted;
+  if ((frame.swap || []).includes(idx)) return COLORS.swap;
+  if ((frame.compare || []).includes(idx)) return COLORS.compare;
+  if ((frame.special || []).includes(idx)) return COLORS.special;
+  return COLORS.default;
+}
+
+function drawChart(canvas, frame) {
+  const ctx = fitCanvas(canvas);
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  ctx.clearRect(0, 0, width, height);
+
+  const marginX = 18;
+  const range = frame.range || [];
+  let auxTop = 8;
+  let top = 18;
+
+  ctx.font = '13px system-ui, sans-serif';
+  ctx.fillStyle = COLORS.ink;
+
+  if ((frame.aux || []).length) {
+    frame.aux.forEach((aux, row) => {
+      const y = auxTop + row * 28;
+      ctx.font = '700 13px system-ui, sans-serif';
+      ctx.fillStyle = COLORS.ink;
+      ctx.fillText(aux.label, marginX, y + 17);
+      let x = marginX + 22;
+      const cellW = 30;
+      aux.values.forEach((v, idx) => {
+        const isPointer = aux.pointer === idx;
+        drawRoundedRect(ctx, x, y, cellW, 22, 6, isPointer ? COLORS.compare : COLORS.aux, isPointer ? COLORS.compare : COLORS.line);
+        ctx.fillStyle = COLORS.ink;
+        ctx.font = '13px system-ui, sans-serif';
+        const t = String(v);
+        ctx.fillText(t, x + cellW / 2 - textWidth(ctx, t, '13px system-ui, sans-serif') / 2, y + 15);
+        x += cellW + 6;
+      });
+    });
+    top += 56;
+  }
+
+  const chartLeft = marginX;
+  const chartRight = width - marginX;
+  const chartBottom = height - 34;
+  const chartTop = Math.max(top + 10, 72);
+  const chartH = chartBottom - chartTop;
+  const arr = frame.array;
+  const maxVal = Math.max(...arr.filter(v => v !== null));
+  const barGap = 8;
+  const barW = (chartRight - chartLeft - barGap * (arr.length - 1)) / arr.length;
+
+  if (range.length === 2) {
+    const [l, r] = range;
+    const rx = chartLeft + l * (barW + barGap) - 8;
+    const rw = (r - l + 1) * barW + (r - l) * barGap + 16;
+    drawRoundedRect(ctx, rx, chartTop - 12, rw, chartH + 28, 14, COLORS.range, null);
+  }
+
+  ctx.strokeStyle = COLORS.line;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(chartLeft, chartBottom);
+  ctx.lineTo(chartRight, chartBottom);
+  ctx.stroke();
+
+  arr.forEach((value, idx) => {
+    const x = chartLeft + idx * (barW + barGap);
+    const idxY = chartBottom + 20;
+    ctx.fillStyle = COLORS.muted;
+    ctx.font = '12px system-ui, sans-serif';
+    const idxText = String(idx);
+    ctx.fillText(idxText, x + barW / 2 - textWidth(ctx, idxText, '12px system-ui, sans-serif') / 2, idxY);
+
+    if (value === null) {
+      drawRoundedRect(ctx, x, chartBottom - 14, barW, 14, 8, COLORS.gap, COLORS.gapline);
+      ctx.strokeStyle = COLORS.gapline;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x + 5, chartBottom - 7);
+      ctx.lineTo(x + barW - 5, chartBottom - 7);
+      ctx.stroke();
+      return;
+    }
+
+    const bh = (value / maxVal) * (chartH - 12);
+    const y = chartBottom - bh;
+    drawRoundedRect(ctx, x, y, barW, bh, 10, barColor(frame, idx), null);
+
+    const valueText = String(value);
+    ctx.font = '700 15px system-ui, sans-serif';
+    if (bh > 28) {
+      ctx.fillStyle = 'white';
+      ctx.fillText(valueText, x + barW / 2 - textWidth(ctx, valueText, '700 15px system-ui, sans-serif') / 2, y + 18);
+    } else {
+      ctx.fillStyle = COLORS.ink;
+      ctx.fillText(valueText, x + barW / 2 - textWidth(ctx, valueText, '700 15px system-ui, sans-serif') / 2, y - 6);
+    }
+  });
+
+  if (frame.floating) {
+    const slot = frame.floating.slot;
+    const xCenter = chartLeft + slot * (barW + barGap) + barW / 2;
+    const label = `${frame.floating.label} ${frame.floating.value}`;
+    const bw = Math.max(68, textWidth(ctx, label, '700 13px system-ui, sans-serif') + 18);
+    const by = chartTop - 38;
+    drawRoundedRect(ctx, xCenter - bw / 2, by, bw, 28, 10, COLORS.floating, COLORS.compare);
+    ctx.fillStyle = COLORS.ink;
+    ctx.font = '700 13px system-ui, sans-serif';
+    ctx.fillText(label, xCenter - textWidth(ctx, label, '700 13px system-ui, sans-serif') / 2, by + 18);
+    ctx.strokeStyle = COLORS.compare;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(xCenter, by + 28);
+    ctx.lineTo(xCenter, chartTop - 6);
+    ctx.stroke();
+  }
+}
+
+class Player {
+  constructor(name, payload) {
+    this.name = name;
+    this.frames = payload.frames;
+    this.stats = payload.stats;
+    this.complexity = payload.complexity;
+    this.index = 0;
+    this.timer = null;
+    this.createCard();
+    this.render();
+  }
+
+  get speed() {
+    return Number(document.getElementById('speed').value);
+  }
+
+  get delay() {
+    return Math.max(100, 700 - this.speed * 90);
+  }
+
+  createCard() {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-head">
+        <h2>${this.name}</h2>
+        <span class="step-label"></span>
+      </div>
+      <div class="meta">${this.complexity} · comparisons on this input: ${this.stats.comparisons} · writes/swaps: ${this.stats.writes}</div>
+      <canvas></canvas>
+      <div class="message"></div>
+      <div class="controls">
+        <button class="primary play">Play</button>
+        <button class="pause">Pause</button>
+        <button class="step">Step</button>
+        <button class="reset">Reset</button>
+      </div>
+    `;
+    this.el = card;
+    this.stepLabel = card.querySelector('.step-label');
+    this.message = card.querySelector('.message');
+    this.canvas = card.querySelector('canvas');
+
+    card.querySelector('.play').addEventListener('click', () => this.play());
+    card.querySelector('.pause').addEventListener('click', () => this.pause());
+    card.querySelector('.step').addEventListener('click', () => this.step());
+    card.querySelector('.reset').addEventListener('click', () => this.reset());
+
+    document.getElementById('grid').appendChild(card);
+  }
+
+  currentFrame() {
+    return this.frames[this.index];
+  }
+
+  render() {
+    this.stepLabel.textContent = `Step ${this.index + 1} / ${this.frames.length}`;
+    this.message.textContent = this.currentFrame().message;
+    drawChart(this.canvas, this.currentFrame());
+  }
+
+  tick() {
+    if (this.index < this.frames.length - 1) {
+      this.index += 1;
+      this.render();
+    } else {
+      this.pause();
+    }
+  }
+
+  play() {
+    if (this.index >= this.frames.length - 1) {
+      this.index = 0;
+      this.render();
+    }
+    this.pause();
+    this.timer = setInterval(() => this.tick(), this.delay);
+  }
+
+  pause() {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+  }
+
+  step() {
+    this.pause();
+    if (this.index < this.frames.length - 1) {
+      this.index += 1;
+      this.render();
+    }
+  }
+
+  reset() {
+    this.pause();
+    this.index = 0;
+    this.render();
+  }
+
+  updateSpeedIfPlaying() {
+    if (this.timer) {
+      this.play();
+    }
+  }
+}
+
+const players = ORDER.map(name => new Player(name, DATA[name]));
+
+document.getElementById('playAll').addEventListener('click', () => players.forEach(p => p.play()));
+document.getElementById('pauseAll').addEventListener('click', () => players.forEach(p => p.pause()));
+document.getElementById('resetAll').addEventListener('click', () => players.forEach(p => p.reset()));
+
+const speed = document.getElementById('speed');
+const speedLabel = document.getElementById('speedLabel');
+speed.addEventListener('input', () => {
+  speedLabel.textContent = `${speed.value}×`;
+  players.forEach(p => p.updateSpeedIfPlaying());
+});
+
+window.addEventListener('resize', () => players.forEach(p => p.render()));
+</script>
+</body>
+</html>

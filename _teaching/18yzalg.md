@@ -114,6 +114,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
      <span class="label">Planned date:</span>
      <span class="date past">23/03/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex05.pdf' | relative_url }}" download>Presentation (PDF)</a>
+     <a class="btn" href="{{ '/files/yzalg/sorting_algorithms_interactive.html' | relative_url }}" download>Sorting Algorithms Demo (HTML)</a>
    </div>
 
 7. **Tutorial 6 — Part III: sorting algorithms (continued).**
