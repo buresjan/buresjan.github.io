@@ -161,7 +161,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date">20/04/2026</span>
-      <!-- <a class="btn" href="{{ '/files/yzalg/ex10.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+     <a class="btn" href="{{ '/files/yzalg/ex08.pdf' | relative_url }}" download>Presentation (PDF)</a>
     </div>
 
 11. **Tutorial 9 — Part V: recursion.**
