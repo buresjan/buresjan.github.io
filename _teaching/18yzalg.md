@@ -120,7 +120,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
 7. **Tutorial 6 — Part III: sorting algorithms (continued).**
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">30/03/2026</span>
+     <span class="date past">30/03/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex06.pdf' | relative_url }}" download>Presentation (PDF)</a>
      <a class="btn" href="{{ '/files/yzalg/ex05_06-miniprojects.pdf' | relative_url }}" download>Mini-projects #2 descriptions (PDF)</a>
    </div>
@@ -146,23 +146,45 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
 8. **No tutorial (Easter Monday).**
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">06/04/2026</span>
+     <span class="date past">06/04/2026</span>
    </div>
 
 9. **Tutorial 7 — Part IV: introduction to graphs and shortest paths.**
    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
    <div class="lp-date">
      <span class="label">Planned date:</span>
-     <span class="date">13/04/2026</span>
+     <span class="date past">13/04/2026</span>
      <!-- <a class="btn" href="{{ '/files/yzalg/ex09.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
    </div>
 
 10. **Tutorial 8 — Part IV: introduction to graphs and shortest paths (continued).**
     <div class="lp-date">
       <span class="label">Planned date:</span>
-      <span class="date">20/04/2026</span>
+      <span class="date past">20/04/2026</span>
      <a class="btn" href="{{ '/files/yzalg/ex08.pdf' | relative_url }}" download>Presentation (PDF)</a>
     </div>
+
+
+     <a class="btn" href="{{ '/files/yzalg/ex08-miniprojects.pdf' | relative_url }}" download>Mini-projects #3 descriptions (PDF)</a>
+   </div>
+   
+   Mini-Projects #3
+   <table>
+     <tr>
+       <th>Project 1</th>
+       <th>Project 2</th>
+       <th>Project 3</th>
+       <th>Project 4</th>
+       <th>Project 5</th>
+     </tr>
+     <tr>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+     </tr>
+   </table>
 
 11. **Tutorial 9 — Part V: recursion.**
     *Student presentations week: part of the tutorial is devoted to assignment presentations.*
