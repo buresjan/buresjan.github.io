@@ -161,27 +161,27 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
     <div class="lp-date">
       <span class="label">Planned date:</span>
       <span class="date past">20/04/2026</span>
-     <a class="btn" href="{{ '/files/yzalg/ex08.pdf' | relative_url }}" download>Presentation (PDF)</a>
-     <a class="btn" href="{{ '/files/yzalg/ex08-miniprojects.pdf' | relative_url }}" download>Mini-projects #3 descriptions (PDF)</a>
-   </div>
+      <a class="btn" href="{{ '/files/yzalg/ex08.pdf' | relative_url }}" download>Presentation (PDF)</a>
+      <a class="btn" href="{{ '/files/yzalg/ex08-miniprojects.pdf' | relative_url }}" download>Mini-projects #3 descriptions (PDF)</a>
+    </div>
    
-   Mini-Projects #3
-   <table>
-     <tr>
-       <th>Project 1</th>
-       <th>Project 2</th>
-       <th>Project 3</th>
-       <th>Project 4</th>
-       <th>Project 5</th>
-     </tr>
-     <tr>
-       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
-       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
-       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
-       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
-       <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
-     </tr>
-   </table>
+    Mini-Projects #3
+    <table>
+      <tr>
+        <th>Project 1</th>
+        <th>Project 2</th>
+        <th>Project 3</th>
+        <th>Project 4</th>
+        <th>Project 5</th>
+      </tr>
+      <tr>
+        <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+        <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+        <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+        <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+        <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+      </tr>
+    </table>
 
 11. **Tutorial 9 — Part V: recursion.**
     *Student presentations week: part of the tutorial is devoted to assignment presentations.*
