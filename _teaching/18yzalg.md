@@ -176,7 +176,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
       </tr>
       <tr>
         <td><span style="color: #dc2626; font-weight: 700;">Taken</span></td>
-        <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
+        <td><span style="color: #dc2626; font-weight: 700;">Taken</span></td>
         <td><span style="color: #dc2626; font-weight: 700;">Taken</span></td>
         <td><span style="color: #16a34a; font-weight: 700;">Available</span></td>
         <td><span style="color: #dc2626; font-weight: 700;">Taken</span></td>
