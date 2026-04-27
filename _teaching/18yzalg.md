@@ -187,8 +187,8 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
     *Student presentations week: part of the tutorial is devoted to assignment presentations.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
-      <span class="date">27/04/2026</span>
-      <!-- <a class="btn" href="{{ '/files/yzalg/ex11.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+      <span class="date past">27/04/2026</span>
+      <a class="btn" href="{{ '/files/yzalg/ex09.pdf' | relative_url }}" download>Presentation (PDF)</a>
     </div>
 
 12. **Tutorial 10 — Part VI: scientific algorithmization.**
