@@ -198,7 +198,7 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
       <!-- <a class="btn" href="{{ '/files/yzalg/ex12.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
     </div>
 
-13. **Tutorial 11 — Part VI**
+13. **Tutorial 10 — Part VI**
     *Student presentations: send via email.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
