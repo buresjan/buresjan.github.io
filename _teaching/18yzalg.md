@@ -191,17 +191,19 @@ html[data-theme="dark"] .btn.lp-btn { color: #181818; }
       <a class="btn" href="{{ '/files/yzalg/ex09.pdf' | relative_url }}" download>Presentation (PDF)</a>
     </div>
 
-12. **Tutorial 10 — Part VI: scientific algorithmization.**
+12. **No tutorial (cancelled).**
     <div class="lp-date">
       <span class="label">Planned date:</span>
-      <span class="date">04/05/2026</span>
+      <span class="date past">04/05/2026</span>
       <!-- <a class="btn" href="{{ '/files/yzalg/ex12.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
     </div>
 
-13. **Tutorial 11 — Part VI: scientific algorithmization (continued).**
-    *Student presentations week: part of the tutorial is devoted to assignment presentations.*
+13. **Tutorial 11 — Part VI**
+    *Student presentations: send via email.*
     <div class="lp-date">
       <span class="label">Planned date:</span>
-      <span class="date">11/05/2026</span>
-      <!-- <a class="btn" href="{{ '/files/yzalg/ex13.pdf' | relative_url }}" download>Task sheet (PDF)</a> -->
+      <span class="date past">11/05/2026</span>
+      <a class="btn" href="{{ '/files/yzalg/ex10.pdf' | relative_url }}" download>Presentation (PDF)</a>
+      <a class="btn" href="{{ '/files/yzalg/ex10notebooks.zip' | relative_url }}" download>Jupyter Notebooks (ZIP)</a>
+      <a class="btn" href="{{ '/files/yzalg/ex10-miniprojects.pdf' | relative_url }}" download>Mini-projects #4 descriptions (PDF)</a>
     </div>
