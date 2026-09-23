@@ -7,6 +7,8 @@ author: "Jan Bures (About/CV)"
 double_sidebar: true
 redirect_from:
   - /resume
+  - /cv-json/
+  - /resume-json
 ---
 
 Education

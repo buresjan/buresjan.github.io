@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+<main id="main" class="home">
+  <article>
+    <header class="home__intro">
+      <img class="home__portrait" src="{{ '/images/profile.png' | relative_url }}" alt="{{ site.author.name }}" width="160" height="160" fetchpriority="high">
+      <h1>{{ site.author.name }}</h1>
+      <div class="home__bio">{{ page.intro | markdownify }}</div>
+    </header>
+    <div class="home__content">
+      {{ content }}
+    </div>
+  </article>
+</main>
