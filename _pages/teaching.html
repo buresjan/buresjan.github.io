@@ -9,5 +9,13 @@ hide_sidebar: true
 {% include base_path %}
 
 {% for post in site.teaching reversed %}
-  {% include archive-single.html %}
+  {% unless post.status == 'inactive' or post.published == false %}
+    {% include archive-single.html %}
+  {% endunless %}
+{% endfor %}
+
+{% for post in site.teaching reversed %}
+  {% if post.status == 'inactive' or post.published == false %}
+    {% include archive-single.html %}
+  {% endif %}
 {% endfor %}
