@@ -7,9 +7,10 @@ local_type: "Academic year 2025/26, 2+2, credit + exam"
 header_lines:
   - "Academic year 2025/26, 2+2, credit + exam; 4 credits"
   - "Tutorials: Mondays (room T-124)"
-summary: "Introduction to algorithmic thinking and basics of algorithmization."
+summary: "Inactive. Introduction to algorithmic thinking and basics of algorithmization, academic year 2025/26."
 permalink: /teaching/18yzalg
 date: 2026-02-01
+status: inactive
 lang: en
 ---
 
