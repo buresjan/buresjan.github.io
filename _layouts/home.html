@@ -3,11 +3,28 @@ layout: default
 ---
 
 <main id="main" class="home">
-  <article>
-    <header class="home__intro">
-      <img class="home__portrait" src="{{ '/images/profile.png' | relative_url }}" alt="{{ site.author.name }}" width="160" height="160" fetchpriority="high">
-      <h1>{{ site.author.name }}</h1>
-      <div class="home__bio">{{ page.intro | markdownify }}</div>
+  <aside class="home__profile" aria-label="Profile and affiliations">
+    <img class="home__portrait" src="{{ site.author.avatar | prepend: '/images/' | relative_url }}" alt="{{ site.author.name }}" width="175" height="175" fetchpriority="high">
+    <h2>{{ site.author.name }}</h2>
+    <p class="home__role">{{ site.author.bio }}</p>
+    <ul class="home__links">
+      <li><i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> {{ site.author.location }}</li>
+      <li><i class="fas fa-fw fa-building-columns" aria-hidden="true"></i> <a href="{{ site.author.employer_url }}">{{ site.author.employer }}</a></li>
+      <li><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> <a href="mailto:{{ site.author.email }}">Email</a></li>
+      <li><i class="ai ai-orcid ai-fw" aria-hidden="true"></i> <a href="{{ site.author.orcid }}">ORCID</a></li>
+    </ul>
+    <section class="home__affiliations">
+      <h3>Member of</h3>
+      <ul>
+        {% for affiliation in page.affiliations %}
+          <li><a href="{{ affiliation.url }}">{{ affiliation.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  </aside>
+  <article class="home__article">
+    <header>
+      <h1>{{ page.title }}</h1>
     </header>
     <div class="home__content">
       {{ content }}
