@@ -18,6 +18,32 @@ lang: cs
 
 [Oficiální sylabus předmětu: Lineární programování (Bílá kniha)](https://bilakniha.cvut.cz/cs/predmet11339905.html#gsc.tab=0){:target="_blank" rel="noopener"}
 
+<section class="lp-schedule" lang="cs" aria-labelledby="terminy-vyuky">
+  <h2 id="terminy-vyuky">Termíny výuky</h2>
+  <table>
+    <caption>Pátky v zimním semestru 2026/27</caption>
+    <thead>
+      <tr><th scope="col">Datum 2026</th><th scope="col">Přednáška<small>9:00–10:40 · T-301</small></th><th scope="col">Cvičení<small>11:00–11:50 · T-115</small></th></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">25. 9.</th><td><span class="lp-session">P1</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
+      <tr><th scope="row">2. 10.</th><td><span class="lp-session">P2</span></td><td><span class="lp-session">C1</span></td></tr>
+      <tr><th scope="row">9. 10.</th><td><span class="lp-session">P3</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
+      <tr><th scope="row">16. 10.</th><td><span class="lp-session">P4</span></td><td><span class="lp-session">C2</span></td></tr>
+      <tr class="lp-cancelled"><th scope="row">23. 10.</th><td colspan="2">Výuka zrušena</td></tr>
+      <tr><th scope="row">30. 10.</th><td><span class="lp-session">P5</span></td><td><span class="lp-session">C3</span></td></tr>
+      <tr><th scope="row">6. 11.</th><td><span class="lp-session">P6</span></td><td><span class="lp-session">C4</span></td></tr>
+      <tr><th scope="row">13. 11.</th><td><span class="lp-session">P7</span></td><td><span class="lp-session">C5</span></td></tr>
+      <tr><th scope="row">20. 11.</th><td><span class="lp-session">P8</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
+      <tr><th scope="row">27. 11.</th><td><span class="lp-session">P9</span></td><td><span class="lp-session">C6</span></td></tr>
+      <tr><th scope="row">4. 12.</th><td><span class="lp-session">P10</span></td><td><span class="lp-session">C7</span></td></tr>
+      <tr><th scope="row">11. 12.</th><td><span class="lp-session">P11</span></td><td><span class="lp-session">C8</span></td></tr>
+      <tr><th scope="row">18. 12.</th><td><span class="lp-session">P12</span></td><td><span class="lp-session">C9</span></td></tr>
+    </tbody>
+    <tfoot><tr><th scope="row">Celkem</th><td>12 přednášek</td><td>9 cvičení</td></tr></tfoot>
+  </table>
+</section>
+
 Požadavky
 ======
 
@@ -42,6 +68,20 @@ K předmětu je k dispozici ucelený studijní text.
 <a class="btn lp-btn" href="{{ '/files/01LIP.pdf' | relative_url }}" download>Studijní text k předmětu (01LIP.pdf)</a>
 
 <style>
+.lp-schedule { max-width: 38rem; margin: 1.5rem 0 2rem; }
+.lp-schedule h2 { margin-bottom: 0.35rem; }
+.lp-schedule table { display: table; width: 100%; table-layout: fixed; margin: 0; font-size: 0.85rem; line-height: 1.35; font-variant-numeric: tabular-nums; border-collapse: collapse; border: 1px solid rgba(127, 127, 127, 0.35); }
+.lp-schedule caption { text-align: left; padding: 0 0 0.6rem; font-size: 0.8rem; }
+.lp-schedule th, .lp-schedule td { padding: 0.2rem 0.5rem; vertical-align: middle; text-align: center; border: 0; border-bottom: 1px solid rgba(127, 127, 127, 0.25); }
+.lp-schedule thead { background: rgba(52, 137, 166, 0.13); border: 0; }
+.lp-schedule th:first-child { text-align: left; width: 25%; }
+.lp-schedule thead th { padding-top: 0.55rem; padding-bottom: 0.55rem; }
+.lp-schedule small { display: block; margin-top: 0.15rem; font-size: 0.65rem; font-weight: normal; }
+.lp-schedule tbody th { font-weight: normal; }
+.lp-session { display: inline-block; min-width: 2.5em; padding: 0.05rem 0.35rem; border-radius: 0.3rem; background: rgba(52, 137, 166, 0.13); font-weight: 600; }
+.lp-schedule .lp-cancelled { background: rgba(190, 100, 45, 0.13); }
+.lp-schedule .lp-cancelled th, .lp-schedule .lp-cancelled td { font-weight: 600; }
+.lp-schedule tfoot th, .lp-schedule tfoot td { padding-top: 0.55rem; padding-bottom: 0.55rem; font-weight: 600; border-bottom: 0; }
 .lp-language-divider { margin: 3rem 0; border: 0; border-top: 2px solid currentColor; opacity: 0.5; }
 #english { scroll-margin-top: 5rem; }
 .btn.lp-btn { background-color: #9b9b9b; border-color: #9b9b9b; color: #111 !important; }
