@@ -19,10 +19,10 @@ lang: cs
 Požadavky
 ======
 
-- Zápočet: Udělen za splněnou docházku a úspěšné vyřešení zápočtového testu.
-  - Detaily doplněny na cvičení.
-  - Cílem je samostatně vypracovat řešení zvolené úlohy lineárního programování dle zadaných pokynů. Lze odevzdat zdrojový kód se stručným popisem v PDF dokumentu **nebo** Jupyter notebook kombinující popis úlohy i samotný kód.
-  - <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
+- Zápočet: Udělen za samostatné vypracování zápočtového projektu a krátkou individuální obhajobu.
+  - Účast na cvičení je nepovinná. Samostatný zápočtový test se nekoná.
+  - Cílem projektu je sestavit, vyřešit a ověřit model lineárního nebo smíšeného celočíselného programování (LP/MILP). Lze odevzdat komentovaný Jupyter notebook s uloženými výsledky **nebo** stručný PDF dokument a kód či editovatelný výpočetní soubor.
+  - Podrobné požadavky stanovují platné pokyny: <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
   - Deadline odevzdání je **14. 5. 2027**.
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
   - Zkouška je realizována písemnou formou -- skládá se ze **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
