@@ -14,6 +14,8 @@ date: 2026-09-01
 lang: cs
 ---
 
+<p lang="en">For the English version of the course, scroll down or <a href="#english">jump to the English section</a>.</p>
+
 [Oficiální sylabus předmětu: Lineární programování (Bílá kniha)](https://bilakniha.cvut.cz/cs/predmet11339905.html#gsc.tab=0){:target="_blank" rel="noopener"}
 
 Požadavky
@@ -40,6 +42,8 @@ K předmětu je k dispozici ucelený studijní text.
 <a class="btn lp-btn" href="{{ '/files/01LIP.pdf' | relative_url }}" download>Studijní text k předmětu (01LIP.pdf)</a>
 
 <style>
+.lp-language-divider { margin: 3rem 0; border: 0; border-top: 2px solid currentColor; opacity: 0.5; }
+#english { scroll-margin-top: 5rem; }
 .btn.lp-btn { background-color: #9b9b9b; border-color: #9b9b9b; color: #111 !important; }
 .btn.lp-btn:hover,
 .btn.lp-btn:focus { background-color: #8c8c8c; border-color: #8c8c8c; color: #111 !important; }
@@ -73,7 +77,7 @@ Osnova cvičení
 7. Gomoryho algoritmus a další algoritmy LIP (metoda větví a mezí).
 8. Kvadratické programování.
 
----
+<hr class="lp-language-divider">
 
 <div lang="en" markdown="1">
 
