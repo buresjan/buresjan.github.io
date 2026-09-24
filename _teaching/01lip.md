@@ -64,4 +64,11 @@ html[data-theme="dark"] .btn.lp-btn {
 Osnova cvičení
 ======
 
-TBA
+1. Řešení úloh LP na počítači - softwarové nástroje a jejich použití.
+2. Úloha lineárního programování, podmínka optimality a neomezenost.
+3. Simplexová metoda - základní kroky algoritmu, různé situace při řešení.
+4. Dvoufázová simplexová metoda - algoritmus techniky pomocné báze, varianta řešení pomocí M-úlohy.
+5. Duální simplexová metoda.
+6. Příklad z teorie her - hledání smíšených strategií.
+7. Gomoryho algoritmus a další algoritmy LIP (metoda větví a mezí).
+8. Kvadratické programování.
