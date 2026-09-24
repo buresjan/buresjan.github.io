@@ -30,7 +30,7 @@ At the institute, I focus on off-diagonal thermodynamics and its application to 
 I design and implement automated pipelines for data processing, statistical evaluation, and reproducibility, working within the group of Martin Srnec.  
 - **Teaching Assistant**, CTU in Prague, Feb 2023–present  
 I lead exercise sessions and helped conducting the exams for Calculus I and II, and I have also helped to develop teaching materials for the Nonlinear Optimization graduate course.  
-More recently, I started leading the undergraduate course on Linear Programming.
+I lead the undergraduate course on Linear Programming.
 - **Research Intern**, UT Southwestern & Children’s Medical Center Dallas, Apr–Jun 2025  
 I collaborated directly with clinicians to define research tasks related to the total cavopulmonary connection. My work included preparing patient-specific datasets, and working on optimization studies. I presented our results on TCPC optimization at the FIMH 2025 conference in Dallas.  
 - **Research Assistant**, Institute for Clinical and Experimental Medicine (IKEM), Dec 2022–Dec 2023  

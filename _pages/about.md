@@ -13,7 +13,7 @@ redirect_from:
   - /about.html
 ---
 
-I am a first-year Ph.D. student in Mathematical Engineering at the Department of Mathematics, Faculty of Nuclear Sciences and Physical Engineering, Czech Technical University in Prague. My research combines computational hemodynamics and gradient-free optimization, with a particular emphasis on the total cavopulmonary connection.
+I am a Ph.D. student in Mathematical Engineering at the Department of Mathematics, Faculty of Nuclear Sciences and Physical Engineering, Czech Technical University in Prague. My research combines computational hemodynamics and gradient-free optimization, with a particular emphasis on the total cavopulmonary connection.
 
 ## Contact & Office Hours
 - Main office: Room T111, Trojanova 13, Praha 2
