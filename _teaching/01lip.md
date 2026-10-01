@@ -126,9 +126,6 @@ Osnova cvičení
 
 *Academic year 2026/27, 2+1, course credit and examination; 3 ECTS credits*
 
-- Lectures: Friday 9:00–10:40, T-301
-- Exercises: selected Fridays 11:00–11:50, T-115
-
 [Official course syllabus: Linear Programming (White Book)](https://bilakniha.cvut.cz/en/predmet11339905.html#gsc.tab=0){:target="_blank" rel="noopener"}
 
 ## Requirements
