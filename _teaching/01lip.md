@@ -29,7 +29,7 @@ lang: cs
       <tr><th scope="row">25. 9.</th><td><span class="lp-session">P1</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
       <tr><th scope="row">2. 10.</th><td><span class="lp-session">P2</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv01.zip' | relative_url }}" download="cv01.zip" title="Stáhnout klíčky, zadání cv01 a řešení (ZIP)" aria-label="Cvičení 1: stáhnout klíčky, zadání a řešení v ZIP">C1</a></td></tr>
       <tr><th scope="row">9. 10.</th><td><span class="lp-session">P3</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
-      <tr><th scope="row">16. 10.</th><td><span class="lp-session">P4</span></td><td><span class="lp-session">C2</span></td></tr>
+      <tr><th scope="row">16. 10.</th><td><span class="lp-session">P4</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv02.zip' | relative_url }}" download="cv02.zip" title="Stáhnout notebook a HTML náhled cvičení 2 (ZIP)" aria-label="Cvičení 2: stáhnout notebook s řešením a HTML náhled v ZIP">C2</a></td></tr>
       <tr class="lp-cancelled"><th scope="row">23. 10.</th><td colspan="2">Výuka zrušena</td></tr>
       <tr><th scope="row">30. 10.</th><td><span class="lp-session">P5</span></td><td><span class="lp-session">C3</span></td></tr>
       <tr><th scope="row">6. 11.</th><td><span class="lp-session">P6</span></td><td><span class="lp-session">C4</span></td></tr>
