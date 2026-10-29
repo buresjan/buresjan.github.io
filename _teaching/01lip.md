@@ -31,7 +31,7 @@ lang: cs
       <tr><th scope="row">9. 10.</th><td><span class="lp-session">P3</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
       <tr><th scope="row">16. 10.</th><td><span class="lp-session">P4</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv02.zip' | relative_url }}?v=20261016-pulp332" download="cv02.zip" title="Stáhnout notebook a HTML náhled cvičení 2 (ZIP)" aria-label="Cvičení 2: stáhnout notebook s řešením a HTML náhled v ZIP">C2</a></td></tr>
       <tr class="lp-cancelled"><th scope="row">23. 10.</th><td colspan="2">Výuka zrušena</td></tr>
-      <tr><th scope="row">30. 10.</th><td><span class="lp-session">P5</span></td><td><span class="lp-session">C3</span></td></tr>
+      <tr><th scope="row">30. 10.</th><td><span class="lp-session">P5</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv03.zip' | relative_url }}?v=20261029" download="cv03.zip" title="Stáhnout notebooky a HTML náhledy cvičení 3 a domácího úkolu (ZIP)" aria-label="Cvičení 3: stáhnout notebooky, řešení a HTML náhledy včetně domácího úkolu v ZIP">C3</a></td></tr>
       <tr><th scope="row">6. 11.</th><td><span class="lp-session">P6</span></td><td><span class="lp-session">C4</span></td></tr>
       <tr><th scope="row">13. 11.</th><td><span class="lp-session">P7</span></td><td><span class="lp-session">C5</span></td></tr>
       <tr><th scope="row">20. 11.</th><td><span class="lp-session">P8</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
@@ -50,7 +50,7 @@ Požadavky
 - Zápočet: Udělen za samostatné vypracování zápočtového projektu a krátkou individuální obhajobu.
   - Účast na cvičení je nepovinná. Samostatný zápočtový test se nekoná.
   - Cílem projektu je sestavit, vyřešit a ověřit model lineárního nebo smíšeného celočíselného programování (LP/MILP). Lze odevzdat komentovaný Jupyter notebook s uloženými výsledky **nebo** stručný PDF dokument a kód či editovatelný výpočetní soubor.
-  - Podrobné požadavky stanovují platné pokyny: <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}" download>Pokyny k vypracování úlohy</a>
+  - Podrobné požadavky stanovují platné pokyny: <a class="btn lp-btn" href="{{ '/files/pokyny.pdf' | relative_url }}?v=20261029" download>Pokyny k vypracování úlohy</a>
   - Deadline odevzdání je **14. 5. 2027**.
 - Zkouška: Teoretická a praktická část vybraná z obsahu probraného na přednáškách.
   - Zkouška je realizována písemnou formou -- skládá se ze **2 teoretických** a **1 praktické** otázky z níže dostupného seznamu.
@@ -110,7 +110,7 @@ Osnova cvičení
 
 1. Řešení úloh LP na počítači - softwarové nástroje a jejich použití.
 2. Úloha lineárního programování, podmínka optimality a neomezenost.
-3. Simplexová metoda - základní kroky algoritmu, různé situace při řešení.
+3. Rozhodnutí ano/ne a logické vazby: binární proměnné, nejvýše jedna a právě jedna možnost, podmíněný výběr. Domácí úkol: výrobní model, kontrola řešení a změna kapacity.
 4. Dvoufázová simplexová metoda - algoritmus techniky pomocné báze, varianta řešení pomocí M-úlohy.
 5. Duální simplexová metoda.
 6. Příklad z teorie her - hledání smíšených strategií.
@@ -133,7 +133,7 @@ Osnova cvičení
 - Course credit: Awarded for an independently completed course project and a short individual oral defense.
   - Exercise attendance is optional. There is no separate course-credit test.
   - The project aims to formulate, solve, and validate a linear or mixed-integer linear programming model (LP/MILP). Submit an annotated Jupyter notebook with saved results **or** a short PDF document together with code or an editable computational file.
-  - The current guidelines specify the detailed requirements: <a class="btn lp-btn" href="{{ '/files/pokyny_en.pdf' | relative_url }}" download>Course project guidelines</a>
+  - The current guidelines specify the detailed requirements: <a class="btn lp-btn" href="{{ '/files/pokyny_en.pdf' | relative_url }}?v=20261029" download>Course project guidelines</a>
   - The submission deadline is **14 May 2027**.
 - Examination: Theoretical and practical material covered in the lectures.
   - The examination is written and consists of **2 theoretical questions** and **1 practical problem** from the list available below.
@@ -166,7 +166,7 @@ A complete set of lecture notes is available for the course.
 
 1. Computer-based solutions of LP problems: choosing and using software tools.
 2. LP problems: testing optimality and identifying unboundedness.
-3. Working through the simplex algorithm and the different cases that arise during its execution.
+3. Yes/no decisions and logical constraints: binary variables, at most one and exactly one option, conditional selection. Homework: a production model, solution checks, and a capacity change.
 4. Finding an auxiliary basis with the two-phase simplex algorithm; the alternative big-M approach.
 5. Applying the dual simplex algorithm.
 6. A game-theoretic example: determining mixed strategies.
