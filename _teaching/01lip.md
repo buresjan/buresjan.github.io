@@ -31,7 +31,7 @@ lang: cs
       <tr><th scope="row">9. 10.</th><td><span class="lp-session">P3</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
       <tr><th scope="row">16. 10.</th><td><span class="lp-session">P4</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv02.zip' | relative_url }}?v=20261016-pulp332" download="cv02.zip" title="Stáhnout notebook a HTML náhled cvičení 2 (ZIP)" aria-label="Cvičení 2: stáhnout notebook s řešením a HTML náhled v ZIP">C2</a></td></tr>
       <tr class="lp-cancelled"><th scope="row">23. 10.</th><td colspan="2">Výuka zrušena</td></tr>
-      <tr><th scope="row">30. 10.</th><td><span class="lp-session">P5</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv03.zip' | relative_url }}?v=20261029" download="cv03.zip" title="Stáhnout notebooky a HTML náhledy cvičení 3 a domácího úkolu (ZIP)" aria-label="Cvičení 3: stáhnout notebooky, řešení a HTML náhledy včetně domácího úkolu v ZIP">C3</a></td></tr>
+      <tr><th scope="row">30. 10.</th><td><span class="lp-session">P5</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv03.zip' | relative_url }}?v=20261029-r2" download="cv03.zip" title="Stáhnout notebooky a HTML náhled cvičení 3 včetně zadání domácího úkolu (ZIP)" aria-label="Cvičení 3: stáhnout notebook, řešení, HTML náhled a zadání domácího úkolu v ZIP">C3</a></td></tr>
       <tr><th scope="row">6. 11.</th><td><span class="lp-session">P6</span></td><td><span class="lp-session">C4</span></td></tr>
       <tr><th scope="row">13. 11.</th><td><span class="lp-session">P7</span></td><td><span class="lp-session">C5</span></td></tr>
       <tr><th scope="row">20. 11.</th><td><span class="lp-session">P8</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
