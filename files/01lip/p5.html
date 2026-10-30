@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Interaktivní prezentace ke kapitole 4: sestavení simplexové tabulky, pivotování a geometrie ve dvou rozměrech.">
+  <title>01LIP · Simplexová tabulka</title>
+  <style>:root {
+  --paper: #f7f4ec;
+  --ink: #192e31;
+  --muted: #647575;
+  --line: #cdd5ce;
+  --teal: #006e66;
+  --teal-soft: #dceee5;
+  --amber: #a15c13;
+  --amber-soft: #f5e8ce;
+  --purple: #6a4194;
+  --purple-soft: #ebe1f5;
+  --coral: #b74e39;
+  --scale: 1;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+body { background: #e5e8e0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { opacity: .28; cursor: default; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--teal); outline-offset: 5px; }
+button { touch-action: manipulation; }
+#stage { width: 1440px; height: 900px; padding: 30px 54px 24px; background: var(--paper); position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(var(--scale)); transform-origin: center; display: grid; grid-template-rows: 46px 126px 1fr 86px 68px; gap: 0; overflow: hidden; }
+.topbar { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--line); padding-bottom: 15px; }
+#topics { display: flex; gap: 25px; }
+#topics button { background: none; border: 0; padding: 8px 0; font-size: 16px; color: var(--muted); position: relative; }
+#topics button.active { color: var(--teal); font-weight: 650; }
+#topics button.active::after { content: ""; display: block; height: 3px; background: var(--teal); position: absolute; bottom: -15px; width: 100%; }
+.icon-button { border: 1px solid var(--line); background: transparent; border-radius: 50%; width: 34px; height: 34px; font-size: 19px; line-height: 1; }
+.heading { padding-top: 23px; }
+.eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: 1.8px; font-size: 14px; font-weight: 650; margin-bottom: 8px; }
+h1 { font-family: Georgia, "Times New Roman", serif; font-size: 46px; font-weight: 400; line-height: 1.1; letter-spacing: -1.3px; margin: 0; }
+#subtitle { font-size: 21px; margin: 12px 0 0; color: var(--muted); line-height: 1.3; }
+#content { min-height: 0; padding-top: 22px; }
+.columns { display: grid; grid-template-columns: 1.24fr 1fr; gap: 44px; height: 100%; }
+.columns.construction { grid-template-columns: .84fr 1.36fr; gap: 48px; }
+.panel { min-width: 0; position: relative; display: flex; flex-direction: column; justify-content: flex-start; }
+.panel-label { color: var(--muted); font-size: 15px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; margin: 0 0 22px; }
+.panel-label .normal { float: right; margin-left: 12px; font-size: 14px; text-transform: none; letter-spacing: 0; font-weight: 400; }
+.math { font-family: Georgia, "Times New Roman", serif; font-variant-numeric: lining-nums tabular-nums; }
+.inline-math { white-space: nowrap; letter-spacing: normal; text-transform: none; }
+.transpose { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-style: normal; }
+i { font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+sub { font-size: .65em; vertical-align: -.22em; }
+sup { font-size: .64em; }
+.equations { margin-top: 4px; font-size: 31px; display: flex; flex-direction: column; gap: 16px; }
+.equation { min-height: 49px; display: flex; align-items: center; gap: 13px; white-space: nowrap; border-radius: 6px; padding: 3px 6px; margin-left: -6px; }
+.equation.selected { background: var(--teal-soft); color: var(--teal); }
+.equation .eq-lhs { min-width: 48px; text-align: right; }
+.equation .eq-sign { color: var(--muted); font-size: .85em; }
+.equations.compact { font-size: 28px; gap: 12px; }
+.equations .eq-objective { border-top: 1px solid var(--line); margin-top: 9px; padding-top: 17px; }
+.math-note { font-size: 22px; margin: 22px 0 0; line-height: 1.45; }
+.math-note.secondary { color: var(--muted); font-size: 20px; }
+.math-note strong { font-weight: 600; }
+.problem { font-size: 33px; }
+.problem .objective { margin: 0 0 26px; font-size: 38px; }
+.problem .constraints { display: flex; flex-direction: column; gap: 19px; padding-left: 6px; }
+.problem .nonnegative { margin: 23px 0 0; font-size: 27px; color: var(--muted); }
+.table-wrap { min-width: 0; width: 100%; }
+.tableau { border-collapse: collapse; width: 100%; font-family: Georgia, "Times New Roman", serif; font-size: 29px; font-variant-numeric: tabular-nums; table-layout: fixed; }
+.tableau th, .tableau td { text-align: center; height: 62px; padding: 5px 2px; position: relative; font-weight: 400; transition: background-color .18s; }
+.tableau thead th { font-size: 25px; height: 55px; border-bottom: 2px solid var(--ink); }
+.tableau th.basis-head { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size: 15px; color: var(--muted); width: 104px; text-align: left; }
+.tableau tbody th { text-align: left; width: 104px; white-space: nowrap; }
+.tableau .row-name { color: var(--muted); font: 11px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display: inline-block; width: 30px; letter-spacing: .5px; }
+.tableau .rhs { border-left: 2px solid var(--ink); background: #ffffff40; width: 72px; }
+.tableau .objective-row th, .tableau .objective-row td { border-top: 2px solid var(--ink); }
+.tableau .objective-row th::after { content: "−r"; font-size: 13px; color: var(--muted); font-family: Georgia,serif; position: absolute; left: 63px; bottom: 7px; }
+.tableau .ghost { color: transparent; }
+.tableau .ghost::after { visibility: hidden; }
+.tableau .identity { background: var(--teal-soft); }
+.tableau .entering { background: var(--teal-soft); color: var(--teal); }
+.tableau .leaving { background: var(--amber-soft); }
+.tableau .changed { background: var(--purple-soft); }
+.tableau .pivot { background: var(--purple-soft); color: var(--purple); box-shadow: inset 0 0 0 2.5px var(--purple); border-radius: 4px; font-weight: 600; }
+.tableau .new-basis { color: var(--teal); }
+.tableau .negative-cost { color: var(--teal); font-weight: 600; }
+.tableau .focus-row { background: var(--teal-soft); }
+.tableau .focus-rhs { color: var(--teal); background: var(--teal-soft); font-weight: 600; }
+.tableau .ratio-cell { font-size: 24px; font-family: Georgia,serif; }
+.tableau .ratio-head { font: 14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color: var(--muted); }
+.tableau .ratio-winner { color: var(--amber); background: var(--amber-soft); font-weight: 600; }
+.tableau .ratio-excluded { color: var(--muted); font: 15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+.table-caption { color: var(--muted); font-size: 17px; line-height: 1.4; margin: 14px 0 0; min-height: 24px; }
+.table-caption .math { font-size: 21px; color: var(--ink); }
+.frac { display: inline-flex; flex-direction: column; vertical-align: middle; font-size: .72em; line-height: 1.1; text-align: center; margin: 0 .07em; }
+.frac > span:first-child { border-bottom: 1px solid currentColor; padding: 0 .14em .05em; }
+.frac > span:last-child { padding: .05em .14em 0; }
+.row-operations { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; font-size: 24px; line-height: 1.4; min-height: 35px; }
+.row-operations .operation { white-space: nowrap; }
+.row-operations + .readout { margin-top: 14px; }
+.readout { margin-top: 24px; font-size: 27px; display: flex; align-items: baseline; flex-wrap: wrap; gap: 14px 26px; }
+.readout .label { color: var(--muted); font: 15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; margin-right: 8px; }
+.readout .objective-value { color: var(--teal); }
+.basis-line { font-size: 20px; color: var(--muted); margin-top: 11px; }
+.swatch { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; background: var(--teal); }
+.swatch.amber { background: var(--amber); }
+.swatch.purple { background: var(--purple); }
+.table-legend { display: flex; gap: 24px; margin-top: 18px; color: var(--muted); font-size: 16px; }
+.geometry { width: 100%; height: 365px; overflow: visible; display: block; }
+.geometry text { fill: var(--muted); font: 16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+.geometry .axis-label { fill: var(--ink); font: italic 24px Georgia,serif; }
+.geometry .point-label { fill: var(--ink); font-size: 15px; font-weight: 600; paint-order: stroke; stroke: var(--paper); stroke-width: 5px; stroke-linejoin: round; }
+.geometry .gridline { stroke: var(--line); stroke-width: .65; }
+.geometry .axis { stroke: var(--ink); stroke-width: 1.4; }
+.geometry .region { fill: #cde3d2; fill-opacity: .5; }
+.geometry .boundary { stroke: #81938b; stroke-width: 1.4; }
+.geometry .path { fill: none; stroke: var(--teal); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.geometry .candidate { fill: none; stroke: var(--teal); stroke-width: 2.5; stroke-dasharray: 6 6; }
+.geometry .level { stroke: var(--coral); stroke-width: 1.5; stroke-dasharray: 7 5; }
+.geometry .optimal-edge { stroke: var(--purple); stroke-width: 6; stroke-linecap: round; }
+.geometry .optimal-point { fill: var(--purple); stroke: var(--paper); stroke-width: 2; }
+.geometry .current { fill: var(--teal); stroke: var(--paper); stroke-width: 3; }
+.geometry .past-point { fill: var(--teal); stroke: var(--paper); stroke-width: 2; }
+.geometry .target-point { fill: var(--paper); stroke: var(--teal); stroke-width: 2.5; }
+.geometry .boundary-label { font-size: 14px; }
+.graph-info { margin-top: 3px; display: flex; justify-content: space-between; align-items: baseline; font-size: 25px; }
+.graph-info .level-label { color: var(--coral); font-size: 18px; }
+.graph-footnote { font-size: 17px; color: var(--muted); margin: 6px 0 0; }
+.edge-control { margin-top: 4px; height: 32px; flex-shrink: 0; display: flex; align-items: center; gap: 15px; font-size: 20px; line-height: 1.15; }
+.edge-control input { flex: 1; accent-color: var(--purple); height: 22px; min-width: 0; }
+.edge-control label { white-space: nowrap; }
+.parametric { font-size: 26px; margin-top: 19px; line-height: 1.5; }
+.certificate { margin-top: 24px; padding-top: 21px; border-top: 1px solid var(--line); font-size: 28px; line-height: 1.5; }
+.certificate .small { display: block; font: 18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color: var(--muted); }
+.certificate.compact { border: 0; margin-top: 12px; padding-top: 0; line-height: 1.3; }
+.certificate.compact + .readout { margin-top: 10px; }
+.reduced-costs { color: var(--teal); font-size: 25px; margin-bottom: 5px; }
+.optimum-table .tableau tbody th, .optimum-table .tableau tbody td { height: 58px; }
+.certificate-proof { display: flex; flex-direction: column; gap: 18px; font-size: 34px; line-height: 1.4; margin-top: 12px; }
+.certificate-proof .bound { color: var(--teal); font-size: 43px; }
+.certificate-attainment { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 22px; font-size: 28px; }
+.certificate-attainment .label { display: block; color: var(--muted); font-size: 17px; margin-bottom: 12px; }
+.sign-equivalence { font-size: 30px; margin-top: 25px; color: var(--teal); }
+.mini-convention { display: flex; gap: 18px; font-size: 22px; align-items: center; margin-top: 25px; }
+.mini-convention .arrow { color: var(--muted); }
+.large-equation { font: 38px Georgia,serif; margin-top: 45px; line-height: 1.6; }
+.general-rule { font-size: 28px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); line-height: 1.5; }
+.summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 44px; padding-top: 35px; }
+.summary-grid h2 { font-family: Georgia,serif; font-weight: 400; font-size: 34px; margin: 20px 0; }
+.summary-grid p { font-size: 24px; line-height: 1.5; margin-top: 20px; }
+.summary-grid .number { font: 68px Georgia,serif; color: var(--teal); }
+#takeaway { position: relative; font-size: 25px; line-height: 1.35; padding: 25px 0 0 23px; }
+#takeaway::before { content: ""; position: absolute; left: 0; top: 24px; width: 5px; height: 40px; background: var(--teal); }
+#takeaway > span:not(.inline-math) { margin-right: 12px; }
+#takeaway .math { font-size: 28px; }
+footer { border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; }
+.footer-left { display: flex; align-items: center; gap: 23px; font-size: 15px; color: var(--muted); min-width: 168px; }
+#keys { font-size: 18px; color: var(--ink); white-space: nowrap; }
+#keys span { font-size: 12px; color: var(--muted); margin-left: 5px; }
+#position { min-width: 50px; }
+#phase-nav { display: flex; gap: 7px; }
+#phase-nav button { border: 0; background: transparent; color: var(--muted); font-size: 13px; padding: 7px 5px; }
+#phase-nav button.active { color: var(--teal); font-weight: 650; }
+#phase-nav button .phase-dot { width: 20px; height: 20px; font-size: 12px; display: inline-flex; border-radius: 50%; border: 1px solid var(--line); align-items: center; justify-content: center; margin-right: 5px; }
+#phase-nav button.active .phase-dot { color: var(--paper); background: var(--teal); border-color: var(--teal); }
+.footer-actions { display: flex; align-items: center; gap: 12px; }
+.text-button { border: 0; background: transparent; font-size: 13px; padding: 8px 6px; color: var(--muted); }
+.text-button[aria-pressed="true"] { color: var(--teal); }
+.nav-button { border: 1px solid var(--line); background: transparent; width: 50px; height: 42px; border-radius: 5px; font-size: 25px; }
+.nav-button.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.progress-track { position: absolute; bottom: 0; left: 0; height: 4px; width: 100%; background: #e2e7de; }
+#progress { background: var(--teal); height: 100%; transition: width .18s; }
+#speaker-note { position: absolute; bottom: 105px; left: 54px; width: 720px; padding: 22px 26px; background: var(--ink); color: var(--paper); font-size: 22px; line-height: 1.5; border-radius: 7px; box-shadow: 0 8px 28px #192e3130; z-index: 10; }
+dialog { width: min(850px,90vw); max-height: 88vh; padding: 30px 38px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); font-size: 17px; line-height: 1.55; }
+dialog::backdrop { background: #12272b88; backdrop-filter: blur(3px); }
+.dialog-top { display: flex; justify-content: space-between; align-items: center; }
+dialog h2 { font: 32px Georgia,serif; margin: 0 0 12px; }
+dialog h3 { font-size: 19px; margin: 25px 0 8px; }
+dialog a { color: var(--teal); }
+dialog li { margin-bottom: 9px; }
+.dialog-fine { color: var(--muted); font-size: 15px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+@media print {
+  html, body { overflow: visible; height: auto; background: var(--paper); }
+  #stage { position: relative; left: auto; top: auto; transform: none; }
+  footer, .topbar, .progress-track, #speaker-note { visibility: hidden; }
+  @page { size: landscape; margin: 0; }
+}
+</style>
+</head>
+<body>
+  <main id="stage" aria-label="Prezentace simplexové metody">
+    <header class="topbar">
+      <nav id="topics" aria-label="Části prezentace"></nav>
+    </header>
+    <div class="heading">
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="title"></h1>
+      <p id="subtitle"></p>
+    </div>
+    <div id="content"></div>
+    <div id="takeaway" aria-live="polite"></div>
+    <footer>
+      <div class="footer-left"><span id="position"></span><span id="keys">← → <span>krokování</span></span></div>
+      <div id="phase-nav" aria-label="Fáze pivotu"></div>
+      <div class="footer-actions">
+        <button id="notesButton" class="text-button" aria-pressed="false" title="Poznámka pro výklad (N)">Poznámka</button>
+        <button id="fullscreenButton" class="icon-button" aria-label="Celá obrazovka" title="Celá obrazovka (F)">⛶</button>
+        <button id="previous" class="nav-button" aria-label="Předchozí krok">←</button>
+        <button id="next" class="nav-button primary" aria-label="Další krok">→</button>
+      </div>
+    </footer>
+    <div class="progress-track"><div id="progress"></div></div>
+    <aside id="speaker-note" hidden aria-label="Poznámka pro výklad"></aside>
+  </main>
+  <dialog id="help">
+    <div class="dialog-top"><h2>Ovládání a prameny</h2><button id="closeHelp" class="icon-button" aria-label="Zavřít">×</button></div>
+    <p>Šipky, mezerník a Page Up / Page Down krokovat. Home / End přejít na kraj prezentace. F celá obrazovka. N poznámka pro výklad. Esc zavřít toto okno.</p>
+    <p>Horní nabídka přepíná příklady. Číslované fáze dole dovolují vrátit se k výběru sloupce, poměrovému testu nebo pivotu. Odkaz v adresním řádku uchovává aktuální krok.</p>
+    <h3>Znaménková konvence</h3>
+    <p>Maximalizujeme. Ve skriptech je <span class="math inline-math"><b>x</b><sub><i>B</i></sub> = <b>p</b> + <i>Q</i><b>x</b><sub><i>N</i></sub></span>, <span class="math inline-math"><i>z</i> = <i>z</i><sub>0</sub> + <b>r</b><sup class="transpose">T</sup><b>x</b><sub><i>N</i></sub></span>. Zde přesouváme proměnné doleva: v nebázickém bloku tabulky stojí <span class="math inline-math">−<i>Q</i></span> a v posledním řádku <span class="math inline-math">−<b>r</b><sup class="transpose">T</sup></span>. Pravá strana posledního řádku je <span class="math inline-math"><i>z</i><sub>0</sub></span>.</p>
+    <p>V omezujícím řádku a nebázickém sloupci je prvek <span class="math inline-math">−<i>q</i><sub><i>ij</i></sub></span>, vpravo <span class="math inline-math"><i>p</i><sub><i>i</i></sub></span>. Pro vstupující proměnnou <span class="math inline-math"><i>x</i><sub><i>v</i></sub></span> počítáme poměry <span class="math inline-math"><i>p</i><sub><i>i</i></sub> / (−<i>q</i><sub><i>iv</i></sub>)</span> pouze při <span class="math inline-math"><i>q</i><sub><i>iv</i></sub> &lt; 0</span>, tedy přes kladné zobrazené prvky.</p>
+    <p>Index <span class="math inline-math"><i>i</i></span> označuje aktuální omezující řádek; jeho bázická proměnná je uvedena vlevo. Po pivotu řádky nepřerovnáváme podle indexů bázických proměnných. Oproti seřazenému zápisu ve skriptech tak mohou být řádky <span class="math inline-math"><b>p</b></span> a <span class="math inline-math"><i>Q</i></span> přeuspořádané.</p>
+    <h3>Prameny</h3>
+    <ul>
+      <li>Kapitola 4 skript 01LIP, části 4.1–4.4. Příklady a cesta prvního výpočtu odpovídají skriptům.</li>
+      <li>Atlas 01LIP, S04-02: příklad se zlomky.</li>
+      <li><a href="https://people.math.carleton.ca/~kcheung/math/notes/MATH5801/04/4_3_tableau.html" target="_blank" rel="noopener">K. Cheung, Carleton University: Tableau Method</a>. Převod rovnic do číselné tabulky a řádkové úpravy. Zdroj pracuje s minimalizací, zde používáme maximalizaci.</li>
+      <li><a href="https://math.uww.edu/~mcfarlat/simplex1.htm" target="_blank" rel="noopener">University of Wisconsin–Whitewater: Simplex Method for Standard Problems</a>. Přímo maximalizační tabulka se zápornými počátečními účelovými koeficienty.</li>
+      <li><a href="https://cw.fel.cvut.cz/b242/_media/courses/b0b33opt/13simplex.pdf" target="_blank" rel="noopener">ČVUT FEL: Optimalizace, Simplexová metoda</a>. Jednotková báze, doplňkové proměnné a pivotování. Zdroj rovněž vychází z minimalizace.</li>
+    </ul>
+    <p class="dialog-fine">Prezentace předpokládá známou přípustnou bázi. U všech čtyř úloh ji tvoří doplňkové proměnné, protože pravé strany jsou nezáporné. Nalezení obecné výchozí báze patří do kapitoly 5, degenerace a pravidla konečnosti do kapitoly 6.</p>
+  </dialog>
+  <script id="example-data" type="application/json">[{"id": "book", "title": "Tři kroky k optimu", "subtitle": "Úvodní příklad z kapitoly 4", "A": [[-1, 1], [1, 0], [0, 1]], "b": [1, 3, 2], "c": [1, 1], "entering": [1, 0, 2], "expectedPath": [[0, 0], [0, 1], [1, 2], [3, 2]], "expectedZ": [0, 1, 3, 5], "graph": {"xMax": 4, "yMax": 3, "labelOffsets": [[12, 19], [-48, -14], [-48, -14], [12, -14]]}, "constraintLabels": ["−x₁ + x₂ ≤ 1", "x₁ ≤ 3", "x₂ ≤ 2"], "outcome": "unique", "source": "chapters/04-simplex.tex, úvodní příklad"}, {"id": "fractions", "title": "Pivot se zlomky", "subtitle": "", "A": [[1, 1], [2, 1]], "b": [5, 8], "c": [3, 2], "entering": [0, 1], "expectedPath": [[0, 0], [4, 0], [3, 2]], "expectedZ": [0, 12, 13], "graph": {"xMax": 6, "yMax": 6, "labelOffsets": [[12, 19], [10, -14], [12, -14]]}, "constraintLabels": ["x₁ + x₂ ≤ 5", "2x₁ + x₂ ≤ 8"], "outcome": "unique", "source": "teaching/atlas/04-simplex.tex, S04-02"}, {"id": "unbounded", "title": "Když krok nic neomezí", "subtitle": "Neomezenost úlohy", "A": [[1, -1], [-1, 1]], "b": [1, 2], "c": [1, 0], "entering": [0], "unboundedEntering": 1, "ray": {"origin": [1, 0], "direction": [1, 1], "objectiveRate": 1}, "expectedPath": [[0, 0], [1, 0]], "expectedZ": [0, 1], "graph": {"xMax": 6, "yMax": 6, "labelOffsets": [[12, 19], [12, -14]]}, "constraintLabels": ["x₁ − x₂ ≤ 1", "−x₁ + x₂ ≤ 2"], "outcome": "unbounded", "source": "chapters/04-simplex.tex, neomezenost úlohy"}, {"id": "multiple", "title": "Celá hrana v optimu", "subtitle": "Více optimálních řešení", "A": [[1, 1], [1, 0], [0, 1]], "b": [5, 4, 3], "c": [1, 1], "entering": [1, 0], "alternativeEntering": 4, "optimalSegment": [[2, 3], [4, 1]], "expectedPath": [[0, 0], [0, 3], [2, 3]], "expectedZ": [0, 3, 5], "graph": {"xMax": 5, "yMax": 4, "labelOffsets": [[12, 19], [12, -14], [-48, -14]]}, "constraintLabels": ["x₁ + x₂ ≤ 5", "x₁ ≤ 4", "x₂ ≤ 3"], "outcome": "segment", "source": "chapters/04-simplex.tex, úsečka optimálních řešení"}]</script>
+  <script>/* Numerical simplex kernel. The display convention is Abar*x=bbar,
+   z-r^T*x=z0: entries of the final row are negative reduced costs. */
+(function (global) {
+  'use strict';
+  const EPS = 1e-10;
+  const clean = value => Math.abs(value) < EPS ? 0 : value;
+  const dataElement = typeof document === 'undefined' ? null : document.getElementById('example-data');
+  const examples = dataElement ? JSON.parse(dataElement.textContent) : (global.SIMPLEX_EXAMPLES || []);
+  const clone = t => ({ rows: t.rows.map(r => r.slice()), basis: t.basis.slice() });
+
+  function initial(example) {
+    const m = example.A.length;
+    const n = example.c.length;
+    if (!m || example.b.length !== m || example.A.some(r => r.length !== n)) {
+      throw new Error('Nesouhlasí rozměry dat úlohy.');
+    }
+    if (example.b.some(b => b < -EPS)) {
+      throw new Error('Počáteční doplňková báze není přípustná.');
+    }
+    const rows = example.A.map((r, i) => [...r, ...Array.from({ length: m }, (_, j) => i === j ? 1 : 0), example.b[i]]);
+    rows.push([...example.c.map(c => clean(-c)), ...Array(m).fill(0), 0]);
+    return { rows, basis: Array.from({ length: m }, (_, i) => n + i) };
+  }
+
+  function pivot(tableau, row, col) {
+    const t = clone(tableau);
+    const m = t.basis.length;
+    const n = t.rows[0].length - 1;
+    if (!Number.isInteger(row) || row < 0 || row >= m || !Number.isInteger(col) || col < 0 || col >= n || t.basis.includes(col)) {
+      throw new Error('Neplatná pozice pivotu.');
+    }
+    const p = t.rows[row][col];
+    if (Math.abs(p) < EPS) throw new Error('Nulový pivot.');
+    const normalized = t.rows[row].map(v => clean(v / p));
+    t.rows = t.rows.map((r, i) => i === row ? normalized.slice() : r.map((v, j) => clean(v - r[col] * normalized[j])));
+    t.basis[row] = col;
+    return t;
+  }
+
+  function solution(tableau) {
+    const n = tableau.rows[0].length - 1;
+    const x = Array(n).fill(0);
+    tableau.basis.forEach((variable, i) => { x[variable] = clean(tableau.rows[i][n]); });
+    return { x, z: clean(tableau.rows[tableau.basis.length][n]) };
+  }
+
+  function ratios(tableau, col) {
+    const n = tableau.rows[0].length - 1;
+    const result = tableau.basis.map((basic, row) => {
+      const coefficient = tableau.rows[row][col];
+      const rhs = tableau.rows[row][n];
+      const eligible = coefficient > EPS;
+      return { row, basic, coefficient, rhs, value: eligible ? clean(rhs / coefficient) : null, eligible, isMinimum: false };
+    });
+    const minimum = Math.min(...result.filter(r => r.eligible).map(r => r.value));
+    result.forEach(r => { r.isMinimum = r.eligible && Math.abs(r.value - minimum) < EPS; });
+    return result;
+  }
+
+  function dictionary(tableau) {
+    const m = tableau.basis.length;
+    const n = tableau.rows[0].length - 1;
+    const nonbasic = Array.from({ length: n }, (_, j) => j).filter(j => !tableau.basis.includes(j));
+    const coefficients = row => Array.from({ length: n }, (_, j) => nonbasic.includes(j) ? clean(-row[j]) : 0);
+    return {
+      nonbasic,
+      rows: tableau.basis.map((basic, i) => ({ basic, constant: tableau.rows[i][n], coefficients: coefficients(tableau.rows[i]) })),
+      objective: { constant: tableau.rows[m][n], coefficients: coefficients(tableau.rows[m]) }
+    };
+  }
+
+  function trace(example) {
+    let t = initial(example);
+    const tableaux = [t];
+    const pivots = [];
+    for (const col of example.entering) {
+      const objective = t.rows[t.basis.length][col];
+      if (objective >= -EPS) throw new Error('Předepsaný vstup nemá kladný redukovaný náklad.');
+      const candidates = ratios(t, col).filter(r => r.isMinimum).sort((a, b) => a.basic - b.basic);
+      if (!candidates.length) throw new Error('Předepsaný pivot je neomezený.');
+      const candidate = candidates[0];
+      const after = pivot(t, candidate.row, col);
+      pivots.push({ col, row: candidate.row, entering: col, leaving: candidate.basic, theta: candidate.value, before: t, after });
+      tableaux.push(after);
+      t = after;
+    }
+    return { tableaux, pivots };
+  }
+
+  // These teaching examples have rational data and small denominators.
+  // Recover a fraction for display while the arithmetic keeps full precision.
+  function format(value) {
+    if (value === null || value === undefined) return '—';
+    if (!Number.isFinite(value)) return value < 0 ? '−∞' : '∞';
+    const v = clean(value);
+    if (Math.abs(v - Math.round(v)) < EPS) return String(Math.round(v)).replace('-', '−');
+    for (let denominator = 2; denominator <= 1000; denominator++) {
+      const numerator = Math.round(v * denominator);
+      if (Math.abs(v - numerator / denominator) < EPS) {
+        return String(numerator).replace('-', '−') + '/' + denominator;
+      }
+    }
+    return v.toLocaleString('cs-CZ', { maximumFractionDigits: 6 });
+  }
+
+  global.SimplexMath = { examples, initial, pivot, solution, ratios, format, dictionary, trace, EPS };
+})(typeof window === 'undefined' ? globalThis : window);
+</script>
+  <script>/* Presentation controller. No network, external fonts, or runtime packages. */
+(function () {
+  'use strict';
+  const M = window.SimplexMath;
+  const examples = M.examples;
+  const traces = Object.fromEntries(examples.map(e => [e.id, M.trace(e)]));
+  const $ = id => document.getElementById(id);
+  const inlineMath = html => `<span class="math inline-math">${html}</span>`;
+  const indexed = (letter, index) => inlineMath(`<i>${letter}</i><sub>${typeof index === 'number' ? index : `<i>${index}</i>`}</sub>`);
+  const v = j => indexed('x', j + 1);
+  const f = value => {
+    const text = M.format(value);
+    if (!text.includes('/')) return text;
+    const [a, b] = text.split('/');
+    return `<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+  };
+  const rowLabel = i => i === 'z' ? '<i>Z</i>' : `<i>R</i><sub>${i + 1}</sub>`;
+  const sections = [
+    { id: 'sestaveni', label: 'Sestavení', example: 'book' },
+    { id: 'prvni-pruchod', label: 'Tři pivoty', example: 'book' },
+    { id: 'zlomky', label: 'Zlomky', example: 'fractions' },
+    { id: 'neomezenost', label: 'Neomezenost', example: 'unbounded' },
+    { id: 'optimalni-hrana', label: 'Optimální hrana', example: 'multiple' }
+  ];
+  const phases = [
+    { id: 'enter', label: 'Vstup' },
+    { id: 'ratio', label: 'Poměr' },
+    { id: 'normalize', label: 'Pivot' },
+    { id: 'eliminate', label: 'Eliminace' },
+    { id: 'result', label: 'Nová báze' }
+  ];
+  const steps = [];
+  for (let build = 0; build <= 8; build++) steps.push({ section: 'sestaveni', example: examples[0], kind: 'build', build });
+  sections.slice(1).forEach(section => {
+    const example = examples.find(e => e.id === section.example);
+    if (example.id !== 'book') steps.push({ section: section.id, example, kind: 'problem' });
+    traces[example.id].pivots.forEach((pivot, iteration) => {
+      phases.forEach(phase => steps.push({ section: section.id, example, kind: 'pivot', phase: phase.id, pivot, iteration }));
+    });
+    steps.push({ section: section.id, example, kind: example.outcome === 'unbounded' ? 'unbounded' : 'optimum' });
+    if (example.id === 'book') steps.push({ section: section.id, example, kind: 'certificate' });
+    if (example.outcome === 'segment') {
+      const before = traces[example.id].tableaux.at(-1), col = example.alternativeEntering;
+      const candidate = M.ratios(before, col).find(r => r.isMinimum);
+      const pivot = { before, after: M.pivot(before, candidate.row, col), col, row: candidate.row,
+        entering: col, leaving: candidate.basic, theta: candidate.value };
+      phases.forEach(phase => steps.push({ section: section.id, example, kind: 'pivot',
+        phase: phase.id, pivot, iteration: traces[example.id].pivots.length, alternative: true }));
+      steps.push({ section: section.id, example, kind: 'segment' });
+    }
+  });
+  let index = 0;
+  let noteVisible = false;
+  let parameter = 0;
+
+  function polynomial(coefficients, constant = null) {
+    let result = constant === null ? '' : f(constant);
+    coefficients.forEach((coefficient, j) => {
+      if (Math.abs(coefficient) < M.EPS) return;
+      const magnitude = Math.abs(coefficient);
+      const term = `${Math.abs(magnitude - 1) < M.EPS ? '' : f(magnitude)}${v(j)}`;
+      if (!result) result = coefficient < 0 ? `−${term}` : term;
+      else result += coefficient < 0 ? ` − ${term}` : ` + ${term}`;
+    });
+    return result || '0';
+  }
+
+  function problem(e) {
+    return `<div class="problem math"><div class="objective"><span style="font-size:24px">max</span> <i>z</i> = ${polynomial(e.c)}</div>
+      <div class="constraints">${e.A.map((row, i) => `<div>${polynomial(row)} ≤ ${f(e.b[i])}</div>`).join('')}</div>
+      <div class="nonnegative">${v(0)}, ${v(1)} ≥ 0</div></div>`;
+  }
+
+  function equations(t, selected = -1, form = 'dictionary') {
+    const d = M.dictionary(t);
+    const rows = [...d.rows, { basic: 'z', ...d.objective }];
+    return `<div class="equations math">${rows.map((row, i) => {
+      const objective = i === t.basis.length;
+      const lhs = objective ? '<i>z</i>' : v(row.basic);
+      let left = lhs;
+      let right = polynomial(row.coefficients, row.constant);
+      if (form === 'left') {
+        if (objective) left = `<i>z</i>${polynomial(t.rows[i].slice(0,-1)).startsWith('−') ? ' ' : ' + '}${polynomial(t.rows[i].slice(0,-1))}`;
+        else left = polynomial(t.rows[i].slice(0,-1));
+        right = f(row.constant);
+      }
+      return `<div class="equation ${objective ? 'eq-objective' : ''} ${i === selected ? 'selected' : ''}">
+        <span class="eq-lhs">${left}</span><span class="eq-sign">=</span><span>${right}</span></div>`;
+    }).join('')}</div>`;
+  }
+
+  function initialEquations(e, selected = -1) {
+    const t = M.initial(e);
+    return `<div class="equations compact math">${t.rows.map((row, i) => {
+      const objective = i === t.basis.length;
+      return `<div class="equation ${objective ? 'eq-objective' : ''} ${selected === i ? 'selected' : ''}">
+        <span>${objective ? `<i>z</i> ${polynomial(row.slice(0,-1))}` : polynomial(row.slice(0,-1))}</span><span class="eq-sign">=</span><span>${f(row.at(-1))}</span></div>`;
+    }).join('')}</div>`;
+  }
+
+  function tableau(t, opts = {}) {
+    const n = t.rows[0].length - 1;
+    const m = t.basis.length;
+    const ratioData = opts.ratios ? M.ratios(t, opts.enter) : null;
+    const classFor = (i, j) => {
+      const result = [];
+      if (j === n) result.push('rhs');
+      if (opts.reveal !== undefined && i > opts.reveal) result.push('ghost');
+      if (opts.identity && opts.identity.includes(j)) result.push('identity');
+      if (opts.enter === j) result.push('entering');
+      if (opts.leave === i) result.push('leaving');
+      if (opts.changed && opts.changed.includes(i)) result.push('changed');
+      if (opts.focus === i) result.push('focus-row');
+      if (opts.rhs && j === n) result.push('focus-rhs');
+      if (opts.costs && i === m && t.rows[i][j] < -M.EPS && j !== n) result.push('negative-cost');
+      if (opts.pivot && opts.pivot[0] === i && opts.pivot[1] === j) result.push('pivot');
+      return result.join(' ');
+    };
+    return `<div class="table-wrap"><table class="tableau" aria-label="Simplexová tabulka">
+      <thead><tr><th scope="col" class="basis-head">${opts.intermediate?'řádek':'báze'}</th>${Array.from({length:n},(_,j)=>`<th scope="col" class="${opts.enter === j ? 'entering' : opts.identity?.includes(j) ? 'identity' : ''}">${v(j)}</th>`).join('')}<th scope="col" class="rhs">PS</th>${ratioData ? '<th scope="col" class="ratio-head">poměr</th>' : ''}</tr></thead>
+      <tbody>${t.rows.map((row,i) => `<tr class="${i === m ? 'objective-row' : ''}" ${opts.reveal !== undefined && i > opts.reveal?'aria-hidden="true"':''}>
+        <th scope="row" class="${opts.reveal !== undefined && i > opts.reveal ? 'ghost' : ''} ${opts.leave === i ? 'leaving' : ''} ${opts.newBasis === i ? 'new-basis' : ''}"><span class="row-name">${i === m ? 'Z' : `R${i+1}`}</span>${i === m ? '<i>z</i>' : opts.intermediate?'':v(t.basis[i])}</th>
+        ${row.map((value,j)=>`<td data-row="${i}" data-col="${j}" class="${classFor(i,j)}">${f(value)}</td>`).join('')}
+        ${ratioData ? i < m ? `<td class="ratio-cell ${ratioData[i].isMinimum ? 'ratio-winner' : !ratioData[i].eligible ? 'ratio-excluded' : ''}">${ratioData[i].eligible ? f(ratioData[i].value) : 'neomezí'}</td>` : '<td></td>' : ''}</tr>`).join('')}</tbody></table></div>`;
+  }
+
+  function solution(t) {
+    const s = M.solution(t);
+    const nb = M.dictionary(t).nonbasic;
+    return `<div class="readout math"><span><span class="label">BFS</span>(${f(s.x[0])}, ${f(s.x[1])})</span><span class="objective-value"><i>z</i> = ${f(s.z)}</span></div>
+      <div class="basis-line math">${nb.map(v).join(' = ')} = 0 <span style="padding:0 12px;color:var(--line)">/</span> B = {${t.basis.map(j=>j+1).sort((a,b)=>a-b).join(', ')}}</div>`;
+  }
+
+  // Clip the viewport rectangle by every original half-plane. This also
+  // displays unbounded feasible regions correctly inside the visible window.
+  function clipPolygon(polygon, a, b, rhs) {
+    if (!polygon.length) return [];
+    const result = [];
+    for (let i = 0; i < polygon.length; i++) {
+      const p = polygon[i], q = polygon[(i+1)%polygon.length];
+      const fp = a*p[0]+b*p[1]-rhs, fq = a*q[0]+b*q[1]-rhs;
+      if (fp <= M.EPS) result.push(p);
+      if ((fp <= M.EPS) !== (fq <= M.EPS)) {
+        const t = fp/(fp-fq);
+        result.push([p[0]+t*(q[0]-p[0]),p[1]+t*(q[1]-p[1])]);
+      }
+    }
+    return result;
+  }
+
+  function lineEndpoints(a,b,rhs,xMax,yMax) {
+    const values = [];
+    if (Math.abs(b)>M.EPS) values.push([0,rhs/b],[xMax,(rhs-a*xMax)/b]);
+    if (Math.abs(a)>M.EPS) values.push([rhs/a,0],[(rhs-b*yMax)/a,yMax]);
+    const result = [];
+    values.filter(([x,y])=>x>=-M.EPS&&x<=xMax+M.EPS&&y>=-M.EPS&&y<=yMax+M.EPS).forEach(p=>{
+      if (!result.some(q=>Math.abs(p[0]-q[0])+Math.abs(p[1]-q[1])<M.EPS)) result.push(p);
+    });
+    return result.slice(0,2);
+  }
+
+  function graph(e, opts = {}) {
+    const { xMax, yMax } = e.graph;
+    const W=540,H=365,L=46,R=25,T=25,B=38;
+    const unit = Math.min((W-L-R)/xMax,(H-T-B)/yMax);
+    const px = x=>L+x*unit, py=y=>H-B-y*unit;
+    const coords=p=>`${px(p[0]).toFixed(2)},${py(p[1]).toFixed(2)}`;
+    const line=(points,cls,extra='')=>points.length===2 ? `<line x1="${px(points[0][0])}" y1="${py(points[0][1])}" x2="${px(points[1][0])}" y2="${py(points[1][1])}" class="${cls}" ${extra}/>` : '';
+    let polygon=[[0,0],[xMax,0],[xMax,yMax],[0,yMax]];
+    e.A.forEach((row,i)=>{polygon=clipPolygon(polygon,row[0],row[1],e.b[i]);});
+    const current = opts.current || [0,0];
+    const z = e.c[0]*current[0]+e.c[1]*current[1];
+    const path = opts.path || [[0,0]];
+    let svg=`<svg class="geometry" viewBox="0 0 ${W} ${H}" role="img" aria-label="Přípustná oblast v rovině x1, x2, cesta simplexové metody a aktuální bod (${M.format(current[0])}, ${M.format(current[1])})"><defs><clipPath id="plot-clip"><rect x="${L}" y="${T-8}" width="${xMax*unit}" height="${yMax*unit+8}"/></clipPath><marker id="ray-arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--teal)" stroke-width="1.2"/></marker></defs>`;
+    for(let x=0;x<=xMax;x++)svg+=`<line class="gridline" x1="${px(x)}" y1="${py(0)}" x2="${px(x)}" y2="${py(yMax)}"/><text text-anchor="middle" x="${px(x)}" y="${py(0)+24}">${x}</text>`;
+    for(let y=1;y<=yMax;y++)svg+=`<line class="gridline" x1="${px(0)}" y1="${py(y)}" x2="${px(xMax)}" y2="${py(y)}"/><text text-anchor="end" x="${px(0)-11}" y="${py(y)+5}">${y}</text>`;
+    svg+=`<g clip-path="url(#plot-clip)"><polygon class="region" points="${polygon.map(coords).join(' ')}"/>`;
+    e.A.forEach((row,i)=>{svg+=line(lineEndpoints(row[0],row[1],e.b[i],xMax,yMax),'boundary');});
+    svg+=line(lineEndpoints(e.c[0],e.c[1],z,xMax,yMax),'level');
+    if(path.length>1)svg+=`<polyline class="path" points="${path.map(coords).join(' ')}"/>`;
+    if(opts.target)svg+=line([current,opts.target],'candidate');
+    if(opts.segment)svg+=line(e.optimalSegment,'optimal-edge');
+    if(opts.ray) {
+      const end=[e.ray.origin[0]+4.3*e.ray.direction[0],e.ray.origin[1]+4.3*e.ray.direction[1]];
+      svg+=line([e.ray.origin,end],'path','marker-end="url(#ray-arrow)"');
+    }
+    svg+='</g>';
+    svg+=line([[0,0],[xMax+.09,0]],'axis')+line([[0,0],[0,yMax+.07]],'axis');
+    svg+=`<text class="axis-label" x="${px(xMax)+12}" y="${py(0)+5}">x<tspan baseline-shift="sub" font-size="65%" font-style="normal">1</tspan></text><text class="axis-label" x="${px(0)-8}" y="${py(yMax)-10}">x<tspan baseline-shift="sub" font-size="65%" font-style="normal">2</tspan></text>`;
+    const namedPoints = opts.optima ? e.optimalSegment.slice(0,opts.optima) : [];
+    path.forEach((p,i)=>{
+      if(namedPoints.some(q=>Math.abs(p[0]-q[0])+Math.abs(p[1]-q[1])<M.EPS))return;
+      const isCurrent=Math.abs(p[0]-current[0])+Math.abs(p[1]-current[1])<M.EPS;
+      if(!isCurrent)svg+=`<circle class="past-point" cx="${px(p[0])}" cy="${py(p[1])}" r="4.5"/>`;
+      const offset=e.graph.labelOffsets?.[i]||[10,-12];
+      svg+=`<text class="point-label" x="${px(p[0])+offset[0]}" y="${py(p[1])+offset[1]}">(${M.format(p[0])}, ${M.format(p[1])})</text>`;
+    });
+    if(opts.target)svg+=`<circle class="target-point" cx="${px(opts.target[0])}" cy="${py(opts.target[1])}" r="6"/>`;
+    namedPoints.forEach((p,i)=>{
+      const offset=i===0?[-12,-18]:[12,22];
+      svg+=`<circle class="optimal-point" cx="${px(p[0])}" cy="${py(p[1])}" r="7"/><text class="point-label" text-anchor="${i===0?'end':'start'}" x="${px(p[0])+offset[0]}" y="${py(p[1])+offset[1]}">${i===0?'A':'B'} = (${M.format(p[0])}, ${M.format(p[1])})</text>`;
+    });
+    const motion=opts.animateFrom&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? `<animate attributeName="cx" from="${px(opts.animateFrom[0])}" to="${px(current[0])}" dur="1.2s"/><animate attributeName="cy" from="${py(opts.animateFrom[1])}" to="${py(current[1])}" dur="1.2s"/>` : '';
+    svg+=`<circle class="current" cx="${px(current[0])}" cy="${py(current[1])}" r="7">${motion}</circle>`;
+    svg+='</svg>';
+    const selectedLabel=opts.parameterized ? `<span class="math">(${f(current[0])}, ${f(current[1])})</span>` : '<span><span class="swatch"></span>aktuální bod</span>';
+    return `${svg}<div class="graph-info">${selectedLabel}<span class="level-label math">${polynomial(e.c)} = ${f(z)}</span></div>
+      <p class="graph-footnote">${opts.ray ? 'Zelená polopřímka pokračuje mimo obrázek.' : opts.segment ? 'Fialová úsečka obsahuje všechna optimální řešení.' : 'Zeleně přípustná oblast, přerušovaně vrstevnice.'}</p>`;
+  }
+
+  function panel(label,content) {return `<section class="panel"><h2 class="panel-label">${label}</h2>${content}</section>`;}
+  function columns(left,right,construction=false) {return `<div class="columns ${construction?'construction':''}">${left}${right}</div>`;}
+  function header(title,subtitle='',eyebrow='') { $('title').innerHTML=title; $('subtitle').innerHTML=subtitle; $('eyebrow').textContent=eyebrow; }
+  function takeaway(html) { $('takeaway').innerHTML=html; }
+
+  function renderBuild(s) {
+    const e=s.example,t=M.initial(e),k=s.build;
+    const titles=['Simplexová tabulka','Rovnice a sloupce','První omezení','Druhé omezení','Třetí omezení','Řádek účelové funkce','Doplňkové proměnné tvoří bázi','Řešení čteme z pravé strany','Tatáž soustava, jiná znaménka'];
+    const subtitles=['Stejný příklad jako na tabuli. Dvě rozhodovací proměnné, tři omezení.','Ke každému omezení přičteme nezápornou doplňkovou proměnnou.','Koeficienty první rovnice zapíšeme do prvního řádku.','Nevyskytující se proměnná má koeficient nula.','Pravé strany zapíšeme do posledního sloupce PS.','Účelovou funkci zapíšeme jako rovnici s proměnnými vlevo.','Jednotkové sloupce určují bázické proměnné.','Nebázické proměnné položíme rovny nule.','Soustava rovnic ve skriptech a číselná tabulka popisují totéž.'];
+    header(titles[k],subtitles[k],'Sestavení / příklad ze skript');
+    if(k===0) {
+      $('content').innerHTML=columns(panel('Zadání',problem(e)),panel('Přípustná oblast',graph(e)),false);
+      takeaway('Začínáme v počátku. Volnou kapacitu popíší doplňkové proměnné.');
+      return 'Navazuje na výklad sekce 4.3 na tabuli. Úloha je totožná s úvodním příkladem kapitoly 4. Na tabuli lze nejprve vytvořit tabulku ručně a zde znovu projít stejný převod.';
+    }
+    const opts={};
+    if(k<=5)opts.reveal=k-2;
+    if(k>=2&&k<=5)opts.focus=k-2;
+    if(k===6)opts.identity=t.basis;
+    if(k===7)opts.rhs=true;
+    if(k===8)opts.focus=3;
+    const left=k<6 ? initialEquations(e,k>=2?k-2:-1) : equations(t,k===8?3:-1);
+    const extra=k===1 ? '<p class="math-note math">'+[2,3,4].map(v).join(', ')+' ≥ 0</p>' : k===6 ? '<p class="math-note math">B = {3, 4, 5}, &nbsp; N = {1, 2}</p>' : k===7 ? `<p class="math-note math">${v(0)} = ${v(1)} = 0</p>` : k===8 ? '<div class="mini-convention math"><span><b>r</b> = (1, 1)<sup class="transpose">T</sup></span><span class="arrow">⇒</span><span>−<b>r</b> = (−1, −1)<sup class="transpose">T</sup></span></div>' : '';
+    const caption=k===8 ? `Nebázický blok: ${inlineMath(`−${indexed('q','ij')}`)}. PS omezení: ${indexed('p','i')}.<br>Účelový řádek: ${inlineMath(`−${indexed('r','j')}`)}; PS: ${indexed('z',0)}.` : k===6 ? 'V z-řádku jsou pod bázickými proměnnými nuly.' : 'PS = pravá strana. Koeficient u z je v posledním řádku vždy 1.';
+    $('content').innerHTML=columns(panel(k<6?'Proměnné vlevo':'Soustava rovnic',left+extra),panel('Číselná tabulka',tableau(t,opts)+`<p class="table-caption">${caption}</p>`+(k===7?solution(t):'')),true);
+    const messages=[
+      '',
+      'Každá proměnná má svůj sloupec. Každá rovnice má svůj řádek.',
+      `<span class="math">−${v(0)} + ${v(1)} + ${v(2)} = 1</span><span>zapíšeme jako</span><span class="math">−1, 1, 1, 0, 0 | 1</span>`,
+      `<span class="math">${v(0)} + ${v(3)} = 3</span><span>zapíšeme jako</span><span class="math">1, 0, 0, 1, 0 | 3</span>`,
+      `<span class="math">${v(1)} + ${v(4)} = 2</span><span>zapíšeme jako</span><span class="math">0, 1, 0, 0, 1 | 2</span>`,
+      inlineMath(`<i>z</i> = ${v(0)} + ${v(1)} &nbsp; ⇔ &nbsp; <i>z</i> − ${v(0)} − ${v(1)} = 0`),
+      'Tři jednotkové sloupce dávají výchozí přípustnou bázi.',
+      inlineMath(`(${[0,1,2,3,4].map(v).join(', ')}) = (0, 0, 1, 3, 2), &nbsp; <i>z</i> = 0`),
+      `Ve skriptech zlepšuje ${inlineMath(`${indexed('r','j')} > 0`)}. Zde tedy hledáme záporné číslo v z-řádku.`
+    ];
+    takeaway(messages[k]);
+    return k===8 ? `Koeficienty při přesunu doleva mění znaménko. Vnitřní nebázický blok je ${inlineMath('−<i>Q</i>')}, jeho prvky tedy ${inlineMath(`−${indexed('q','ij')}`)} pro nebázická ${inlineMath('<i>j</i>')}. Pravé strany omezení obsahují ${indexed('p','i')} a z-řádek obsahuje ${inlineMath('−<b>r</b>')}. Pravá strana se nemění. Pro MAX tedy vstupujeme při záporném prvku posledního řádku a poměrový test provádíme jen přes kladné omezující prvky. Toto je výslovně jiná číselná konvence než v atlasu.` : k===6 ? `Všechna ${indexed('b','i')} jsou nezáporná, proto je doplňková báze přípustná. U obecné úlohy nemusí být výchozí báze takto zřejmá. To řeší kapitola 5. Jednotkové sloupce vybíráme jako bázi, ne jako automatický důkaz jediné možné báze.` : `Proměnná, která se v rovnici nevyskytuje, má v příslušném sloupci nulu. Označení ${[0,1,2].map(rowLabel).join(', ')} slouží pro následující řádkové úpravy; základní proměnná řádku se při pivotu může změnit.`;
+  }
+
+  function renderProblem(s) {
+    const e=s.example,t=M.initial(e);
+    header(e.title,e.subtitle,'Další příklad');
+    $('content').innerHTML=columns(panel('Zadání',problem(e)),panel('Přípustná oblast',graph(e)));
+    takeaway(e.id==='fractions'?'Dvě omezení, dvě doplňkové proměnné. Tentokrát budeme dělit pivotem 2.':e.id==='unbounded'?'Neomezená přípustná oblast sama o sobě ještě neprokazuje neomezenost účelové funkce.':'Sledujeme stejnou účelovou funkci. Změní se tvar přípustné oblasti.');
+    return 'Výchozí bázi tvoří doplňkové proměnné. Všechny proměnné jsou nezáporné. Nechte studenty před dalším krokem navrhnout vstupující proměnnou. '+(e.id==='unbounded'?'Pro neomezenost potřebujeme přípustný směr s kladným růstem účelové funkce.':'');
+  }
+
+  function renderPivot(s) {
+    const {example:e,pivot:p,iteration:i,phase,alternative=false}=s;
+    const m=p.before.basis.length,n=p.before.rows[0].length-1;
+    const before=M.solution(p.before),after=M.solution(p.after);
+    const a=p.before.rows[p.row][p.col];
+    const cost=p.before.rows[m][p.col];
+    const opts={enter:p.col};
+    let t=p.before, operations='',caption='',message='',note='';
+    const titles={enter:`Vstupuje ${v(p.entering)}`,ratio:`Vystupuje ${v(p.leaving)}`,normalize:'Pivotní prvek upravíme na 1',eliminate:'Vynulování zbytku sloupce',result:'Nová báze, nový vrchol'};
+    const sub={enter:'Záporný prvek v z-řádku odpovídá kladnému redukovanému nákladu.',ratio:'Která bázická proměnná jako první klesne na nulu?',normalize:'Pivotní řádek vydělíme pivotním prvkem.',eliminate:'Násobky pivotního řádku odečteme i od z-řádku.',result:'Nebázické proměnné jsou opět nulové. Řešení čteme z pravé strany.'};
+    if(alternative) {
+      titles.enter=`Nulový náklad u ${v(p.entering)}`;
+      sub.enter='Hodnota účelové funkce se nezmění. Ověříme, jak daleko lze dojít.';
+      sub.eliminate='Upravíme omezující řádky. Účelový řádek už má ve sloupci nulu.';
+      titles.result='Druhý optimální bod B = (4, 1)';
+      sub.result='Dva různé přípustné body, oba s optimální hodnotou 5.';
+    }
+    header(titles[phase],sub[phase],`${e.id==='book'?'Příklad ze skript':e.id==='fractions'?'Příklad se zlomky':e.id==='unbounded'?'Neomezenost':'Optimální hrana'} / pivot ${i+1}`);
+    if(phase==='enter') {
+      opts.costs=true;
+      message=`${v(p.entering)} roste, ostatní nebázické proměnné držíme na nule. &nbsp; ${inlineMath(`${indexed('r',p.col+1)} = ${f(-cost)} > 0`)}`;
+      caption=i===0&&e.id==='book'?`Vstoupit může ${v(0)} i ${v(1)}. Volíme ${v(1)} stejně jako ve skriptech.`:p.entering>=e.c.length?'Do báze může vstoupit i doplňková proměnná.':'Každý záporný prvek v posledním řádku nabízí vstupující proměnnou.';
+      note='Výběr vstupující proměnné zde sleduje předem zvolenou cestu ze skript nebo atlasu. Nejde o jediné možné pravidlo. Kladný redukovaný náklad dovolí růst účelové funkce, pokud má přípustný krok kladnou délku; degeneraci probírá kapitola 6.';
+    } else if(phase==='ratio') {
+      opts.ratios=true;opts.leave=p.row;opts.pivot=[p.row,p.col];
+      const eligible=M.ratios(t,p.col).filter(r=>r.eligible);
+      operations=`<span class="math">θ = min { ${eligible.map(r=>`${f(r.rhs)} / ${f(r.coefficient)}`).join(', ')} } = ${f(p.theta)}</span>`;
+      const pi=indexed('p','i'),qiv=indexed('q','iv');
+      caption=`Prvek tabulky je ${inlineMath(`−${qiv}`)}. Poměr ${inlineMath(`${pi} / (−${qiv})`)} bereme pro ${inlineMath(`${qiv} < 0`)}.`;
+      message=`Nejmenší poměr určuje délku kroku. &nbsp; <span class="math">${v(p.leaving)} = 0</span> &nbsp; v cílovém bodě.`;
+      note=`Index ${inlineMath('<i>v</i>')} označuje vstupující proměnnou, zde ${v(p.col)}. Index ${inlineMath('<i>i</i>')} označuje aktuální řádek; jeho bázickou proměnnou čteme vlevo. Ve značení skript se bázická proměnná v řádku ${inlineMath('<i>i</i>')} změní z ${pi} na ${inlineMath(`${pi} + ${qiv} θ`)}. Růst omezuje ${inlineMath(`${qiv} < 0`)}. V číselné tabulce stojí opačný koeficient ${inlineMath(`−${qiv} > 0`)}, proto dělíme kladným zobrazeným prvkem: ${inlineMath(`${pi} / (−${qiv}) = −${pi} / ${qiv}`)}. Při shodě minim volíme jednu vystupující proměnnou; zde shoda nenastává.`;
+    } else if(phase==='normalize') {
+      t={rows:p.before.rows.map(r=>r.slice()),basis:p.before.basis.slice()};
+      t.rows[p.row]=t.rows[p.row].map(value=>value/a);
+      opts.leave=p.row;opts.pivot=[p.row,p.col];opts.intermediate=true;
+      operations=`<span class="operation math">${rowLabel(p.row)} ← ${rowLabel(p.row)} / ${f(a)}</span>`;
+      caption=(a===1?'Pivot už je 1, řádek se nemění. ':'Dělíme celý řádek včetně pravé strany. ')+'Mezikrok eliminace: z PS zatím nečteme BFS.';
+      message=`Pivot leží v průsečíku vstupujícího sloupce ${v(p.entering)} a vystupujícího řádku ${v(p.leaving)}.`;
+      note='Jde o mezikrok Gaussovy–Jordanovy eliminace. Dokud nevynulujeme ostatní prvky ve vstupujícím sloupci, tabulka ještě není zapsána vůči nové bázi. Bod v grafu proto stále ukazuje původní BFS. Dělení celého řádku zachovává rovnici.';
+    } else if(phase==='eliminate') {
+      t=p.after;opts.changed=[];opts.newBasis=p.row;
+      operations=p.before.rows.map((row,r)=>{
+        if(r===p.row||Math.abs(row[p.col])<M.EPS)return '';
+        opts.changed.push(r);
+        const factor=row[p.col];
+        return `<span class="operation math">${rowLabel(r===m?'z':r)} ← ${rowLabel(r===m?'z':r)} ${factor>0?'−':'+'} ${Math.abs(factor)===1?'':f(Math.abs(factor))}${rowLabel(p.row)}</span>`;
+      }).join('');
+      caption='R vpravo označuje už vydělený pivotní řádek. Fialově jsou upravené řádky.';
+      message=`Sloupec ${v(p.entering)} je jednotkový, v z-řádku je pod ním nula. Nově patří do báze.`;
+      note='Řádkové operace se provádějí s normalizovaným pivotním řádkem z předchozího kroku. Všechny rovnice se mění ekvivalentně. Pravá strana z-řádku se aktualizuje stejnou operací jako ostatní prvky, proto automaticky získáme novou účelovou hodnotu.';
+    } else {
+      t=p.after;delete opts.enter;opts.rhs=true;opts.newBasis=p.row;
+      caption='Tabulka nyní popisuje přípustnou bázi po pivotu.';
+      operations=`<span class="math">Δ<i>z</i> = ${indexed('r',p.col+1)} θ = ${f(-cost)} · ${f(p.theta)} = ${f(after.z-before.z)}</span>`;
+      message=`<span class="math">(${f(before.x[0])}, ${f(before.x[1])}) &nbsp; → &nbsp; (${f(after.x[0])}, ${f(after.x[1])}), &nbsp; <i>z</i>: ${f(before.z)} → ${f(after.z)}</span>`;
+      note='Tento pivot je nedegenerovaný: má θ>0 a kladný přírůstek hodnoty účelové funkce. Geometricky přecházíme po hraně do sousedního vrcholu. Báze se může změnit i bez pohybu při degeneraci, což přijde v kapitole 6.';
+    }
+    if(alternative) {
+      if(phase==='enter') {
+        caption=`${inlineMath(`${indexed('r',p.col+1)} = 0`)}: zvětšování ${v(p.entering)} nemění hodnotu účelové funkce.`;
+        message='První optimum A už známe. Nulový náklad nabízí pohyb se stejnou hodnotou.';
+        note='Jde o hledání jiného optimálního bodu, nikoli o zlepšující pivot. Nulový redukovaný náklad sám nestačí: přípustná délka kroku musí být kladná.';
+      } else if(phase==='ratio') {
+        message=`${inlineMath('θ = 2 > 0')}: dojdeme do jiného bodu. ${v(p.leaving)} klesne na nulu.`;
+      } else if(phase==='eliminate') {
+        caption='Účelový řádek se nemění: ve vstupujícím sloupci už měl nulu.';
+      } else if(phase==='result') {
+        caption='Nová přípustná báze dává druhé optimální řešení.';
+        message=`${inlineMath('<i>A</i> = (2, 3), &nbsp; <i>B</i> = (4, 1), &nbsp; <i>z</i>(<i>A</i>) = <i>z</i>(<i>B</i>) = 5')}`;
+        note=`Krok má kladnou délku 2, takže A a B jsou různé body. ${v(4)} vstoupila a ${v(3)} vystoupila. Nové řešení všech pěti proměnných je (4,1,0,0,2). Poslední rovnice zůstává ${inlineMath(`<i>z</i> = 5 − ${v(2)}`)}, proto je i B optimální. Nulový přírůstek hodnoty při kladném kroku není degenerace.`;
+      }
+    }
+    const showAfter=phase==='result'||phase==='eliminate';
+    const path=alternative ? (showAfter?[...e.expectedPath,after.x.slice(0,2)]:e.expectedPath) : e.expectedPath.slice(0,i+(showAfter?2:1));
+    const current=showAfter?[after.x[0],after.x[1]]:[before.x[0],before.x[1]];
+    const target=!showAfter&&(phase==='ratio'||phase==='normalize')?[after.x[0],after.x[1]]:null;
+    const legend=`<div class="table-legend"><span><span class="swatch"></span>vstupující sloupec</span>${phase==='ratio'||phase==='normalize'?'<span><span class="swatch amber"></span>vystupující řádek</span>':''}</div>`;
+    $('content').innerHTML=columns(panel(`Číselná tabulka <span class="normal">z-řádek obsahuje ${inlineMath('−<b>r</b>')}</span>`,tableau(t,opts)+(phase==='result'?'':`<p class="table-caption">${caption}</p>`)+`<div class="row-operations">${operations}</div>`+(phase==='result'?solution(t):legend)),panel(`Geometrie v rovině ${v(0)}, ${v(1)}`,graph(e,{current,path,target,optima:alternative?(showAfter?2:1):0,animateFrom:alternative&&phase==='result'?before.x.slice(0,2):null})));
+    takeaway(message);
+    return note;
+  }
+
+  function finalTable(e) {return traces[e.id].tableaux.at(-1);}
+
+  function optimalReducedCosts(t) {
+    const d=M.dictionary(t);
+    return `<b>r</b> = (${d.nonbasic.map(j=>f(d.objective.coefficients[j])).join(', ')})<sup class="transpose">T</sup> ≤ <b>0</b>`;
+  }
+
+  function renderOptimum(s) {
+    const e=s.example,t=finalTable(e),d=M.dictionary(t),sol=M.solution(t);
+    header(e.outcome==='segment'?'První optimální bod A = (2, 3)':'Certifikát optimality',`Redukované náklady ve značení skript splňují ${inlineMath('<b>r</b> ≤ <b>0</b>')}.`,e.id==='book'?'Příklad ze skript / optimum':e.id==='fractions'?'Příklad se zlomky / optimum':'Optimální hrana / optimum');
+    const equation=`<i>z</i> = ${polynomial(d.objective.coefficients,d.objective.constant)}`;
+    const cert=`<div class="certificate compact math"><div class="reduced-costs">${optimalReducedCosts(t)}</div><div>${equation} ≤ ${f(sol.z)}</div></div>`;
+    $('content').innerHTML=columns(panel('Optimální tabulka',`<div class="optimum-table">${tableau(t,{rhs:true,...(e.outcome==='segment'?{pivot:[t.basis.length,e.alternativeEntering]}:{})})}</div>`+cert+solution(t)),panel(`Geometrie v rovině ${v(0)}, ${v(1)}`,graph(e,{current:sol.x.slice(0,2),path:e.expectedPath,optima:e.outcome==='segment'?1:0})));
+    takeaway(e.outcome==='segment'?`${v(e.alternativeEntering)} má nulový redukovaný náklad. Zbývá ověřit, zda se s ní můžeme skutečně pohnout.`:`Hodnoty ${f(sol.z)} dosahujeme. Větší hodnotu nepřipouští poslední rovnice.`);
+    const order=`Složky ${inlineMath('<b>r</b>')} jsou uvedeny v pořadí nebázických proměnných ${d.nonbasic.map(v).join(', ')}. V číselné tabulce jsou v těchto sloupcích opačná znaménka. `;
+    return order+(e.outcome==='segment'?'Nulový redukovaný náklad sám o sobě nezaručuje druhý optimální bod: přípustný krok může mít délku nula. Poměrovým testem ověříme kladnou délku, provedeme pivot do druhého optimálního bodu B a teprve potom ukážeme celou optimální úsečku.':'Certifikát je globální: poslední rovnice vznikla ekvivalentními úpravami a platí pro všechna přípustná řešení. Nezápornost proměnných dává horní mez z. Zde navíc rovnost vynutí obě nebázické proměnné nulové a tím určí celé řešení jednoznačně.');
+  }
+
+  function renderCertificate(s) {
+    const t=finalTable(s.example);
+    const z0=indexed('z',0),xN='<b>x</b><sub><i>N</i></sub>';
+    const product=`<b>r</b><sup class="transpose">T</sup>${xN}`;
+    header(`Certifikát ze skript: ${inlineMath('<b>r</b> ≤ <b>0</b>')}`,'Postačující podmínka pro maximum při přípustné bázi.','Obecné kritérium optimality');
+    const proof=`<div class="certificate-proof math">
+      <div><i>z</i> = ${z0} + ${product}</div>
+      <div><b>r</b> ≤ <b>0</b>, &nbsp; ${xN} ≥ <b>0</b></div>
+      <div>⇒ &nbsp; ${product} ≤ 0</div>
+      <div class="bound">⇒ &nbsp; <i>z</i> ≤ ${z0}</div>
+    </div><div class="certificate-attainment"><span class="label">Příslušné BFS</span>${inlineMath(`${xN} = <b>0</b> &nbsp; ⇒ &nbsp; <i>z</i> = ${z0}`)}</div>`;
+    const signs=`<p class="table-caption">V nebázických sloupcích posledního řádku stojí ${inlineMath('−<b>r</b>')}.</p><div class="sign-equivalence math">${indexed('r','j')} ≤ 0 &nbsp; ⇔ &nbsp; −${indexed('r','j')} ≥ 0</div>`;
+    $('content').innerHTML=columns(panel('Každé přípustné řešení',proof),panel('Stejná báze v číselné tabulce',tableau(t,{focus:t.basis.length})+signs));
+    takeaway('Příslušné BFS dosahuje horní meze. Je tedy optimální.');
+    return `Používáme přípustnou bázi, tedy příslušné BFS skutečně existuje. Rovnice účelové funkce platí pro každé přípustné řešení. Vektorové nerovnosti jsou po složkách. Z ${inlineMath('<b>r</b> ≤ <b>0</b>')} a ${inlineMath(`${xN} ≥ <b>0</b>`)} plyne nekladnost skalárního součinu, a tedy globální horní mez ${z0}. Při ${inlineMath(`${xN} = <b>0</b>`)} této meze dosahujeme. Jde o postačující certifikát: při degeneraci nemusí být nekladnost všech redukovaných nákladů nutná pro optimalitu samotného bodu. Ekvivalence znamének posledního řádku a redukovaných nákladů je přesná.`;
+  }
+
+  function renderUnbounded(s) {
+    const e=s.example,t=finalTable(e),col=e.unboundedEntering,d=M.dictionary(t);
+    const value=parameter;
+    const current=[1+value,value];
+    header('Zlepšující směr bez omezení','Vstupující sloupec má záporný z-prvek a žádný kladný omezující prvek.','Neomezenost / přípustný paprsek');
+    const cert=`<div class="parametric math">${v(0)} = 1 + t, &nbsp; ${v(1)} = t<br>${v(2)} = 0, &nbsp; ${v(3)} = 3<br><i>z</i> = 1 + t, &nbsp; t ≥ 0</div>`;
+    const control=`<div class="edge-control"><label for="parameter" class="math">t = <span id="parameterValue">${f(value)}</span></label><input id="parameter" type="range" min="0" max="4" step="0.25" value="${value}" aria-label="Parametr t na přípustném paprsku"></div>`;
+    $('content').innerHTML=columns(panel('Žádný řádek nevystupuje',tableau(t,{enter:col,ratios:true})+`<p class="table-caption math"><i>z</i> = ${polynomial(d.objective.coefficients,d.objective.constant)}</p>`+cert),panel('Pohyb po paprsku',`<div id="graph-display">${graph(e,{current,path:e.expectedPath,ray:true,parameterized:true})}</div>`+control));
+    takeaway('Pro libovolně velké t zůstává řešení přípustné a z = 1 + t roste bez omezení.');
+    return `Posuvník ukazuje jen konečnou část paprsku. Algebraická parametrizace platí pro všechna ${inlineMath('<i>t</i> ≥ 0')}. Všimněte si, že se nemění nezáporné doplňkové proměnné ${inlineMath(`${v(2)} = 0`)} a ${inlineMath(`${v(3)} = 3`)}. Samotná neomezenost přípustné oblasti nestačí: zde máme navíc směr s kladným přírůstkem účelové funkce.`;
+  }
+
+  function renderSegment(s) {
+    const e=s.example,t=finalTable(e),col=e.alternativeEntering;
+    const value=parameter,current=[2+value,3-value];
+    header('Celá úsečka optimálních řešení','Známe dvě různá optima A a B. Optimální je i každý bod mezi nimi.','Optimální hrana / pohyb s Δz = 0');
+    const parameterization=`<div class="parametric math">${v(2)} = 0, &nbsp; ${v(4)} = t, &nbsp; 0 ≤ t ≤ 2<br>(${v(0)}, ${v(1)}) = (2 + t, 3 − t), &nbsp; <i>z</i> = 5</div>`;
+    const control=`<div class="edge-control"><label for="parameter" class="math">t = <span id="parameterValue">${f(value)}</span></label><input id="parameter" type="range" min="0" max="2" step="0.25" value="${value}" aria-label="Parametr t na optimální úsečce"></div>`;
+    $('content').innerHTML=columns(panel('Tabulka v bodě A = (2, 3)',tableau(t,{enter:col})+`<p class="table-caption">${inlineMath('<i>A</i> = (2, 3), &nbsp; <i>B</i> = (4, 1), &nbsp; <i>z</i>(<i>A</i>) = <i>z</i>(<i>B</i>) = 5')}</p>`+parameterization),panel(`Všechny body mají ${inlineMath('<i>z</i> = 5')}`,`<div id="graph-display">${graph(e,{current,path:[],segment:true,optima:2,parameterized:true})}</div>`+control));
+    takeaway('Konvexita zaručuje přípustnost celé úsečky. Linearita zachovává hodnotu 5.');
+    return `Tabulka zůstává tabulkou výchozího optimálního vrcholu (2,3). Posuvník mění bod na úsečce, nikoli bázi. Při ${inlineMath(`${v(2)} = 0`)} a ${inlineMath(`${v(4)} = <i>t</i>`)} jsou ${inlineMath(`${v(0)} = 2 + <i>t</i>`)}, ${inlineMath(`${v(1)} = 3 − <i>t</i>`)}, ${inlineMath(`${v(3)} = 2 − <i>t</i>`)}. Nezápornost dává přesně ${inlineMath('0 ≤ <i>t</i> ≤ 2')}. Rovnost ${inlineMath('<i>z</i> = 5')} v certifikátu ${inlineMath(`<i>z</i> = 5 − ${v(2)}`)} vyžaduje ${inlineMath(`${v(2)} = 0`)}, a proto jsme popsali všechna optimální řešení.`;
+  }
+
+  function updateParameter() {
+    const control=$('parameter');
+    if(control)control.addEventListener('input',()=>{
+      parameter=Number(control.value);
+      const s=steps[index],e=s.example,isSegment=s.kind==='segment';
+      $('parameterValue').innerHTML=f(parameter);
+      $('graph-display').innerHTML=graph(e,{current:isSegment?[2+parameter,3-parameter]:[1+parameter,parameter],path:isSegment?[]:e.expectedPath,segment:isSegment,optima:isSegment?2:0,ray:!isSegment,parameterized:true});
+    });
+  }
+
+  function render() {
+    const s=steps[index];
+    const local=steps.filter(step=>step.section===s.section);
+    const localIndex=local.indexOf(s)+1;
+    let note='';
+    if(s.kind==='build')note=renderBuild(s);
+    else if(s.kind==='problem')note=renderProblem(s);
+    else if(s.kind==='pivot')note=renderPivot(s);
+    else if(s.kind==='optimum')note=renderOptimum(s);
+    else if(s.kind==='certificate')note=renderCertificate(s);
+    else if(s.kind==='unbounded')note=renderUnbounded(s);
+    else if(s.kind==='segment')note=renderSegment(s);
+    $('speaker-note').innerHTML=note;
+    $('speaker-note').hidden=!noteVisible;
+    $('notesButton').setAttribute('aria-pressed',String(noteVisible));
+    $('topics').innerHTML=sections.map(section=>`<button data-section="${section.id}" class="${section.id===s.section?'active':''}" ${section.id===s.section?'aria-current="step"':''}>${section.label}</button>`).join('');
+    $('topics').querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>go(steps.findIndex(step=>step.section===button.dataset.section))));
+    $('position').textContent=`${localIndex} / ${local.length}`;
+    $('previous').disabled=index===0;
+    $('next').disabled=index===steps.length-1;
+    $('progress').style.width=`${100*(index+1)/steps.length}%`;
+    $('phase-nav').innerHTML=s.kind==='pivot'?phases.map((phase,i)=>`<button data-phase="${phase.id}" class="${phase.id===s.phase?'active':''}" aria-label="Fáze ${i+1}: ${phase.label}"><span class="phase-dot">${i+1}</span>${phase.label}</button>`).join(''):'';
+    $('phase-nav').querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>go(steps.findIndex(step=>step.section===s.section&&step.iteration===s.iteration&&step.phase===button.dataset.phase))));
+    updateParameter();
+    document.title=`01LIP · ${$('title').textContent}`;
+    const hash=`#${s.section}/${localIndex}`;
+    if(location.hash!==hash)history.replaceState(null,'',hash);
+  }
+
+  function go(nextIndex) {
+    const target=Math.max(0,Math.min(steps.length-1,nextIndex));
+    if(target!==index)parameter=0;
+    index=target;
+    render();
+  }
+
+  function parseHash() {
+    const [section,number]=location.hash.slice(1).split('/');
+    const candidates=steps.map((s,i)=>({s,i})).filter(({s})=>s.section===section);
+    if(candidates.length)index=candidates[Math.max(0,Math.min(candidates.length-1,(Number(number)||1)-1))]?.i||0;
+  }
+
+  function resize() { document.documentElement.style.setProperty('--scale',Math.min(innerWidth/1440,innerHeight/900)); }
+  function toggleNotes() {noteVisible=!noteVisible;render();}
+  async function fullscreen() {
+    try { if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen(); }
+    catch { $('fullscreenButton').title='Použijte celou obrazovku v nabídce prohlížeče.'; }
+  }
+  $('previous').addEventListener('click',()=>go(index-1));
+  $('next').addEventListener('click',()=>go(index+1));
+  $('notesButton').addEventListener('click',toggleNotes);
+  $('fullscreenButton').addEventListener('click',fullscreen);
+  $('closeHelp').addEventListener('click',()=>$('help').close());
+  $('help').addEventListener('click',event=>{if(event.target===$('help')){const b=$('help').getBoundingClientRect();if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom)$('help').close();}});
+  window.addEventListener('resize',resize);
+  window.addEventListener('hashchange',()=>{parseHash();parameter=0;render();});
+  document.addEventListener('keydown',event=>{
+    if($('help').open||event.altKey||event.ctrlKey||event.metaKey)return;
+    if(event.target.matches('input'))return;
+    if(['ArrowRight','PageDown',' '].includes(event.key)){event.preventDefault();go(index+1);}
+    else if(['ArrowLeft','PageUp','Backspace'].includes(event.key)){event.preventDefault();go(index-1);}
+    else if(event.key==='Home'){event.preventDefault();go(0);}
+    else if(event.key==='End'){event.preventDefault();go(steps.length-1);}
+    else if(event.key.toLowerCase()==='n')toggleNotes();
+    else if(event.key.toLowerCase()==='f')fullscreen();
+    else if(event.key==='?')$('help').showModal();
+  });
+  parseHash();resize();render();
+  // Small inspectable interface for mathematical and layout verification.
+  window.SimplexDeck={steps,go,get index(){return index;},get current(){return steps[index];}};
+})();
+</script>
+</body>
+</html>
