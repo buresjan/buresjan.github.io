@@ -24,7 +24,7 @@ lang: cs
   <table>
     <caption>Pátky v zimním semestru 2026/27</caption>
     <thead>
-      <tr><th scope="col">Datum<small>2026</small></th><th scope="col">Přednáška<small>9:00–10:40 · T-301</small></th><th scope="col" class="lp-topics">Probraná témata</th><th scope="col" class="lp-textbook">Studijní text</th><th scope="col">Cvičení<small>11:00–11:50 · T-115</small></th></tr>
+      <tr><th scope="col">Datum<small>2026</small></th><th scope="col">Přednáška<small class="lp-time">9:00–10:40</small><small class="lp-room">T-301</small></th><th scope="col" class="lp-topics">Probraná témata</th><th scope="col" class="lp-textbook">Studijní text</th><th scope="col">Cvičení<small class="lp-time">11:00–11:50</small><small class="lp-room">T-115</small></th></tr>
     </thead>
     <tbody>
       <tr><th scope="row">25. 9.</th><td><span class="lp-session">P1</span></td><td class="lp-topics">Formulace LP, přípustné a optimální řešení, převody mezi tvary.</td><td class="lp-textbook"><a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.1.1" aria-label="Studijní text: § 1.1">§ 1.1</a>, <a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.1.2" aria-label="Studijní text: § 1.2">§ 1.2</a></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
@@ -82,6 +82,7 @@ K předmětu je k dispozici ucelený studijní text.
 .lp-schedule .lp-textbook { width: 17%; }
 .lp-schedule thead th { vertical-align: top; padding-top: 0.55rem; padding-bottom: 0.55rem; }
 .lp-schedule small { display: block; margin-top: 0.15rem; font-size: 0.65rem; font-weight: normal; }
+.lp-schedule .lp-time, .lp-schedule .lp-room { white-space: nowrap; }
 .lp-schedule tbody th { font-weight: normal; }
 .lp-session { display: inline-block; min-width: 2.5em; padding: 0.05rem 0.35rem; border-radius: 0.3rem; background: rgba(52, 137, 166, 0.13); font-weight: 600; }
 .lp-schedule .lp-cancelled { background: rgba(190, 100, 45, 0.13); }
