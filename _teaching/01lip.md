@@ -20,28 +20,30 @@ lang: cs
 
 <section class="lp-schedule" lang="cs" aria-labelledby="terminy-vyuky">
   <h2 id="terminy-vyuky">Termíny výuky</h2>
+  <div class="lp-schedule-scroll" role="region" aria-label="Přehled výuky" tabindex="0">
   <table>
     <caption>Pátky v zimním semestru 2026/27</caption>
     <thead>
-      <tr><th scope="col">Datum 2026</th><th scope="col">Přednáška<small>9:00–10:40 · T-301</small></th><th scope="col">Cvičení<small>11:00–11:50 · T-115</small></th></tr>
+      <tr><th scope="col">Datum 2026</th><th scope="col">Přednáška<small>9:00–10:40 · T-301</small></th><th scope="col" class="lp-topics">Probraná témata</th><th scope="col" class="lp-textbook">Studijní Text</th><th scope="col">Cvičení<small>11:00–11:50 · T-115</small></th></tr>
     </thead>
     <tbody>
-      <tr><th scope="row">25. 9.</th><td><span class="lp-session">P1</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
-      <tr><th scope="row">2. 10.</th><td><span class="lp-session">P2</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv01.zip' | relative_url }}" download="cv01.zip" title="Stáhnout klíčky, zadání cv01 a řešení (ZIP)" aria-label="Cvičení 1: stáhnout klíčky, zadání a řešení v ZIP">C1</a></td></tr>
-      <tr><th scope="row">9. 10.</th><td><span class="lp-session">P3</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
-      <tr><th scope="row">16. 10.</th><td><span class="lp-session">P4</span></td><td><a class="lp-session" href="{{ '/files/01lip/cv02.zip' | relative_url }}?v=20261016-pulp332" download="cv02.zip" title="Stáhnout notebook a HTML náhled cvičení 2 (ZIP)" aria-label="Cvičení 2: stáhnout notebook s řešením a HTML náhled v ZIP">C2</a></td></tr>
-      <tr class="lp-cancelled"><th scope="row">23. 10.</th><td colspan="2">Výuka zrušena</td></tr>
-      <tr><th scope="row">30. 10.</th><td><a class="lp-session" href="{{ '/files/01lip/p5.html' | relative_url }}" download="p5.html" title="Stáhnout prezentaci o simplexové metodě (HTML)" aria-label="Přednáška 5: stáhnout prezentaci o simplexové metodě v HTML">P5</a></td><td><a class="lp-session" href="{{ '/files/01lip/cv03.zip' | relative_url }}?v=20261029-r2" download="cv03.zip" title="Stáhnout notebooky a HTML náhled cvičení 3 včetně zadání domácího úkolu (ZIP)" aria-label="Cvičení 3: stáhnout notebook, řešení, HTML náhled a zadání domácího úkolu v ZIP">C3</a></td></tr>
-      <tr><th scope="row">6. 11.</th><td><span class="lp-session">P6</span></td><td><span class="lp-session">C4</span></td></tr>
-      <tr><th scope="row">13. 11.</th><td><span class="lp-session">P7</span></td><td><span class="lp-session">C5</span></td></tr>
-      <tr><th scope="row">20. 11.</th><td><span class="lp-session">P8</span></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
-      <tr><th scope="row">27. 11.</th><td><span class="lp-session">P9</span></td><td><span class="lp-session">C6</span></td></tr>
-      <tr><th scope="row">4. 12.</th><td><span class="lp-session">P10</span></td><td><span class="lp-session">C7</span></td></tr>
-      <tr><th scope="row">11. 12.</th><td><span class="lp-session">P11</span></td><td><span class="lp-session">C8</span></td></tr>
-      <tr><th scope="row">18. 12.</th><td><span class="lp-session">P12</span></td><td><span class="lp-session">C9</span></td></tr>
+      <tr><th scope="row">25. 9.</th><td><span class="lp-session">P1</span></td><td class="lp-topics">Formulace LP, přípustné a optimální řešení, převody mezi tvary.</td><td class="lp-textbook"><a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.1.1" aria-label="Studijní Text: § 1.1">§ 1.1</a>, <a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.1.2" aria-label="Studijní Text: § 1.2">§ 1.2</a></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
+      <tr><th scope="row">2. 10.</th><td><span class="lp-session">P2</span></td><td class="lp-topics">Konvexita, mnohostěny, báze a bázická přípustná řešení.</td><td class="lp-textbook"><a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=chapter.2" aria-label="Studijní Text: Kap. 2">Kap. 2</a></td><td><a class="lp-session" href="{{ '/files/01lip/cv01.zip' | relative_url }}" download="cv01.zip" title="Stáhnout klíčky, zadání cv01 a řešení (ZIP)" aria-label="Cvičení 1: stáhnout klíčky, zadání a řešení v ZIP">C1</a></td></tr>
+      <tr><th scope="row">9. 10.</th><td><span class="lp-session">P3</span></td><td class="lp-topics">Bázická přípustná řešení, degenerace a základní věta LP.</td><td class="lp-textbook"><a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.2.2" aria-label="Studijní Text: § 2.2">§ 2.2</a>, <a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.3.1" aria-label="Studijní Text: § 3.1">§ 3.1</a></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
+      <tr><th scope="row">16. 10.</th><td><span class="lp-session">P4</span></td><td class="lp-topics">Opakování bázických přípustných řešení a degenerace; grafické řešení úloh.</td><td class="lp-textbook"><a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.2.2" aria-label="Studijní Text: § 2.2">§ 2.2</a>, <a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=section.3.2" aria-label="Studijní Text: § 3.2">§ 3.2</a></td><td><a class="lp-session" href="{{ '/files/01lip/cv02.zip' | relative_url }}?v=20261016-pulp332" download="cv02.zip" title="Stáhnout notebook a HTML náhled cvičení 2 (ZIP)" aria-label="Cvičení 2: stáhnout notebook s řešením a HTML náhled v ZIP">C2</a></td></tr>
+      <tr class="lp-cancelled"><th scope="row">23. 10.</th><td colspan="4">Výuka zrušena</td></tr>
+      <tr><th scope="row">30. 10.</th><td><a class="lp-session" href="{{ '/files/01lip/p5.html' | relative_url }}" download="p5.html" title="Stáhnout prezentaci o simplexové metodě (HTML)" aria-label="Přednáška 5: stáhnout prezentaci o simplexové metodě v HTML">P5</a></td><td class="lp-topics">Simplexové tabulky, pivotování, optimalita, neomezenost a více optimálních řešení.</td><td class="lp-textbook"><a href="{{ '/files/01LIP.pdf' | relative_url }}#nameddest=chapter.4" aria-label="Studijní Text: Kap. 4">Kap. 4</a></td><td><a class="lp-session" href="{{ '/files/01lip/cv03.zip' | relative_url }}?v=20261029-r2" download="cv03.zip" title="Stáhnout notebooky a HTML náhled cvičení 3 včetně zadání domácího úkolu (ZIP)" aria-label="Cvičení 3: stáhnout notebook, řešení, HTML náhled a zadání domácího úkolu v ZIP">C3</a></td></tr>
+      <tr><th scope="row">6. 11.</th><td><span class="lp-session">P6</span></td><td class="lp-topics"></td><td class="lp-textbook"></td><td><span class="lp-session">C4</span></td></tr>
+      <tr><th scope="row">13. 11.</th><td><span class="lp-session">P7</span></td><td class="lp-topics"></td><td class="lp-textbook"></td><td><span class="lp-session">C5</span></td></tr>
+      <tr><th scope="row">20. 11.</th><td><span class="lp-session">P8</span></td><td class="lp-topics"></td><td class="lp-textbook"></td><td><span aria-label="Cvičení se nekoná">—</span></td></tr>
+      <tr><th scope="row">27. 11.</th><td><span class="lp-session">P9</span></td><td class="lp-topics"></td><td class="lp-textbook"></td><td><span class="lp-session">C6</span></td></tr>
+      <tr><th scope="row">4. 12.</th><td><span class="lp-session">P10</span></td><td class="lp-topics"></td><td class="lp-textbook"></td><td><span class="lp-session">C7</span></td></tr>
+      <tr><th scope="row">11. 12.</th><td><span class="lp-session">P11</span></td><td class="lp-topics"></td><td class="lp-textbook"></td><td><span class="lp-session">C8</span></td></tr>
+      <tr><th scope="row">18. 12.</th><td><span class="lp-session">P12</span></td><td class="lp-topics"></td><td class="lp-textbook"></td><td><span class="lp-session">C9</span></td></tr>
     </tbody>
-    <tfoot><tr><th scope="row">Celkem</th><td>12 přednášek</td><td>9 cvičení</td></tr></tfoot>
+    <tfoot><tr><th scope="row">Celkem</th><td>12 přednášek</td><td></td><td></td><td>9 cvičení</td></tr></tfoot>
   </table>
+  </div>
 </section>
 
 Požadavky
@@ -68,13 +70,16 @@ K předmětu je k dispozici ucelený studijní text.
 <a class="btn lp-btn" href="{{ '/files/01LIP.pdf' | relative_url }}" download>Studijní text k předmětu (01LIP.pdf)</a>
 
 <style>
-.lp-schedule { max-width: 38rem; margin: 1.5rem 0 2rem; }
+.lp-schedule { max-width: 64rem; margin: 1.5rem 0 2rem; }
 .lp-schedule h2 { margin-bottom: 0.35rem; }
-.lp-schedule table { display: table; width: 100%; table-layout: fixed; margin: 0; font-size: 0.85rem; line-height: 1.35; font-variant-numeric: tabular-nums; border-collapse: collapse; border: 1px solid rgba(127, 127, 127, 0.35); }
+.lp-schedule-scroll { overflow-x: auto; }
+.lp-schedule table { min-width: 40rem; display: table; width: 100%; table-layout: fixed; margin: 0; font-size: 0.85rem; line-height: 1.35; font-variant-numeric: tabular-nums; border-collapse: collapse; border: 1px solid rgba(127, 127, 127, 0.35); }
 .lp-schedule caption { text-align: left; padding: 0 0 0.6rem; font-size: 0.8rem; }
 .lp-schedule th, .lp-schedule td { padding: 0.2rem 0.5rem; vertical-align: middle; text-align: center; border: 0; border-bottom: 1px solid rgba(127, 127, 127, 0.25); }
 .lp-schedule thead { background: rgba(52, 137, 166, 0.13); border: 0; }
-.lp-schedule th:first-child { text-align: left; width: 25%; }
+.lp-schedule th:first-child { text-align: left; width: 13%; }
+.lp-schedule .lp-topics { width: 42%; text-align: left; }
+.lp-schedule .lp-textbook { width: 17%; }
 .lp-schedule thead th { padding-top: 0.55rem; padding-bottom: 0.55rem; }
 .lp-schedule small { display: block; margin-top: 0.15rem; font-size: 0.65rem; font-weight: normal; }
 .lp-schedule tbody th { font-weight: normal; }
