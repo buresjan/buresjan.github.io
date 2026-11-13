@@ -614,8 +614,6 @@ SOFTWARE.
   const slides=[],add=(section,id,title,body,note)=>slides.push({section,id,title,body,note});
   add('Pravidla','pravidla','Volba vstupující proměnné',
     `<div class="rule-list">${[['Dantzigovo',raw`\max r_j`],['Největší zlepšení',raw`\max r_j\theta_j`],['Nejstrmější hrana',raw`\max\frac{r_j}{\|\mathbf d_j\|_2}`],['Blandovo',raw`\min j`]].map(([name,tex])=>`<div class="rule-row"><span>${T(name)}</span><span>${K(tex)}</span></div>`).join('')}</div>`+eq(raw`j\in N,\quad r_j>0`,'small')+eq(raw`\theta_j=\min_{i:q_{ij}<0}\frac{p_i}{-q_{ij}},\qquad\|\mathbf d_j\|_2=\sqrt{1+\sum_iq_{ij}^2}`,'small'),notes.rules);
-  add('Pravidla','prvni-volba','Stejná báze, jiná volba',
-    ()=>pair(`<div class="controls">${select('comparison-rule',P.rules,comparisonRule,'Pivotovací pravidlo')}</div>`+candidateTable(trace(P.kleeMinty(3),comparisonRule).states[0]),eq(raw`\begin{aligned}\max\quad &4x_1+2x_2+x_3\\x_1&\le5\\4x_1+x_2&\le25\\8x_1+4x_2+x_3&\le125\\x_1,x_2,x_3&\ge0\end{aligned}`)),notes.rules+' '+notes.klee);
   add('Cyklení','cykleni-zadani','Příklad cyklení',
     `<div class="centered">${eq(raw`\begin{aligned}\max\quad &10x_1-57x_2-9x_3-24x_4\\\tfrac12x_1-\tfrac{11}2x_2-\tfrac52x_3+9x_4&\le0\\\tfrac12x_1-\tfrac32x_2-\tfrac12x_3+x_4&\le0\\x_1&\le1\\x_1,x_2,x_3,x_4&\ge0\end{aligned}`)}${eq(raw`B_0=\{5,6,7\},\qquad z_0=0`,'accent')}</div>`,notes.cycle);
   add('Cyklení','cyklus','Cyklení',cycleBody,notes.cycle);
@@ -623,6 +621,8 @@ SOFTWARE.
     pair(eq(raw`\max\ \sum_{j=1}^n2^{n-j}x_j`)+eq(raw`\sum_{j=1}^{i-1}2^{i-j+1}x_j+x_i\le5^i`)+eq(raw`i=1,\ldots,n,\qquad\mathbf x\ge\mathbf0`,'small'),p('Dantzigovo pravidlo z počátku')+eq(raw`2^n-1`,'hero accent')+p('pivotů')+p('Každý krok zvýší hodnotu účelové funkce.','muted')),
     notes.klee);
   add('Klee–Minty','krychle','Kleeho–Mintyho krychle',cubeBody,notes.klee+' Otočení tažením nebo šipkami po zaměření obrázku. Obnovení pohledu klávesou R. Zelená značí dosavadní cestu, oranžová další pivot, fialová optimální bod.');
+  add('Klee–Minty','prvni-volba','Stejná báze, jiná volba',
+    ()=>pair(`<div class="controls">${select('comparison-rule',P.rules,comparisonRule,'Pivotovací pravidlo')}</div>`+candidateTable(trace(P.kleeMinty(3),comparisonRule).states[0]),eq(raw`\text{Kleeho–Mintyho úloha},\quad n=3`,'small muted')+eq(raw`\begin{aligned}\max\quad &4x_1+2x_2+x_3\\x_1&\le5\\4x_1+x_2&\le25\\8x_1+4x_2+x_3&\le125\\x_1,x_2,x_3&\ge0\end{aligned}`)),notes.rules+' '+notes.klee);
   add('Klee–Minty','rozmer','Počet pivotů',growthBody,notes.klee);
   add('Algoritmus','souhrn','Dvoufázový simplexový algoritmus',
     eq(raw`\max\ z=\mathbf c^{\mathsf T}\mathbf x,\qquad A\mathbf x=\mathbf b,\quad\mathbf x\ge\mathbf0`,'summary-problem')+
