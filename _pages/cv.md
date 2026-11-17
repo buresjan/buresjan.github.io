@@ -11,6 +11,8 @@ redirect_from:
   - /resume-json
 ---
 
+[Download CV (PDF)]({{ '/files/jan-bures-cv.pdf' | relative_url }})
+
 Education
 ======
 - **Ph.D., Mathematical Engineering**, FNSPE CTU in Prague, 2025–present  
@@ -31,7 +33,8 @@ I design and implement automated pipelines for data processing, statistical eval
 - **Teaching Assistant**, CTU in Prague, Feb 2023–present  
 I lead exercise sessions and helped conducting the exams for Calculus I and II, and I have also helped to develop teaching materials for the Nonlinear Optimization graduate course.  
 I lead the undergraduate course on Linear Programming.
-- **Research Intern**, UT Southwestern & Children’s Medical Center Dallas, Apr–Jun 2025  
+- **Visiting Junior Researcher**, UT Southwestern Medical Center Dallas, Apr–Jun 2025; Jul–Sep 2026  
+I developed patient-specific lumped-parameter models for double outlet right ventricle (DORV) and Fontan fenestration test occlusion, using MRI and catheterization data.  
 I collaborated directly with clinicians to define research tasks related to the total cavopulmonary connection. My work included preparing patient-specific datasets, and working on optimization studies. I presented our results on TCPC optimization at the FIMH 2025 conference in Dallas.  
 - **Research Assistant**, Institute for Clinical and Experimental Medicine (IKEM), Dec 2022–Dec 2023  
 I participated in experimental work on MRI-validated flow in 3D-printed TCPC phantoms.  
@@ -43,6 +46,12 @@ The outcomes of this project were presented at the ECCOMAS 2022 conference.
 I developed software tools for the Swiss National Cooperative for the Disposal of Radioactive Waste (Nagra), focusing on data management and analytics for activation characterization.  
 This role included creating interactive web applications in Plotly Dash and developing visualization tools, including RepowerScore for the Repower Initiative.  
 
+
+Organizational Involvement
+======
+- **Head (faculty-wide)**, PhD Association, FNSPE CTU in Prague, Oct 2026–present  
+- **Head**, Medical Physics and Computational Science Junior Group, Aug 2025–Sep 2026  
+I coordinated MSc and PhD students in medical physics and computational science at FNSPE.
 
 Honors & Awards
 ======
